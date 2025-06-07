@@ -24,6 +24,7 @@ Route::get('/kalkulator-statistik/kalkulator-standar-deviasi', fn() => view('kal
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/profil/{slug}', [ProfilController::class, 'show'])->name('profil.show');
     Route::resource('profil', ProfilController::class);
     Route::get('/daftar-magang', [PendaftaranMagangController::class, 'index'])
         ->name('daftar-magang.index');

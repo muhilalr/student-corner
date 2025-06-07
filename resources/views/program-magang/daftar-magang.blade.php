@@ -50,10 +50,6 @@
           <!-- Status Title -->
           <h2 class="text-3xl font-bold text-gray-900 mb-4">
             @switch($pendaftaran->status)
-              @case('pending')
-                Pendaftaran Berhasil Diterima!
-              @break
-
               @case('diproses')
                 Pendaftaran Sedang Diproses
               @break
@@ -74,13 +70,8 @@
           <!-- Status Message -->
           <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
             @switch($pendaftaran->status)
-              @case('pending')
-                Terima kasih telah mendaftar untuk program magang kami. Aplikasi Anda telah berhasil diterima dan akan
-                segera diproses oleh tim kami.
-              @break
-
               @case('diproses')
-                Aplikasi Anda sedang dalam tahap review oleh tim HR kami. Mohon menunggu informasi lebih lanjut.
+                Pendaftaran Anda sedang dalam tahap review oleh tim kami. Mohon menunggu informasi lebih lanjut.
               @break
 
               @case('diterima')
@@ -89,73 +80,15 @@
               @break
 
               @case('ditolak')
-                Mohon maaf, saat ini kami tidak dapat menerima aplikasi magang Anda. Terima kasih atas minat Anda terhadap
-                perusahaan kami.
+                Mohon maaf, saat ini kami tidak dapat menerima pendaftaran magang Anda. Terima kasih atas minat Anda
+                terhadap
+                instansi kami.
               @break
 
               @default
                 Status pendaftaran Anda saat ini: {{ ucfirst($pendaftaran->status) }}
             @endswitch
           </p>
-
-          <!-- Status Timeline -->
-          <div class="max-w-2xl mx-auto mb-8">
-            <div class="flex items-center justify-between">
-              <div class="flex flex-col items-center">
-                <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mb-2">
-                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <span class="text-sm font-medium text-green-600">Diterima</span>
-              </div>
-
-              <div
-                class="flex-1 h-1 mx-4 {{ in_array($pendaftaran->status, ['diproses', 'diterima', 'ditolak']) ? 'bg-green-200' : 'bg-gray-200' }}">
-              </div>
-
-              <div class="flex flex-col items-center">
-                <div
-                  class="w-10 h-10 {{ in_array($pendaftaran->status, ['diproses', 'diterima', 'ditolak']) ? 'bg-blue-500' : 'bg-gray-300' }} rounded-full flex items-center justify-center mb-2">
-                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
-                </div>
-                <span
-                  class="text-sm font-medium {{ in_array($pendaftaran->status, ['diproses', 'diterima', 'ditolak']) ? 'text-blue-600' : 'text-gray-500' }}">Review</span>
-              </div>
-
-              <div
-                class="flex-1 h-1 mx-4 {{ $pendaftaran->status === 'diterima' ? 'bg-green-200' : ($pendaftaran->status === 'ditolak' ? 'bg-red-200' : 'bg-gray-200') }}">
-              </div>
-
-              <div class="flex flex-col items-center">
-                <div
-                  class="w-10 h-10 {{ $pendaftaran->status === 'diterima' ? 'bg-green-500' : ($pendaftaran->status === 'ditolak' ? 'bg-red-500' : 'bg-gray-300') }} rounded-full flex items-center justify-center mb-2">
-                  @if ($pendaftaran->status === 'diterima')
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  @elseif($pendaftaran->status === 'ditolak')
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  @else
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  @endif
-                </div>
-                <span
-                  class="text-sm font-medium {{ $pendaftaran->status === 'diterima' ? 'text-green-600' : ($pendaftaran->status === 'ditolak' ? 'text-red-600' : 'text-gray-500') }}">
-                  {{ $pendaftaran->status === 'diterima' ? 'Diterima' : ($pendaftaran->status === 'ditolak' ? 'Ditolak' : 'Hasil') }}
-                </span>
-              </div>
-            </div>
-          </div>
 
           <!-- Info Cards -->
           @if ($pendaftaran->status !== 'ditolak')
@@ -194,15 +127,11 @@
                   @else
                     <li class="flex items-start">
                       <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                      Tim HR sedang meninjau aplikasi Anda
+                      Tim sedang meninjau pendaftaran Anda
                     </li>
                     <li class="flex items-start">
                       <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                       Anda akan dihubungi dalam 3-5 hari kerja
-                    </li>
-                    <li class="flex items-start">
-                      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                      Proses interview akan dijadwalkan jika lolos seleksi
                     </li>
                   @endif
                 </ul>
@@ -229,7 +158,7 @@
                     <a href="tel:+62812345678" class="text-green-600 hover:underline">+62 812 3456 789</a>
                   </p>
                   <p class="text-xs text-gray-500 mt-3">
-                    Hubungi kami jika ada pertanyaan mengenai aplikasi Anda
+                    Hubungi kami jika ada pertanyaan mengenai pendaftaran Anda
                   </p>
                 </div>
               </div>
@@ -246,17 +175,6 @@
               </svg>
               Kembali ke Beranda
             </a>
-
-            @if ($pendaftaran->status !== 'ditolak')
-              <button onclick="window.print()"
-                class="bg-gray-100 text-gray-700 font-semibold py-3 px-8 rounded-xl hover:bg-gray-200 transition-colors flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                </svg>
-                Print Status
-              </button>
-            @endif
           </div>
 
           <!-- Refresh Note -->

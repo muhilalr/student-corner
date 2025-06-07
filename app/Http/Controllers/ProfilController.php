@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -39,10 +40,15 @@ class ProfilController extends Controller
      */
     public function show($slug)
     {
-        $user = User::where('slug', $slug)->firstOrFail();
+        [$id, $nameSlug] = explode('-', $slug, 2);
 
-        // opsional: hanya izinkan melihat profil sendiri
-        if (auth()->user()->id !== $user->id) {
+        $user = \App\Models\User::findOrFail($id);
+
+        if (Str::slug($user->name) !== $nameSlug) {
+            abort(404); // atau redirect ke URL yang benar
+        }
+
+        if (Auth::id() !== $user->id) {
             abort(403);
         }
 

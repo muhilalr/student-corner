@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Models\PendaftaranMagang;
 use App\Http\Controllers\Controller;
+use App\Mail\PendaftaranMagang as MailPendaftaranMagang;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class PendaftaranMagangController extends Controller
 {
@@ -34,16 +36,9 @@ class PendaftaranMagangController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'nama' => 'required|string|max:255',
-        //     'email' => 'required|email|unique:users,email',
-        //     'no_hp' => 'required|string|max:20',
-        //     'cv_file' => 'required|file|mimes:pdf,doc,docx|max:5120',
-        //     'surat_motivasi' => 'nullable|string',
-        //     'is_agreed' => 'accepted',
-        // ]);
 
         $user = Auth::user();
+
 
         // Cek apakah user sudah pernah mendaftar dan statusnya belum selesai
         $existingPendaftaran = PendaftaranMagang::where('user_id', $user->id)
@@ -61,24 +56,22 @@ class PendaftaranMagangController extends Controller
             'is_agreed' => 'required|accepted',
         ]);
 
-        // Upload CV file
-        $cvPath = null;
-        if ($request->hasFile('cv_file')) {
-            $cvPath = $request->file('cv_file')->store('cv_files', 'public');
-        }
+        $filePath = $request->file('cv_file')->store('cv_magang_user', 'public');
 
         // Simpan data pendaftaran
-        PendaftaranMagang::create([
+        $pendaftaran = PendaftaranMagang::create([
             'user_id' => $user->id,
             'nama' => $user->name,
             'email' => $user->email,
             'no_hp' => $user->no_hp,
-            'cv_file' => $cvPath,
+            'cv_file' => $filePath,
             'surat_motivasi' => $request->surat_motivasi,
             'status' => 'diproses', // status default
             'is_agreed' => true,
             'agreed_at' => now(),
         ]);
+
+        Mail::to($pendaftaran->email)->queue(new MailPendaftaranMagang($pendaftaran));
 
         return redirect()->route('daftar-magang.index')
             ->with('success', 'Pendaftaran berhasil dikirim!');
