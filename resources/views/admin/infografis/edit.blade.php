@@ -50,7 +50,7 @@
                   </div>
                   <div class="form-group">
                     <label for="gambar">Gambar</label>
-                    <input type="file" name="deskripsi" class="form-control" id="gambar"
+                    <input type="file" name="gambar" class="form-control" id="gambar"
                       value="{{ $infografi->gambar }}" placeholder="Masukkan Gambar">
                   </div>
                   <div class="form-group">

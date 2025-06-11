@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Mail\MailMagangDitolak;
+use App\Mail\MailMagangDiterima;
 use App\Models\PendaftaranMagang;
 use App\Http\Controllers\Controller;
-use App\Mail\PendaftaranMagang as MailPendaftaranMagang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use App\Mail\PendaftaranMagang as MailPendaftaranMagang;
 
 class PendaftaranMagangController extends Controller
 {
@@ -24,6 +27,12 @@ class PendaftaranMagangController extends Controller
             ->first();
 
         return view('program-magang.daftar-magang', compact('pendaftaran'));
+    }
+
+    public function index_admin()
+    {
+        $pendaftaran = PendaftaranMagang::all();
+        return view('admin.pendaftaran-magang.index', compact('pendaftaran'));
     }
 
     /**
@@ -88,24 +97,51 @@ class PendaftaranMagangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(PendaftaranMagang $pendaftaran_magang)
     {
-        //
+        return view('admin.pendaftaran-magang.edit', compact('pendaftaran_magang'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, PendaftaranMagang $pendaftaran_magang)
     {
-        //
+        $request->validate([
+            'status' => 'required',
+        ]);
+
+        // Simpan status lama untuk pengecekan
+        $statusLama = $pendaftaran_magang->status;
+        $statusBaru = $request->status;
+
+        // Update status
+        $pendaftaran_magang->update([
+            'status' => $statusBaru,
+        ]);
+
+        // Kirim email hanya jika status berubah dari 'diproses' ke 'diterima' atau 'ditolak'
+        if ($statusLama === 'diproses' && in_array($statusBaru, ['diterima', 'ditolak'])) {
+            if ($statusBaru === 'diterima') {
+                // Kirim email diterima
+                Mail::to($pendaftaran_magang->email)->queue(new MailMagangDiterima($pendaftaran_magang));
+            } elseif ($statusBaru === 'ditolak') {
+                // Kirim email ditolak
+                Mail::to($pendaftaran_magang->email)->queue(new MailMagangDitolak($pendaftaran_magang));
+            }
+        }
+
+        return redirect()->route('admin_daftar-magang.index-admin')
+            ->with('success', 'Status pendaftaran berhasil diperbarui dan email notifikasi telah dikirim');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(PendaftaranMagang $pendaftaran_magang)
     {
-        //
+        Storage::disk('public')->delete($pendaftaran_magang->cv_file);
+        $pendaftaran_magang->delete();
+        return redirect()->route('admin_daftar-magang.index-admin')->with('success', 'Data Pendaftar Magang berhasil dihapus');
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SubjekMateriController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\InformasiMagangController;
 use App\Http\Controllers\Admin\SubJudulArtikelController;
+use App\Http\Controllers\Admin\PendaftaranMagangController;
 use App\Http\Controllers\Admin\VideoPembelajaranController;
 use App\Http\Controllers\Admin\DetailSubJudulArtikelController;
 
@@ -27,6 +28,14 @@ Route::prefix('admin')->name('admin_')->group(function () {
     Route::resource('video-pembelajaran', VideoPembelajaranController::class);
     Route::resource('infografis', InfografisController::class);
     Route::resource('informasi-magang', InformasiMagangController::class);
+    Route::get('/pendaftaran-magang', [PendaftaranMagangController::class, 'index_admin'])
+      ->name('daftar-magang.index-admin');
+    Route::get('/pendaftaran-magang/{pendaftaran_magang}/edit', [PendaftaranMagangController::class, 'edit'])
+      ->name('daftar-magang.edit');
+    Route::put('/pendaftaran-magang/{pendaftaran_magang}', [PendaftaranMagangController::class, 'update'])
+      ->name('daftar-magang.update');
+    Route::delete('/pendaftaran-magang/{pendaftaran_magang}', [PendaftaranMagangController::class, 'destroy'])
+      ->name('daftar-magang.destroy');
     Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
   });
 });

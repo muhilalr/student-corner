@@ -36,7 +36,7 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
-        <li class="nav-item menu-open">
+        <li class="nav-item">
           <a href="#" class="nav-link active">
             <p>
               Konten Edukasi
@@ -82,7 +82,7 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item menu-open">
+        <li class="nav-item">
           <a href="#" class="nav-link active">
             <p>
               Informasi Magang
@@ -94,6 +94,12 @@
               <a href="{{ route('admin_informasi-magang.index') }}"
                 class="nav-link {{ Route::is('admin_informasi-magang.index') ? 'active' : '' }}">
                 <p>Informasi Magang</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('admin_daftar-magang.index-admin') }}"
+                class="nav-link {{ Route::is('admin_daftar-magang.index-admin') ? 'active' : '' }}">
+                <p>Data Pendaftar Magang</p>
               </a>
             </li>
           </ul>
