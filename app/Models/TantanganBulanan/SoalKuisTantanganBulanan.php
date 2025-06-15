@@ -2,9 +2,27 @@
 
 namespace App\Models\TantanganBulanan;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SoalKuisTantanganBulanan extends Model
 {
-    //
+    use HasFactory;
+
+    protected $fillable = [
+        'id_kuis_tantangan_bulanan',
+        'soal',
+        'tipe_soal',
+        'jawaban',
+    ];
+
+    public function kuis_tantangan_bulanan()
+    {
+        return $this->belongsTo(KuisTantanganBulanan::class, 'id_kuis_tantangan_bulanan');
+    }
+
+    public function opsi_tantangan_bulanan()
+    {
+        return $this->hasMany(OpsiSoalKuisTantanganBulanan::class, 'id_soal_tantangan');
+    }
 }

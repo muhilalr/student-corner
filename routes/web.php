@@ -34,6 +34,8 @@ Route::prefix('visualisasi-data')->name('visualisasi.')->group(function () {
     Route::post('/histogram/upload', [HistogramController::class, 'uploadData'])->name('histogram.upload');
     Route::post('/histogram/generate', [HistogramController::class, 'generateHistogram'])->name('histogram.generate');
 });
+
+Route::get('/kuis-dan-tantangan-bulanan', fn() => view('kuis-tantangan.index'))->name('kuis-tantangan.index');
 // Route::get('/kalkulator-statistik', fn() => view('kalkulator-statistik.index'))->name('kalkulator-statistik.index');
 // Route::get('/kalkulator-statistik/kalkulator-mean-median-modus', fn() => view('kalkulator-statistik.mean'))->name('kalkulator-statistik.mean');
 // Route::get('/kalkulator-statistik/kalkulator-kombinasi', fn() => view('kalkulator-statistik.kombinasi'))->name('kalkulator-statistik.kombinasi');
@@ -46,10 +48,10 @@ Route::prefix('visualisasi-data')->name('visualisasi.')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profil/{slug}', [ProfilController::class, 'show'])->name('profil.show');
     Route::resource('profil', ProfilController::class);
-    Route::get('/daftar-magang', [PendaftaranMagangController::class, 'index'])
+    Route::get('/program-magang/daftar-magang', [PendaftaranMagangController::class, 'index'])
         ->name('daftar-magang.index');
 
-    Route::post('/daftar-magang', [PendaftaranMagangController::class, 'store'])
+    Route::post('/program-magang/daftar-magang', [PendaftaranMagangController::class, 'store'])
         ->name('daftar-magang.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -5,8 +5,10 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Str;
 use Illuminate\Notifications\Notifiable;
+use App\Models\KuisReguler\HasilKuisReguler;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\TantanganBulanan\HasilKuisTantanganBulanan;
 
 class User extends Authenticatable
 {
@@ -55,6 +57,16 @@ class User extends Authenticatable
     public function pendaftaran_magang()
     {
         return $this->hasMany(PendaftaranMagang::class, 'user_id');
+    }
+
+    public function hasil_kuis_reguler()
+    {
+        return $this->hasMany(HasilKuisReguler::class, 'id_user');
+    }
+
+    public function hasil_kuis_tantangan_bulanan()
+    {
+        return $this->hasMany(HasilKuisTantanganBulanan::class, 'id_user');
     }
 
     public function getSlugAttribute()
