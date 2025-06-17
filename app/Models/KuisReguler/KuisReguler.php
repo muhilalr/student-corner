@@ -13,6 +13,7 @@ class KuisReguler extends Model
         'judul',
         'deskripsi',
         'gambar',
+        'slug'
     ];
 
     public function soal_reguler()

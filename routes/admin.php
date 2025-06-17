@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\KuisReguler\KuisReguler;
 use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\Admin\InfografisController;
 use App\Http\Controllers\Admin\SubjekMateriController;
@@ -10,6 +11,8 @@ use App\Http\Controllers\Admin\SubJudulArtikelController;
 use App\Http\Controllers\Admin\PendaftaranMagangController;
 use App\Http\Controllers\Admin\VideoPembelajaranController;
 use App\Http\Controllers\Admin\DetailSubJudulArtikelController;
+use App\Http\Controllers\Admin\KuisReguler\KuisRegulerController;
+use App\Http\Controllers\Admin\KuisReguler\SoalKuisRegulerController;
 
 Route::prefix('admin')->name('admin_')->group(function () {
   Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('login');
@@ -36,6 +39,8 @@ Route::prefix('admin')->name('admin_')->group(function () {
       ->name('daftar-magang.update');
     Route::delete('/pendaftaran-magang/{pendaftaran_magang}', [PendaftaranMagangController::class, 'destroy'])
       ->name('daftar-magang.destroy');
+    Route::resource('kuis-reguler', KuisRegulerController::class);
+    Route::resource('soal-kuis-reguler', SoalKuisRegulerController::class);
     Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
   });
 });

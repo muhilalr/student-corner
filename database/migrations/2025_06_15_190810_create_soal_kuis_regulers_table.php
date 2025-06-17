@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_kuis_reguler');
             $table->text('soal');
-            $table->enum('tipe_soal', ['pilihan_ganda', 'isian_singkat']);
+            $table->enum('tipe_soal', ['Pilihan Ganda', 'Isian Singkat']);
             $table->text('jawaban');
             $table->timestamps();
             $table->foreign('id_kuis_reguler')->references('id')->on('kuis_regulers')->onDelete('cascade');

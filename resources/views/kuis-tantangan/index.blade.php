@@ -1,8 +1,33 @@
 <x-layout-web>
   <!-- Hero Section -->
-  <section class="bg-primary text-white container text-center py-20">
-    <h1 class="text-5xl font-bold mb-4">Kuis & Tantangan Statistik</h1>
-    <p class="text-xl font-medium text-blue-100">Uji pengetahuan statistik Anda dan raih peringkat tertinggi!</p>
+  <section class="gradient-bg text-white py-20 relative overflow-hidden">
+    <div class="absolute inset-0 bg-black opacity-10"></div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="text-center">
+        <div class="floating inline-block mb-6">
+          <i class="fas fa-brain text-6xl text-yellow-300"></i>
+        </div>
+        <h1 class="text-5xl font-bold mb-4">Kuis & Tantangan Statistik</h1>
+        <p class="text-xl mb-8 opacity-90">Uji pengetahuan statistik Anda dan raih peringkat tertinggi!</p>
+        <div class="flex justify-center space-x-4">
+          <button
+            class="bg-white text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition duration-300 shadow-lg">
+            <i class="fas fa-play mr-2"></i>Mulai Kuis
+          </button>
+          <button
+            class="glass-effect text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:bg-opacity-20 transition duration-300">
+            <i class="fas fa-trophy mr-2"></i>Lihat Peringkat
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Floating Elements -->
+    <div class="absolute top-20 left-10 opacity-30">
+      <i class="fas fa-chart-bar text-4xl floating" style="animation-delay: 0.5s;"></i>
+    </div>
+    <div class="absolute bottom-20 right-10 opacity-30">
+      <i class="fas fa-calculator text-4xl floating" style="animation-delay: 1s;"></i>
+    </div>
   </section>
 
   <!-- Stats Overview -->
@@ -276,19 +301,18 @@
   </section>
 
   <!-- Leaderboard Section -->
-  <section class="py-16 mb-20 bg-primary">
+  <section class="py-16 bg-gray-50">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold text-white mb-4">Papan Peringkat</h2>
-        <p class="text-xl text-blue-100">Para ahli statistik terbaik bulan ini</p>
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">Papan Peringkat</h2>
+        <p class="text-xl text-gray-600">Para ahli statistik terbaik bulan ini</p>
       </div>
 
       <div class="max-w-4xl mx-auto">
         <!-- Top 3 -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <!-- 2nd Place -->
-          <div
-            class="bg-gradient-to-br from-gray-500 to-gray-700 rounded-2xl p-6 text-center card-hover order-2 md:order-1">
+          <div class="bg-white rounded-2xl p-6 text-center card-hover order-2 md:order-1">
             <div class="relative inline-block mb-4">
               <img src="https://images.unsplash.com/photo-1494790108755-2616b60f-3274?w=80&h=80&fit=crop&crop=face"
                 alt="2nd Place" class="w-20 h-20 rounded-full mx-auto object-cover">
@@ -322,7 +346,7 @@
           </div>
 
           <!-- 3rd Place -->
-          <div class="bg-gradient-to-br from-orange-500 to-orange-700 rounded-2xl p-6 text-center card-hover order-3">
+          <div class="bg-white rounded-2xl p-6 text-center card-hover order-3">
             <div class="relative inline-block mb-4">
               <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face"
                 alt="3rd Place" class="w-20 h-20 rounded-full mx-auto object-cover">
@@ -393,8 +417,25 @@
     </div>
   </section>
 
+  <!-- CTA Section -->
+  <section class="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-4xl font-bold mb-4">Siap Menjadi Master Statistik?</h2>
+      <p class="text-xl mb-8 opacity-90">Bergabunglah dengan ribuan pengguna lain dan tingkatkan kemampuan statistik
+        Anda!</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button
+          class="bg-white text-blue-600 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition duration-300 shadow-lg">
+          <i class="fas fa-rocket mr-2"></i>Mulai Sekarang
+        </button>
+        <button
+          class="glass-effect text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:bg-opacity-20 transition duration-300">
+          <i class="fas fa-info-circle mr-2"></i>Pelajari Lebih Lanjut
+        </button>
+      </div>
+    </div>
+  </section>
 
-  <x-footer class="fill-[#EEF0F2]" />
   <script>
     // Simple animations and interactions
     document.addEventListener('DOMContentLoaded', function() {
