@@ -15,13 +15,13 @@ class SoalKuisRegulerController extends Controller
      */
     public function index()
     {
-        $soal = SoalKuisReguler::with('kuis_reguler')->get();
+        $soal = SoalKuisReguler::with('kuis_reguler')->paginate(10);
         return view('admin.kuis-reguler.soal-kuis.index', compact('soal'));
     }
 
     public function indexOpsi()
     {
-        $opsi = OpsiSoalKuisReguler::with('soal_kuis_reguler')->get();
+        $opsi = OpsiSoalKuisReguler::with('soal_kuis_reguler')->paginate(12);
         return view('admin.kuis-reguler.opsi-soal-pilgan.index', compact('opsi'));
     }
 

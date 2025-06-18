@@ -35,7 +35,7 @@
                     @endforeach
                   </tbody>
                 </table>
-
+                {{ $opsi->links() }}
               </div>
               <!-- /.card-body -->
             </div>

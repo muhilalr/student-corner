@@ -2,288 +2,99 @@
   <!-- Main Content -->
   <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <form id="quizForm" class="space-y-8">
-
-      <!-- Question 1 -->
-      <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden animate-fade-in">
-        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
-          <div class="flex items-center space-x-3 mb-4">
-            <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-              <span class="text-sm font-bold">1</span>
+      @csrf
+      @foreach ($soal as $index => $item)
+        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden animate-fade-in">
+          <div class="bg-primary p-6 text-white">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                <span class="text-sm font-bold">{{ $index + 1 }}</span>
+              </div>
+              <span class="text-blue-100 text-sm font-medium">Pertanyaan {{ $index + 1 }}</span>
+              <span class="bg-white/20 text-xs px-2 py-1 rounded-full">
+                {{ $item->tipe_soal }}
+              </span>
             </div>
-            <span class="text-blue-100 text-sm font-medium">Pertanyaan 1</span>
+            <h2 class="text-xl sm:text-2xl font-bold leading-tight">
+              {{ $item->soal }}
+            </h2>
           </div>
-          <h2 class="text-xl sm:text-2xl font-bold leading-tight">
-            Apa yang dimaksud dengan mean dalam statistik deskriptif?
-          </h2>
-        </div>
-        <div class="p-6 sm:p-8">
-          <div class="space-y-4">
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_1" value="a"
-                class="mt-1 w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">A.</span>
-                <p class="text-gray-900 font-medium">Nilai tengah dari sekumpulan data yang telah diurutkan</p>
+          <div class="p-6 sm:p-8">
+            @if ($item->tipe_soal === 'Pilihan Ganda')
+              <!-- Tampilan Pilihan Ganda -->
+              <div class="space-y-4">
+                @foreach ($item->opsi as $opsi)
+                  <label
+                    class="flex items-center space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-primary cursor-pointer transition-all duration-200 question-option">
+                    <input type="radio" name="jawaban_{{ $item->id }}" value="{{ $opsi->label }}"
+                      data-question-id="{{ $item->id }}" data-question-type="multiple_choice"
+                      data-correct-answer="{{ $item->jawaban }}"
+                      class="text-primary border-gray-300 focus:ring-primary question-input">
+                    <p class="text-gray-900 font-medium">{{ $opsi->label }}. {{ $opsi->teks_opsi }}</p>
+                  </label>
+                @endforeach
               </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_1" value="b"
-                class="mt-1 w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">B.</span>
-                <p class="text-gray-900 font-medium">Rata-rata aritmatika dari sekumpulan data</p>
+            @elseif($item->tipe_soal === 'Isian Singkat')
+              <!-- Tampilan Isian Singkat -->
+              <div class="space-y-4">
+                <div class="relative">
+                  <label for="jawaban_{{ $item->id }}" class="block text-sm font-medium text-gray-700 mb-2">
+                    Jawaban Anda:
+                  </label>
+                  <input type="text" id="jawaban_{{ $item->id }}" name="jawaban_{{ $item->id }}"
+                    data-question-id="{{ $item->id }}" data-question-type="short_answer"
+                    data-correct-answer="{{ $item->jawaban }}"
+                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary focus:outline-none transition-all duration-200 question-input"
+                    placeholder="Ketik jawaban Anda di sini..." autocomplete="off">
+                  <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none mt-8">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                      </path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                  <div class="flex">
+                    <div class="flex-shrink-0">
+                      <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                          clip-rule="evenodd"></path>
+                      </svg>
+                    </div>
+                    <div class="ml-3">
+                      <p class="text-sm text-blue-700">
+                        <strong>Tips:</strong> Pastikan ejaan dan huruf besar/kecil sesuai. Jawaban akan diperiksa
+                        secara otomatis.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_1" value="c"
-                class="mt-1 w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">C.</span>
-                <p class="text-gray-900 font-medium">Nilai yang paling sering muncul dalam data</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_1" value="d"
-                class="mt-1 w-5 h-5 text-blue-600 border-gray-300 focus:ring-blue-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">D.</span>
-                <p class="text-gray-900 font-medium">Selisih antara nilai maksimum dan minimum</p>
-              </div>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Question 2 -->
-      <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden animate-fade-in">
-        <div class="bg-gradient-to-r from-purple-600 to-pink-600 p-6 text-white">
-          <div class="flex items-center space-x-3 mb-4">
-            <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-              <span class="text-sm font-bold">2</span>
-            </div>
-            <span class="text-purple-100 text-sm font-medium">Pertanyaan 2</span>
-          </div>
-          <h2 class="text-xl sm:text-2xl font-bold leading-tight">
-            Manakah yang merupakan ukuran pemusatan data?
-          </h2>
-        </div>
-        <div class="p-6 sm:p-8">
-          <div class="space-y-4">
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:bg-purple-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_2" value="a"
-                class="mt-1 w-5 h-5 text-purple-600 border-gray-300 focus:ring-purple-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">A.</span>
-                <p class="text-gray-900 font-medium">Varians</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:bg-purple-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_2" value="b"
-                class="mt-1 w-5 h-5 text-purple-600 border-gray-300 focus:ring-purple-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">B.</span>
-                <p class="text-gray-900 font-medium">Standar deviasi</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:bg-purple-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_2" value="c"
-                class="mt-1 w-5 h-5 text-purple-600 border-gray-300 focus:ring-purple-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">C.</span>
-                <p class="text-gray-900 font-medium">Median</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-purple-300 hover:bg-purple-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_2" value="d"
-                class="mt-1 w-5 h-5 text-purple-600 border-gray-300 focus:ring-purple-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">D.</span>
-                <p class="text-gray-900 font-medium">Range</p>
-              </div>
-            </label>
+            @endif
           </div>
         </div>
-      </div>
-
-      <!-- Question 3 -->
-      <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden animate-fade-in">
-        <div class="bg-gradient-to-r from-green-600 to-teal-600 p-6 text-white">
-          <div class="flex items-center space-x-3 mb-4">
-            <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-              <span class="text-sm font-bold">3</span>
-            </div>
-            <span class="text-green-100 text-sm font-medium">Pertanyaan 3</span>
-          </div>
-          <h2 class="text-xl sm:text-2xl font-bold leading-tight">
-            Bagaimana cara menghitung modus dari data berkelompok?
-          </h2>
-        </div>
-        <div class="p-6 sm:p-8">
-          <div class="space-y-4">
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-green-300 hover:bg-green-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_3" value="a"
-                class="mt-1 w-5 h-5 text-green-600 border-gray-300 focus:ring-green-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">A.</span>
-                <p class="text-gray-900 font-medium">Menggunakan rumus interpolasi linear</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-green-300 hover:bg-green-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_3" value="b"
-                class="mt-1 w-5 h-5 text-green-600 border-gray-300 focus:ring-green-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">B.</span>
-                <p class="text-gray-900 font-medium">Mencari kelas dengan frekuensi tertinggi lalu menggunakan rumus
-                  modus</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-green-300 hover:bg-green-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_3" value="c"
-                class="mt-1 w-5 h-5 text-green-600 border-gray-300 focus:ring-green-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">C.</span>
-                <p class="text-gray-900 font-medium">Menghitung rata-rata dari semua kelas</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-green-300 hover:bg-green-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_3" value="d"
-                class="mt-1 w-5 h-5 text-green-600 border-gray-300 focus:ring-green-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">D.</span>
-                <p class="text-gray-900 font-medium">Menggunakan nilai tengah dari setiap kelas</p>
-              </div>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Question 4 -->
-      <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden animate-fade-in">
-        <div class="bg-gradient-to-r from-orange-600 to-red-600 p-6 text-white">
-          <div class="flex items-center space-x-3 mb-4">
-            <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-              <span class="text-sm font-bold">4</span>
-            </div>
-            <span class="text-orange-100 text-sm font-medium">Pertanyaan 4</span>
-          </div>
-          <h2 class="text-xl sm:text-2xl font-bold leading-tight">
-            Apa perbedaan antara varians dan standar deviasi?
-          </h2>
-        </div>
-        <div class="p-6 sm:p-8">
-          <div class="space-y-4">
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-orange-300 hover:bg-orange-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_4" value="a"
-                class="mt-1 w-5 h-5 text-orange-600 border-gray-300 focus:ring-orange-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">A.</span>
-                <p class="text-gray-900 font-medium">Tidak ada perbedaan, keduanya sama</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-orange-300 hover:bg-orange-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_4" value="b"
-                class="mt-1 w-5 h-5 text-orange-600 border-gray-300 focus:ring-orange-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">B.</span>
-                <p class="text-gray-900 font-medium">Standar deviasi adalah akar kuadrat dari varians</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-orange-300 hover:bg-orange-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_4" value="c"
-                class="mt-1 w-5 h-5 text-orange-600 border-gray-300 focus:ring-orange-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">C.</span>
-                <p class="text-gray-900 font-medium">Varians lebih besar dari standar deviasi</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-orange-300 hover:bg-orange-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_4" value="d"
-                class="mt-1 w-5 h-5 text-orange-600 border-gray-300 focus:ring-orange-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">D.</span>
-                <p class="text-gray-900 font-medium">Varians adalah kuadrat dari standar deviasi</p>
-              </div>
-            </label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Question 5 -->
-      <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden animate-fade-in">
-        <div class="bg-gradient-to-r from-indigo-600 to-blue-600 p-6 text-white">
-          <div class="flex items-center space-x-3 mb-4">
-            <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-              <span class="text-sm font-bold">5</span>
-            </div>
-            <span class="text-indigo-100 text-sm font-medium">Pertanyaan 5</span>
-          </div>
-          <h2 class="text-xl sm:text-2xl font-bold leading-tight">
-            Dalam histogram, apa yang dimaksud dengan frekuensi relatif?
-          </h2>
-        </div>
-        <div class="p-6 sm:p-8">
-          <div class="space-y-4">
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_5" value="a"
-                class="mt-1 w-5 h-5 text-indigo-600 border-gray-300 focus:ring-indigo-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">A.</span>
-                <p class="text-gray-900 font-medium">Jumlah data dalam setiap kelas</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_5" value="b"
-                class="mt-1 w-5 h-5 text-indigo-600 border-gray-300 focus:ring-indigo-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">B.</span>
-                <p class="text-gray-900 font-medium">Perbandingan frekuensi kelas dengan total frekuensi</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_5" value="c"
-                class="mt-1 w-5 h-5 text-indigo-600 border-gray-300 focus:ring-indigo-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">C.</span>
-                <p class="text-gray-900 font-medium">Lebar interval kelas</p>
-              </div>
-            </label>
-            <label
-              class="flex items-start space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 cursor-pointer transition-all duration-200 question-option">
-              <input type="radio" name="question_5" value="d"
-                class="mt-1 w-5 h-5 text-indigo-600 border-gray-300 focus:ring-indigo-500">
-              <div class="flex-1">
-                <span class="text-sm font-medium text-gray-500 mb-1 block">D.</span>
-                <p class="text-gray-900 font-medium">Titik tengah setiap kelas</p>
-              </div>
-            </label>
-          </div>
-        </div>
-      </div>
+      @endforeach
 
       <!-- Submit Button -->
       <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-8 text-center animate-fade-in">
         <div class="max-w-md mx-auto">
           <h3 class="text-2xl font-bold text-gray-900 mb-4">Selesai Mengerjakan?</h3>
           <p class="text-gray-600 mb-6">Pastikan semua jawaban sudah terisi sebelum mengirim kuis.</p>
+
+          <!-- Progress Bar -->
+          <div class="mb-6">
+            <div class="flex justify-between text-sm text-gray-600 mb-2">
+              <span>Progress</span>
+              <span id="progressText">0/{{ count($soal) }}</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div id="progressBar" class="bg-primary h-2 rounded-full transition-all duration-300" style="width: 0%">
+              </div>
+            </div>
+          </div>
+
           <button type="submit" id="submitButton" disabled
             class="w-full bg-gray-400 text-white font-bold py-4 px-8 rounded-xl transition-all duration-200 shadow-lg text-lg cursor-not-allowed">
             <span class="flex items-center justify-center space-x-3">
@@ -297,174 +108,230 @@
           <p class="text-sm text-gray-500 mt-4">Setelah dikirim, jawaban tidak dapat diubah lagi.</p>
         </div>
       </div>
-
     </form>
+
+    <!-- Modal Konfirmasi -->
+    <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-md mx-4 p-8">
+        <div class="text-center">
+          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
+            <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">Konfirmasi Pengiriman</h3>
+          <p class="text-sm text-gray-500 mb-6">Apakah Anda yakin ingin mengirim jawaban? Skor Anda adalah <span
+              id="finalScore" class="font-bold text-primary"></span></p>
+          <div class="flex space-x-3">
+            <button id="cancelSubmit"
+              class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors">
+              Batal
+            </button>
+            <button id="confirmSubmit"
+              class="flex-1 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors">
+              Ya, Kirim
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <!-- Floating Help Button -->
-  <div class="fixed bottom-6 right-6 z-50">
-    <button
-      class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white p-4 rounded-full shadow-lg transition-all duration-200 transform hover:scale-110 animate-pulse-slow">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-        </path>
-      </svg>
-    </button>
-  </div>
-
-  <!-- Scroll to Top Button -->
-  <div class="fixed bottom-6 left-6 z-50">
-    <button id="scrollToTop"
-      class="bg-gray-800 hover:bg-gray-900 text-white p-3 rounded-full shadow-lg transition-all duration-200 transform hover:scale-110 opacity-0 invisible">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-      </svg>
-    </button>
-  </div>
-
   <script>
-    // Enhanced interactivity
-    const questionOptions = document.querySelectorAll('.question-option');
-    const submitButton = document.getElementById('submitButton');
-    const scrollToTopBtn = document.getElementById('scrollToTop');
+    document.addEventListener('DOMContentLoaded', function() {
+      const quizForm = document.getElementById('quizForm');
+      const submitButton = document.getElementById('submitButton');
+      const progressBar = document.getElementById('progressBar');
+      const progressText = document.getElementById('progressText');
+      const confirmationModal = document.getElementById('confirmationModal');
+      const finalScoreSpan = document.getElementById('finalScore');
+      const cancelSubmitBtn = document.getElementById('cancelSubmit');
+      const confirmSubmitBtn = document.getElementById('confirmSubmit');
 
-    // Function to check if all questions are answered
-    function checkAllAnswered() {
-      const totalQuestions = 5;
+      const totalQuestions = {{ count($soal) }};
       let answeredQuestions = 0;
+      let calculatedScore = 0;
+      let userAnswers = {};
 
-      for (let i = 1; i <= totalQuestions; i++) {
-        if (document.querySelector(`input[name="question_${i}"]:checked`)) {
-          answeredQuestions++;
+      // Fungsi untuk normalisasi jawaban (untuk isian singkat)
+      function normalizeAnswer(answer) {
+        return answer.toString().toLowerCase().trim();
+      }
+
+      // Fungsi untuk update progress dan check apakah semua soal sudah dijawab
+      function updateProgress() {
+        const answeredCount = Object.keys(userAnswers).length;
+        answeredQuestions = answeredCount;
+
+        // Update progress bar
+        const progressPercent = (answeredCount / totalQuestions) * 100;
+        progressBar.style.width = progressPercent + '%';
+        progressText.textContent = answeredCount + '/' + totalQuestions;
+
+        // Enable/disable submit button
+        if (answeredCount === totalQuestions) {
+          submitButton.disabled = false;
+          submitButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
+          submitButton.classList.add('bg-primary', 'hover:bg-primary/90', 'cursor-pointer');
+
+          // Hitung skor
+          calculateScore();
+        } else {
+          submitButton.disabled = true;
+          submitButton.classList.add('bg-gray-400', 'cursor-not-allowed');
+          submitButton.classList.remove('bg-primary', 'hover:bg-primary/90', 'cursor-pointer');
         }
       }
 
-      if (answeredQuestions === totalQuestions) {
-        submitButton.disabled = false;
-        submitButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
-        submitButton.classList.add('bg-gradient-to-r', 'from-green-600', 'to-emerald-600', 'hover:from-green-700',
-          'hover:to-emerald-700', 'transform', 'hover:scale-105');
-      } else {
-        submitButton.disabled = true;
-        submitButton.classList.add('bg-gray-400', 'cursor-not-allowed');
-        submitButton.classList.remove('bg-gradient-to-r', 'from-green-600', 'to-emerald-600', 'hover:from-green-700',
-          'hover:to-emerald-700', 'transform', 'hover:scale-105');
-      }
-    }
+      // Fungsi untuk menghitung skor
+      function calculateScore() {
+        let score = 0;
 
-    // Handle option selection
-    questionOptions.forEach(option => {
-      const radio = option.querySelector('input[type="radio"]');
+        Object.keys(userAnswers).forEach(questionId => {
+          const input = document.querySelector(`[data-question-id="${questionId}"]`);
+          const questionType = input.getAttribute('data-question-type');
+          const correctAnswer = input.getAttribute('data-correct-answer');
+          const userAnswer = userAnswers[questionId];
 
-      option.addEventListener('click', function() {
-        // Remove selected state from all options with same name
-        const sameNameOptions = document.querySelectorAll(`input[name="${radio.name}"]`);
-        sameNameOptions.forEach(r => {
-          const label = r.closest('label');
-          label.classList.remove('border-blue-500', 'bg-blue-50', 'border-purple-500', 'bg-purple-50',
-            'border-green-500', 'bg-green-50', 'border-orange-500', 'bg-orange-50',
-            'border-indigo-500', 'bg-indigo-50');
-          label.classList.add('border-gray-200');
+          if (questionType === 'multiple_choice') {
+            // Untuk pilihan ganda, langsung bandingkan
+            if (userAnswer === correctAnswer) {
+              score += 1;
+            }
+          } else if (questionType === 'short_answer') {
+            // Untuk isian singkat, normalisasi dulu sebelum bandingkan
+            if (normalizeAnswer(userAnswer) === normalizeAnswer(correctAnswer)) {
+              score += 1;
+            }
+          }
         });
 
-        // Add selected state to clicked option
-        if (radio.checked) {
-          const questionCard = option.closest('.bg-white');
-          const headerClasses = questionCard.querySelector('[class*="bg-gradient-to-r"]').className;
+        calculatedScore = score;
+        console.log('Skor yang dihitung:', calculatedScore);
+        console.log('Detail jawaban:', userAnswers);
+      }
 
-          if (headerClasses.includes('from-blue-600')) {
-            option.classList.add('border-blue-500', 'bg-blue-50');
-          } else if (headerClasses.includes('from-purple-600')) {
-            option.classList.add('border-purple-500', 'bg-purple-50');
-          } else if (headerClasses.includes('from-green-600')) {
-            option.classList.add('border-green-500', 'bg-green-50');
-          } else if (headerClasses.includes('from-orange-600')) {
-            option.classList.add('border-orange-500', 'bg-orange-50');
-          } else if (headerClasses.includes('from-indigo-600')) {
-            option.classList.add('border-indigo-500', 'bg-indigo-50');
+      // Event listener untuk radio button (pilihan ganda)
+      document.querySelectorAll('input[type="radio"].question-input').forEach(radio => {
+        radio.addEventListener('change', function() {
+          const questionId = this.getAttribute('data-question-id');
+          const userAnswer = this.value;
+
+          // Simpan jawaban user
+          userAnswers[questionId] = userAnswer;
+
+          // Update progress
+          updateProgress();
+        });
+      });
+
+      // Event listener untuk text input (isian singkat)
+      document.querySelectorAll('input[type="text"].question-input').forEach(textInput => {
+        // Debounce untuk input text
+        let timeout;
+
+        textInput.addEventListener('input', function() {
+          clearTimeout(timeout);
+          const questionId = this.getAttribute('data-question-id');
+          const userAnswer = this.value.trim();
+
+          timeout = setTimeout(() => {
+            if (userAnswer !== '') {
+              // Simpan jawaban user
+              userAnswers[questionId] = userAnswer;
+            } else {
+              // Hapus jawaban jika kosong
+              delete userAnswers[questionId];
+            }
+
+            // Update progress
+            updateProgress();
+          }, 500); // 500ms delay
+        });
+
+        // Event listener untuk blur (ketika user meninggalkan input)
+        textInput.addEventListener('blur', function() {
+          const questionId = this.getAttribute('data-question-id');
+          const userAnswer = this.value.trim();
+
+          if (userAnswer !== '') {
+            userAnswers[questionId] = userAnswer;
+          } else {
+            delete userAnswers[questionId];
           }
 
-          option.classList.remove('border-gray-200');
+          updateProgress();
+        });
+      });
+
+      // Event listener untuk form submit
+      quizForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Tampilkan modal konfirmasi dengan skor
+        finalScoreSpan.textContent = calculatedScore + '/' + totalQuestions;
+        confirmationModal.classList.remove('hidden');
+        confirmationModal.classList.add('flex');
+      });
+
+      // Event listener untuk tombol batal di modal
+      cancelSubmitBtn.addEventListener('click', function() {
+        confirmationModal.classList.add('hidden');
+        confirmationModal.classList.remove('flex');
+      });
+
+      // Event listener untuk tombol konfirmasi di modal
+      confirmSubmitBtn.addEventListener('click', function() {
+        // Siapkan data untuk dikirim ke controller
+        const formData = new FormData();
+        formData.append('_token', document.querySelector('input[name="_token"]').value);
+        formData.append('skor', calculatedScore);
+        formData.append('total_soal', totalQuestions);
+
+        // Tambahkan jawaban user dengan detail tipe soal
+        Object.keys(userAnswers).forEach(questionId => {
+          const input = document.querySelector(`[data-question-id="${questionId}"]`);
+          const questionType = input.getAttribute('data-question-type');
+
+          formData.append('jawaban[' + questionId + '][answer]', userAnswers[questionId]);
+          formData.append('jawaban[' + questionId + '][type]', questionType);
+        });
+
+        // Kirim data ke controller
+        fetch('', {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest'
+            }
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              // Redirect ke halaman hasil atau tampilkan pesan sukses
+              window.location.href = data.redirect || '/quiz/result';
+            } else {
+              alert('Terjadi kesalahan: ' + data.message);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Terjadi kesalahan saat mengirim jawaban');
+          })
+          .finally(() => {
+            confirmationModal.classList.add('hidden');
+            confirmationModal.classList.remove('flex');
+          });
+      });
+
+      // Tutup modal jika klik di luar modal
+      confirmationModal.addEventListener('click', function(e) {
+        if (e.target === confirmationModal) {
+          confirmationModal.classList.add('hidden');
+          confirmationModal.classList.remove('flex');
         }
-
-        // Check if all questions are answered
-        checkAllAnswered();
       });
     });
-
-    // Handle form submission
-    document.getElementById('quizForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      // Show confirmation
-      if (confirm('Apakah Anda yakin ingin mengirim jawaban? Jawaban tidak dapat diubah setelah dikirim.')) {
-        // Here you would normally submit to server
-        alert('Jawaban berhasil dikirim! Terima kasih telah mengikuti kuis.');
-        // For demo purposes, you could redirect or show results
-      }
-    });
-
-    // Scroll to top functionality
-    window.addEventListener('scroll', function() {
-      if (window.pageYOffset > 300) {
-        scrollToTopBtn.classList.remove('opacity-0', 'invisible');
-        scrollToTopBtn.classList.add('opacity-100', 'visible');
-      } else {
-        scrollToTopBtn.classList.add('opacity-0', 'invisible');
-        scrollToTopBtn.classList.remove('opacity-100', 'visible');
-      }
-    });
-
-    scrollToTopBtn.addEventListener('click', function() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-
-    // Animate elements on scroll
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-        }
-      });
-    }, observerOptions);
-
-    // Observe all question cards
-    document.querySelectorAll('.animate-fade-in').forEach((el, index) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(30px)';
-      el.style.transition = `opacity 0.6s ease-out ${index * 0.1}s, transform 0.6s ease-out ${index * 0.1}s`;
-      observer.observe(el);
-    });
-
-    // Auto-save functionality (for better UX)
-    const autoSave = () => {
-      const formData = new FormData(document.getElementById('quizForm'));
-      const answers = {};
-
-      for (let [key, value] of formData.entries()) {
-        answers[key] = value;
-      }
-
-      // Store in memory (in real Laravel app, you'd send to server)
-      console.log('Auto-saved answers:', answers);
-    };
-
-    // Auto-save when answer changes
-    document.querySelectorAll('input[type="radio"]').forEach(radio => {
-      radio.addEventListener('change', autoSave);
-    });
-
-    // Initial check on page load
-    checkAllAnswered();
   </script>
 </x-layout-web>

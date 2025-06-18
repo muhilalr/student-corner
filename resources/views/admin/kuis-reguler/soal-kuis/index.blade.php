@@ -56,7 +56,7 @@
                     @endforeach
                   </tbody>
                 </table>
-
+                {{ $soal->links() }}
               </div>
               <!-- /.card-body -->
             </div>

@@ -37,7 +37,7 @@ Route::prefix('visualisasi-data')->name('visualisasi.')->group(function () {
 });
 
 Route::get('/kuis-dan-tantangan-bulanan', [KuisDanTantanganController::class, 'index'])->name('kuis-tantangan.index');
-Route::get('/soal', fn() => view('kuis-tantangan.soal'))->name('kuis-tantangan.soal');
+Route::get('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}', [KuisDanTantanganController::class, 'showSoalKuisReguler'])->name('kuis-tantangan.soal');
 // Route::get('/kalkulator-statistik', fn() => view('kalkulator-statistik.index'))->name('kalkulator-statistik.index');
 // Route::get('/kalkulator-statistik/kalkulator-mean-median-modus', fn() => view('kalkulator-statistik.mean'))->name('kalkulator-statistik.mean');
 // Route::get('/kalkulator-statistik/kalkulator-kombinasi', fn() => view('kalkulator-statistik.kombinasi'))->name('kalkulator-statistik.kombinasi');
