@@ -22,9 +22,9 @@
                 <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-md flex flex-col h-full">
                   <img src="{{ asset('storage/' . $item->gambar) }}" alt="" width="500"
                     class="aspect-[3/2] rounded-lg object-cover" />
-                  <h3 class="text-xl font-bold text-gray-800 mb-2">{{ $item->judul }}</h3>
+                  <h3 class="text-xl font-bold text-gray-800 my-2">{{ $item->judul }}</h3>
                   <p class="text-gray-600 font-semibold mb-4">
-                    {{ Str::limit($item->deskripsi, 200, '...') }}</p>
+                    {{ Str::limit($item->deskripsi, 150, '...') }}</p>
                   <a href="{{ route('kuis-tantangan.soal', $item->slug) }}">
                     <button class="bg-primary w-full text-white px-4 py-2 rounded-lg hover:bg-[#00295A]">
                       Mulai

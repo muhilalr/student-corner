@@ -37,7 +37,8 @@ Route::prefix('visualisasi-data')->name('visualisasi.')->group(function () {
 });
 
 Route::get('/kuis-dan-tantangan-bulanan', [KuisDanTantanganController::class, 'index'])->name('kuis-tantangan.index');
-Route::get('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}', [KuisDanTantanganController::class, 'showSoalKuisReguler'])->name('kuis-tantangan.soal');
+
+Route::get('/quiz/result', [KuisDanTantanganController::class, 'result'])->name('quiz.result');
 // Route::get('/kalkulator-statistik', fn() => view('kalkulator-statistik.index'))->name('kalkulator-statistik.index');
 // Route::get('/kalkulator-statistik/kalkulator-mean-median-modus', fn() => view('kalkulator-statistik.mean'))->name('kalkulator-statistik.mean');
 // Route::get('/kalkulator-statistik/kalkulator-kombinasi', fn() => view('kalkulator-statistik.kombinasi'))->name('kalkulator-statistik.kombinasi');
@@ -55,6 +56,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/program-magang/daftar-magang', [PendaftaranMagangController::class, 'store'])
         ->name('daftar-magang.store');
+    Route::get('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}', [KuisDanTantanganController::class, 'showSoalKuisReguler'])->name('kuis-tantangan.soal');
+    Route::post('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}', [KuisDanTantanganController::class, 'submit'])->name('kuis.submit');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
