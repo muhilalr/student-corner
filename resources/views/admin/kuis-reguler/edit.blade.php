@@ -40,7 +40,7 @@
                   <div class="form-group">
                     <label for="gambar">Gambar</label>
                     <input type="file" name="gambar" class="form-control" id="gambar"
-                      placeholder="Masukkan Gambar Kuis" required>
+                      placeholder="Masukkan Gambar Kuis">
                   </div>
                 </div>
                 <!-- /.card-body -->

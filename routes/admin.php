@@ -40,6 +40,7 @@ Route::prefix('admin')->name('admin_')->group(function () {
     Route::delete('/pendaftaran-magang/{pendaftaran_magang}', [PendaftaranMagangController::class, 'destroy'])
       ->name('daftar-magang.destroy');
     Route::resource('kuis-reguler', KuisRegulerController::class);
+    Route::get('/opsi-soal-pilihan-ganda', [SoalKuisRegulerController::class, 'indexOpsi'])->name('opsi-soal-pilihan-ganda.index');
     Route::resource('soal-kuis-reguler', SoalKuisRegulerController::class);
     Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
   });

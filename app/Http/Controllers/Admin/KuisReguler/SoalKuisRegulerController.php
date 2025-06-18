@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin\KuisReguler;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\KuisReguler\KuisReguler;
 use App\Models\KuisReguler\SoalKuisReguler;
+use App\Models\KuisReguler\OpsiSoalKuisReguler;
 
 class SoalKuisRegulerController extends Controller
 {
@@ -17,12 +19,19 @@ class SoalKuisRegulerController extends Controller
         return view('admin.kuis-reguler.soal-kuis.index', compact('soal'));
     }
 
+    public function indexOpsi()
+    {
+        $opsi = OpsiSoalKuisReguler::with('soal_kuis_reguler')->get();
+        return view('admin.kuis-reguler.opsi-soal-pilgan.index', compact('opsi'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        $kuis_reguler = KuisReguler::all();
+        return view('admin.kuis-reguler.soal-kuis.create', compact('kuis_reguler'));
     }
 
     /**
@@ -30,7 +39,35 @@ class SoalKuisRegulerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'kuis_reguler' => 'required|exists:kuis_regulers,id',
+            'soal' => 'required|string',
+            'tipe_soal' => 'required|in:Pilihan Ganda,Isian Singkat',
+            'jawaban' => 'required|string',
+        ]);
+
+        // Simpan ke tabel soal_kuis_regulers
+        $soal = SoalKuisReguler::create([
+            'id_kuis_reguler' => $request->kuis_reguler,
+            'soal' => $request->soal,
+            'tipe_soal' => $request->tipe_soal,
+            'jawaban' => $request->jawaban,
+        ]);
+
+        // Jika pilihan ganda, simpan opsi-opsinya
+        if ($request->tipe_soal === 'Pilihan Ganda' && $request->has('options')) {
+            foreach ($request->options as $label => $text) {
+                if (!empty($text)) {
+                    OpsiSoalKuisReguler::create([
+                        'id_soal_kuis_reguler' => $soal->id,
+                        'label' => $label,       // A, B, C, D
+                        'teks_opsi' => $text,    // Isi teks jawaban
+                    ]);
+                }
+            }
+        }
+
+        return redirect()->route('admin_soal-kuis-reguler.index')->with('success', 'Soal berhasil ditambahkan.');
     }
 
     /**
@@ -44,24 +81,57 @@ class SoalKuisRegulerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $kuis_reguler = KuisReguler::all();
+        $soal = SoalKuisReguler::with('opsi')->findOrFail($id);
+        return view('admin.kuis-reguler.soal-kuis.edit', compact('soal', 'kuis_reguler'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'kuis_reguler' => 'required|exists:kuis_regulers,id',
+            'soal' => 'required|string',
+            'tipe_soal' => 'required|in:Pilihan Ganda,Isian Singkat',
+            'jawaban' => 'required',
+        ]);
+
+        $soal = SoalKuisReguler::findOrFail($id);
+        $soal->update([
+            'id_kuis_reguler' => $request->kuis_reguler,
+            'soal' => $request->soal,
+            'tipe_soal' => $request->tipe_soal,
+            'jawaban' => $request->jawaban,
+        ]);
+
+        // Hapus opsi lama kalau Pilihan Ganda
+        if ($request->tipe_soal === 'Pilihan Ganda') {
+            $soal->opsi()->delete();
+
+            foreach ($request->options as $label => $teks) {
+                if ($teks) {
+                    OpsiSoalKuisReguler::create([
+                        'id_soal_kuis_reguler' => $soal->id,
+                        'label' => $label,
+                        'teks_opsi' => $teks,
+                    ]);
+                }
+            }
+        }
+
+        return redirect()->route('admin_soal-kuis-reguler.index')->with('success', 'Soal berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(SoalKuisReguler $soal_kuis_reguler)
     {
-        //
+        $soal_kuis_reguler->delete();
+        return redirect()->route('admin_soal-kuis-reguler.index')->with('success', 'Soal berhasil dihapus.');
     }
 }

@@ -21,7 +21,7 @@ class SoalKuisReguler extends Model
         return $this->belongsTo(KuisReguler::class, 'id_kuis_reguler');
     }
 
-    public function opsi_soal_reguler()
+    public function opsi()
     {
         return $this->hasMany(OpsiSoalKuisReguler::class, 'id_soal_kuis_reguler');
     }

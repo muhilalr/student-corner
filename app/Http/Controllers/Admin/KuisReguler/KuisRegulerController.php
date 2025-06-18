@@ -76,7 +76,7 @@ class KuisRegulerController extends Controller
         $request->validate([
             'judul' => 'required',
             'deskripsi' => 'required|string|max:255',
-            'gambar' => 'required|image|mimes:jpg,jpeg,png'
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png'
         ]);
 
         $slug = Str::slug($request->judul);

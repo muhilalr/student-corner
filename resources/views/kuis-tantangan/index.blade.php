@@ -1,196 +1,39 @@
 <x-layout-web>
   <!-- Hero Section -->
-  <section class="gradient-bg text-white py-20 relative overflow-hidden">
-    <div class="absolute inset-0 bg-black opacity-10"></div>
-    <div class="container mx-auto px-4 relative z-10">
-      <div class="text-center">
-        <div class="floating inline-block mb-6">
-          <i class="fas fa-brain text-6xl text-yellow-300"></i>
-        </div>
-        <h1 class="text-5xl font-bold mb-4">Kuis & Tantangan Statistik</h1>
-        <p class="text-xl mb-8 opacity-90">Uji pengetahuan statistik Anda dan raih peringkat tertinggi!</p>
-        <div class="flex justify-center space-x-4">
-          <button
-            class="bg-white text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition duration-300 shadow-lg">
-            <i class="fas fa-play mr-2"></i>Mulai Kuis
-          </button>
-          <button
-            class="glass-effect text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:bg-opacity-20 transition duration-300">
-            <i class="fas fa-trophy mr-2"></i>Lihat Peringkat
-          </button>
-        </div>
-      </div>
-    </div>
-    <!-- Floating Elements -->
-    <div class="absolute top-20 left-10 opacity-30">
-      <i class="fas fa-chart-bar text-4xl floating" style="animation-delay: 0.5s;"></i>
-    </div>
-    <div class="absolute bottom-20 right-10 opacity-30">
-      <i class="fas fa-calculator text-4xl floating" style="animation-delay: 1s;"></i>
-    </div>
-  </section>
-
-  <!-- Stats Overview -->
-  <section class="py-16 bg-white">
-    <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <div class="text-center">
-          <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fas fa-question-circle text-2xl text-blue-600"></i>
-          </div>
-          <h3 class="text-3xl font-bold text-gray-800 mb-2">1,250+</h3>
-          <p class="text-gray-600">Soal Tersedia</p>
-        </div>
-        <div class="text-center">
-          <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fas fa-users text-2xl text-green-600"></i>
-          </div>
-          <h3 class="text-3xl font-bold text-gray-800 mb-2">5,480</h3>
-          <p class="text-gray-600">Peserta Aktif</p>
-        </div>
-        <div class="text-center">
-          <div class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fas fa-fire text-2xl text-yellow-600"></i>
-          </div>
-          <h3 class="text-3xl font-bold text-gray-800 mb-2">32</h3>
-          <p class="text-gray-600">Tantangan Selesai</p>
-        </div>
-        <div class="text-center">
-          <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fas fa-medal text-2xl text-purple-600"></i>
-          </div>
-          <h3 class="text-3xl font-bold text-gray-800 mb-2">890</h3>
-          <p class="text-gray-600">Skor Tertinggi</p>
-        </div>
-      </div>
+  <section class="bg-primary text-white py-20">
+    <div class="container mx-auto text-center px-4">
+      <h1 class="text-5xl font-bold mb-4">Kuis & Tantangan Statistik</h1>
+      <p class="text-xl text-blue-100">Uji pengetahuan statistik Anda dan raih peringkat tertinggi!</p>
     </div>
   </section>
 
   <!-- Kuis Reguler Section -->
   <section class="py-16 bg-gray-50">
-    <div class="container mx-auto px-4">
+    <div class="max-w-6xl mx-auto px-4">
       <div class="text-center mb-12">
         <h2 class="text-4xl font-bold text-gray-800 mb-4">Kuis Reguler</h2>
         <p class="text-xl text-gray-600">Asah kemampuan statistik Anda dengan berbagai topik menarik</p>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Kuis Card 1 -->
-        <div class="bg-white rounded-2xl shadow-lg card-hover overflow-hidden">
-          <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 relative">
-            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
-            <div class="absolute bottom-4 left-4 text-white">
-              <i class="fas fa-chart-line text-3xl"></i>
-            </div>
-            <div class="absolute top-4 right-4">
-              <span class="bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-semibold">Populer</span>
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-2">Statistik Deskriptif</h3>
-            <p class="text-gray-600 mb-4">Pelajari mean, median, modus, dan ukuran pemusatan data lainnya</p>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-sm text-gray-500">
-                <i class="fas fa-clock mr-1"></i>15 menit
-              </span>
-              <span class="text-sm text-gray-500">
-                <i class="fas fa-question mr-1"></i>20 soal
-              </span>
-            </div>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center">
-                <div class="flex text-yellow-400">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
+      <div class="splide mt-8 relative" aria-label="Splide Basic Example">
+        <div class="splide__track mx-4 sm:mx-16 pb-10">
+          <ul class="splide__list">
+            @foreach ($kuis as $item)
+              <li class="splide__slide px-2">
+                <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-md flex flex-col h-full">
+                  <img src="{{ asset('storage/' . $item->gambar) }}" alt="" width="500"
+                    class="aspect-[3/2] rounded-lg object-cover" />
+                  <h3 class="text-xl font-bold text-gray-800 mb-2">{{ $item->judul }}</h3>
+                  <p class="text-gray-600 font-semibold mb-4">
+                    {{ Str::limit($item->deskripsi, 200, '...') }}</p>
+                  <a href="{{ route('kuis-tantangan.soal') }}">
+                    <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-[#00295A]">
+                      Mulai
+                    </button>
+                  </a>
                 </div>
-                <span class="text-sm text-gray-600 ml-2">(4.8)</span>
-              </div>
-              <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
-                Mulai
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Kuis Card 2 -->
-        <div class="bg-white rounded-2xl shadow-lg card-hover overflow-hidden">
-          <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 relative">
-            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
-            <div class="absolute bottom-4 left-4 text-white">
-              <i class="fas fa-chart-pie text-3xl"></i>
-            </div>
-            <div class="absolute top-4 right-4">
-              <span class="bg-green-400 text-green-900 px-3 py-1 rounded-full text-sm font-semibold">Baru</span>
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-2">Probabilitas Dasar</h3>
-            <p class="text-gray-600 mb-4">Konsep dasar peluang dan distribusi probabilitas</p>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-sm text-gray-500">
-                <i class="fas fa-clock mr-1"></i>20 menit
-              </span>
-              <span class="text-sm text-gray-500">
-                <i class="fas fa-question mr-1"></i>25 soal
-              </span>
-            </div>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center">
-                <div class="flex text-yellow-400">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="far fa-star"></i>
-                </div>
-                <span class="text-sm text-gray-600 ml-2">(4.5)</span>
-              </div>
-              <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300">
-                Mulai
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Kuis Card 3 -->
-        <div class="bg-white rounded-2xl shadow-lg card-hover overflow-hidden">
-          <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 relative">
-            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
-            <div class="absolute bottom-4 left-4 text-white">
-              <i class="fas fa-chart-bar text-3xl"></i>
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-2">Inferensi Statistik</h3>
-            <p class="text-gray-600 mb-4">Uji hipotesis, interval kepercayaan, dan estimasi parameter</p>
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-sm text-gray-500">
-                <i class="fas fa-clock mr-1"></i>30 menit
-              </span>
-              <span class="text-sm text-gray-500">
-                <i class="fas fa-question mr-1"></i>30 soal
-              </span>
-            </div>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center">
-                <div class="flex text-yellow-400">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <span class="text-sm text-gray-600 ml-2">(4.9)</span>
-              </div>
-              <button
-                class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-300">
-                Mulai
-              </button>
-            </div>
-          </div>
+              </li>
+            @endforeach
+          </ul>
         </div>
       </div>
     </div>
@@ -205,8 +48,7 @@
       </div>
 
       <!-- Current Challenge -->
-      <div
-        class="bg-gradient-to-r from-orange-400 to-red-500 rounded-3xl p-8 mb-8 text-white relative overflow-hidden">
+      <div class="bg-gradient-to-r from-orange-400 to-red-500 rounded-3xl p-8 mb-8 text-white relative overflow-hidden">
         <div class="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -mr-16 -mt-16"></div>
         <div class="absolute bottom-0 left-0 w-24 h-24 bg-white bg-opacity-10 rounded-full -ml-12 -mb-12"></div>
         <div class="relative z-10">

@@ -119,6 +119,18 @@
                 <p>Topik Kuis Reguler</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="{{ route('admin_soal-kuis-reguler.index') }}"
+                class="nav-link {{ Route::is('admin_soal-kuis-reguler.index') ? 'active' : '' }}">
+                <p>Soal Kuis Reguler</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('admin_opsi-soal-pilihan-ganda.index') }}"
+                class="nav-link {{ Route::is('admin_opsi-soal-pilihan-ganda.index') ? 'active' : '' }}">
+                <p>Opsi Soal Pilihan Ganda</p>
+              </a>
+            </li>
           </ul>
         </li>
 

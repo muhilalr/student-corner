@@ -31,18 +31,17 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($artikels as $artikel)
+                    @foreach ($soal as $item)
                       <tr>
-                        <td>{{ $artikel->subjek_materi->judul }}</td>
-                        <td>{{ $artikel->judul }}</td>
-                        <td>{{ $artikel->deskripsi }}</td>
-                        <td><img src="{{ asset('storage/' . $artikel->gambar) }}" alt="Gambar Subjek"
-                            style="max-width: 100px; max-height: 100px;"></td>
+                        <td>{{ $item->kuis_reguler->judul }}</td>
+                        <td>{{ $item->soal }}</td>
+                        <td>{{ $item->tipe_soal }}</td>
+                        <td>{{ $item->jawaban }}</td>
                         <td>
                           <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-                            <a href="{{ route('admin_artikel.edit', $artikel->id) }}" class="btn btn-warning"><span><i
-                                  class="fas fa-edit"></i></span></a>
-                            <form action="{{ route('admin_artikel.destroy', $artikel->id) }}" method="POST"
+                            <a href="{{ route('admin_soal-kuis-reguler.edit', $item->id) }}"
+                              class="btn btn-warning"><span><i class="fas fa-edit"></i></span></a>
+                            <form action="{{ route('admin_soal-kuis-reguler.destroy', $item->id) }}" method="POST"
                               class="m-0">
                               @csrf
                               @method('DELETE')
