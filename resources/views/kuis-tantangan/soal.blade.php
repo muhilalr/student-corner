@@ -2,55 +2,12 @@
   <!-- Main Content -->
   <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     @if (isset($sudahSubmit) && $sudahSubmit)
-      <div class="bg-green-100 border border-green-300 text-green-700 rounded-xl p-6 mb-8">
-        <h2 class="text-xl font-bold mb-2">Skor Anda: {{ $skor }} / {{ count($soal) }}</h2>
-        <p>Berikut ini adalah jawaban dan penilaian Anda:</p>
+      <div class="bg-white rounded-xl p-6 border border-green-300 shadow mb-6 text-center">
+        <h2 class="text-2xl font-bold text-green-600">🎉 Terima kasih telah mengerjakan kuis!</h2>
+        <p class="text-lg mt-4 text-gray-800">Nilai Anda : <span
+            class="font-semibold text-primary text-xl">{{ $skor }}</span></p>
       </div>
-
-      @foreach ($soal as $index => $item)
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
-          <div class="bg-primary p-6 text-white">
-            <div class="flex items-center space-x-3 mb-4">
-              <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                <span class="text-sm font-bold">{{ $index + 1 }}</span>
-              </div>
-              <span class="text-blue-100 text-sm font-medium">Pertanyaan {{ $index + 1 }}</span>
-              <span class="bg-white/20 text-xs px-2 py-1 rounded-full">{{ $item->tipe_soal }}</span>
-            </div>
-            <h2 class="text-xl sm:text-2xl font-bold leading-tight">{{ $item->soal }}</h2>
-          </div>
-
-          <div class="p-6 sm:p-8">
-
-            @php
-              $jawaban = $jawabanUser[$item->id] ?? null;
-              $jawabanBenar = $item->jawaban;
-              $isBenar = strtolower(trim($jawaban)) === strtolower(trim($jawabanBenar));
-
-              // Ambil teks dari opsi user
-              $opsiUser = $item->opsi->firstWhere('label', $jawaban);
-              $opsiBenar = $item->opsi->firstWhere('label', $jawabanBenar);
-            @endphp
-
-            <p><strong>Jawaban Anda:</strong> <span
-                class="{{ $isBenar ? 'text-green-600' : 'text-red-600' }}">{{ $jawaban }}.
-                {{ $opsiUser->teks_opsi ?? '-' }}</span></p>
-            <p><strong>Jawaban Benar:</strong> <span class="text-primary">{{ $jawabanBenar }}.
-                {{ $opsiBenar->teks_opsi ?? '-' }}</span></p>
-
-            @if ($isBenar)
-              <div class="mt-3 p-3 bg-green-50 text-green-700 rounded-lg border border-green-300">Jawaban Anda benar 🎉
-              </div>
-            @else
-              <div class="mt-3 p-3 bg-red-50 text-red-700 rounded-lg border border-red-300">Jawaban Anda salah ❌</div>
-            @endif
-
-          </div>
-        </div>
-      @endforeach
-    @endif
-
-    @if (!isset($sudahSubmit) || !$sudahSubmit)
+    @else
       <form id="quizForm" class="space-y-8" action="{{ route('kuis.submit', $kuis->slug) }}" method="POST">
         @csrf
         <input type="hidden" name="kuis_id" value="{{ $kuis->id }}">
@@ -173,8 +130,8 @@
             </svg>
           </div>
           <h3 class="text-lg font-medium text-gray-900 mb-2">Konfirmasi Pengiriman</h3>
-          <p class="text-sm text-gray-500 mb-6">Apakah Anda yakin ingin mengirim jawaban? Skor Anda adalah <span
-              id="finalScore" class="font-bold text-primary"></span></p>
+          <p class="text-sm text-gray-500 mb-6">Apakah Anda yakin ingin mengirim jawaban?<span id="finalScore"
+              class="font-bold text-primary hidden"></span></p>
           <div class="flex space-x-3">
             <button id="cancelSubmit"
               class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors">
@@ -202,7 +159,7 @@
       const cancelSubmit = document.getElementById('cancelSubmit');
       const confirmSubmit = document.getElementById('confirmSubmit');
 
-      const totalQuestions = {{ count($soal) }};
+      const totalQuestions = {{ isset($soal) ? count($soal) : 0 }};
       let answeredQuestions = new Set();
 
       // Deteksi perubahan jawaban
@@ -257,7 +214,11 @@
           }
         });
 
-        finalScoreElement.textContent = `${score} poin`;
+
+
+
+        const finalScore = Math.round((score / totalQuestions) * 100);
+        finalScoreElement.textContent = `${finalScore} poin`;
         confirmationModal.classList.remove('hidden');
         confirmationModal.classList.add('flex');
       });
@@ -274,7 +235,7 @@
         const inputSkor = document.createElement('input');
         inputSkor.type = 'hidden';
         inputSkor.name = 'skor';
-        inputSkor.value = finalScoreElement.textContent.split(' ')[0]; // ambil angka saja
+        inputSkor.value = finalScore; // ambil angka saja
         form.appendChild(inputSkor);
 
         form.submit(); // submit ke controller

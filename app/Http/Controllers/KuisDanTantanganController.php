@@ -18,59 +18,29 @@ class KuisDanTantanganController extends Controller
 
     public function showSoalKuisReguler($slug)
     {
-        // Ambil ID kuis berdasarkan slug
-        $kuis = DB::table('kuis_regulers')
-            ->where('slug', $slug)
-            ->first();
-
-        if (!$kuis) {
-            abort(404); // Jika tidak ditemukan
-        }
-
-        // Ambil soal-soal berdasarkan ID kuis
-        $soal = DB::table('soal_kuis_regulers')
-            ->where('id_kuis_reguler', $kuis->id)
-            ->select('id', 'soal', 'jawaban', 'tipe_soal')
-            ->get()
-            ->map(function ($item) {
-                if ($item->tipe_soal === 'Pilihan Ganda') {
-                    $item->opsi = DB::table('opsi_soal_kuis_regulers')
-                        ->where('id_soal_kuis_reguler', $item->id)
-                        ->select('label', 'teks_opsi')
-                        ->get();
-                } else {
-                    $item->opsi = collect(); // kosong jika isian singkat
-                }
-                return $item;
-            });
-
-        $sudahSubmit = DB::table('hasil_kuis_regulers')
-            ->where('id_kuis_reguler', $kuis->id)
-            ->where('id_user', Auth::user()->id)
-            ->exists();
-
-        $skor = DB::table('hasil_kuis_regulers')
-            ->where('id_kuis_reguler', $kuis->id)
-            ->where('id_user', Auth::user()->id)
-            ->value('skor');
-
-        $jawabanUser = DB::table('hasil_kuis_regulers')
-            ->where('id_kuis_reguler', $kuis->id)
-            ->where('id_user', Auth::user()->id)
-            ->value('jawaban');
-
-        return view('kuis-tantangan.soal', compact('soal', 'kuis', 'sudahSubmit', 'skor'));
-    }
-
-    public function submit(Request $request, $slug)
-    {
+        $user = Auth::user();
         $kuis = DB::table('kuis_regulers')->where('slug', $slug)->first();
 
         if (!$kuis) {
             abort(404);
         }
 
-        // Ambil soal dan cocokkan jawaban untuk ditampilkan ulang nanti
+        // Cek apakah user sudah submit kuis ini
+        $hasil = DB::table('hasil_kuis_regulers')
+            ->where('id_user', $user->id)
+            ->where('id_kuis_reguler', $kuis->id)
+            ->first();
+
+        if ($hasil) {
+            // Jika sudah submit, hanya tampilkan ucapan dan skor
+            return view('kuis-tantangan.soal', [
+                'kuis' => $kuis,
+                'skor' => $hasil->skor,
+                'sudahSubmit' => true,
+            ]);
+        }
+
+        // Ambil soal dan opsi
         $soal = DB::table('soal_kuis_regulers')
             ->where('id_kuis_reguler', $kuis->id)
             ->select('id', 'soal', 'jawaban', 'tipe_soal')
@@ -87,32 +57,65 @@ class KuisDanTantanganController extends Controller
                 return $item;
             });
 
-        // Simpan skor (opsional, jika ingin ke DB)
-        $skor = $request->input('skor');
+        return view('kuis-tantangan.soal', [
+            'kuis' => $kuis,
+            'soal' => $soal,
+            'sudahSubmit' => false,
+        ]);
+    }
 
-        // Ambil jawaban user
-        $jawabanUser = [];
-        foreach ($soal as $item) {
-            $jawabanKey = 'jawaban_' . $item->id;
-            $jawabanUser[$item->id] = $request->input($jawabanKey);
+
+    public function submit(Request $request, $slug)
+    {
+        $kuis = DB::table('kuis_regulers')->where('slug', $slug)->first();
+        $user = Auth::user();
+
+        if (!$kuis) {
+            abort(404);
         }
 
-        // Simpan skor ke database hasil_kuis_regulers
+        // Cek apakah sudah pernah submit
+        $cek = DB::table('hasil_kuis_regulers')
+            ->where('id_user', $user->id)
+            ->where('id_kuis_reguler', $kuis->id)
+            ->first();
+
+        if ($cek) {
+            return redirect()->route('kuis-tantangan.soal', $slug)
+                ->with('info', 'Anda sudah mengerjakan kuis ini.');
+        }
+
+        // Ambil soal untuk memproses jawaban
+        $soal = DB::table('soal_kuis_regulers')
+            ->where('id_kuis_reguler', $kuis->id)
+            ->select('id', 'jawaban', 'tipe_soal')
+            ->get();
+
+        $skor = 0;
+
+        foreach ($soal as $item) {
+            $key = 'jawaban_' . $item->id;
+            $jawabanUser = strtolower(trim($request->input($key)));
+            $jawabanBenar = strtolower(trim($item->jawaban));
+
+            if ($jawabanUser === $jawabanBenar) {
+                $skor++;
+            }
+        }
+
+        $jumlahSoal = $soal->count();
+        $skorFinal = round(($skor / $jumlahSoal) * 100);
+
+        // Simpan hasil
         DB::table('hasil_kuis_regulers')->insert([
-            'id_user' => Auth::id(),
+            'id_user' => $user->id,
             'id_kuis_reguler' => $kuis->id,
-            'skor' => $skor,
+            'skor' => $skorFinal,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
-        // Redirect kembali ke halaman soal, tapi kali ini bawa data jawaban dan skor
-        return view('kuis-tantangan.soal', [
-            'kuis' => $kuis,
-            'soal' => $soal,
-            'skor' => $skor,
-            'jawabanUser' => $jawabanUser,
-            'sudahSubmit' => true,
-        ]);
+        return redirect()->route('kuis-tantangan.soal', $slug)
+            ->with('success', 'Jawaban berhasil disimpan.');
     }
 }
