@@ -2,10 +2,140 @@
   <!-- Main Content -->
   <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     @if (isset($sudahSubmit) && $sudahSubmit)
-      <div class="bg-white rounded-xl p-6 border border-green-300 shadow mb-6 text-center">
-        <h2 class="text-2xl font-bold text-green-600">🎉 Terima kasih telah mengerjakan kuis!</h2>
-        <p class="text-lg mt-4 text-gray-800">Nilai Anda : <span
-            class="font-semibold text-primary text-xl">{{ $skor }}</span></p>
+      <!-- Main Score Card -->
+      <div class="max-w-md mx-auto bg-white rounded-3xl p-8 shadow-2xl overflow-hidden border border-gray-100">
+        <!-- Success Icon -->
+        <div class="relative flex justify-center mb-6 z-10">
+          <div class="relative">
+            <div class="absolute inset-0 w-16 h-16 bg-green-400 rounded-full animate-ping opacity-30"></div>
+            <div
+              class="relative w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center shadow-lg">
+              <svg class="w-8 h-8 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Title -->
+        <div class="text-center mb-8 relative z-10">
+          <h2 class="text-3xl font-bold mb-2">
+            <span>🎉</span> Selamat!
+          </h2>
+          <p class="text-gray-600 font-medium text-lg">Kuis telah berhasil diselesaikan</p>
+        </div>
+
+        <!-- Score Display -->
+        <div class="relative flex justify-center mb-4 z-10">
+          <div class="relative">
+            <!-- Score Circle -->
+            <div
+              class="w-32 h-32 rounded-full bg-gradient-to-br from-green-50 to-emerald-50 border-4 border-green-200 flex items-center justify-center relative shadow-inner">
+              <div class="w-24 h-24 bg-white rounded-full flex flex-col items-center justify-center shadow-lg">
+                <span
+                  class="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent"
+                  id="score-display">
+                  {{ $skor }}
+                </span>
+                <span class="text-xs text-gray-500 font-semibold tracking-wider">NILAI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performance Badge -->
+        <div class="flex justify-center mb-8 z-10">
+          @if ($skor >= 90)
+            <div
+              class="bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 px-6 py-2 rounded-full text-sm font-bold shadow-lg border-2 border-yellow-300">
+              ⭐ Outstanding
+            </div>
+          @elseif($skor >= 80)
+            <div
+              class="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
+              🏆 Excellent
+            </div>
+          @elseif($skor >= 70)
+            <div
+              class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
+              👍 Good Job
+            </div>
+          @elseif($skor >= 60)
+            <div
+              class="bg-gradient-to-r from-orange-400 to-orange-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
+              📈 Keep Going
+            </div>
+          @elseif($skor >= 50)
+            <div
+              class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
+              📚 Need Practice
+            </div>
+          @else
+            <div
+              class="bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
+              💪 Try Again
+            </div>
+          @endif
+        </div>
+
+        <!-- Stats Section -->
+        <div class="grid grid-cols-3 gap-3 mb-6 relative z-10">
+          <div class="text-center p-3 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200">
+            <div class="text-xl font-bold text-gray-700">{{ $skor }}%</div>
+            <div class="text-xs text-gray-500 font-medium">Persentase</div>
+          </div>
+          <div class="text-center p-3 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl border border-green-200">
+            <div class="text-xl font-bold text-green-600">
+              {{ $jawaban_benar ?? 0 }}
+            </div>
+            <div class="text-xs text-green-600 font-medium">Jawaban Benar</div>
+          </div>
+          <div class="text-center p-3 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl border border-blue-200">
+            <div class="text-xl font-bold text-blue-600">
+              {{ $jawaban_salah ?? 0 }}
+            </div>
+            <div class="text-xs text-blue-600 font-medium">Jawaban Salah</div>
+          </div>
+        </div>
+
+        <!-- Thank You Message -->
+        <div
+          class="text-center bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-4 relative z-10 border border-gray-200">
+          <p class="text-gray-700 font-medium">
+            <span class="text-lg">🙏</span> Terima kasih telah mengerjakan kuis!
+          </p>
+          <p class="text-sm text-gray-500 mt-1">Semangat terus belajar dan berkembang</p>
+        </div>
+      </div>
+
+      <!-- Additional Motivational Card -->
+      <div class="max-w-md mx-auto mt-4 flex flex-col gap-4">
+        <div
+          class=" bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl p-4 text-center shadow-lg border border-gray-100">
+          @if ($skor >= 90)
+            <p class="text-gray-600 text-sm">🌟 <strong>Luar biasa sekali!</strong> Prestasi sempurna yang membanggakan!
+            </p>
+          @elseif($skor >= 80)
+            <p class="text-gray-600 text-sm">🏆 <strong>Excellent!</strong> Kerja yang sangat memuaskan!</p>
+          @elseif($skor >= 70)
+            <p class="text-gray-600 text-sm">🌟 <strong>Bagus sekali!</strong> Terus pertahankan semangat belajar!</p>
+          @elseif($skor >= 60)
+            <p class="text-gray-600 text-sm">📈 <strong>Cukup baik!</strong> Masih ada ruang untuk berkembang lebih
+              baik!
+            </p>
+          @elseif($skor >= 50)
+            <p class="text-gray-600 text-sm">📚 <strong>Perlu latihan lagi!</strong> Jangan menyerah, terus belajar!</p>
+          @else
+            <p class="text-gray-600 text-sm">💪 <strong>Jangan patah semangat!</strong> Setiap usaha adalah langkah
+              menuju
+              kesuksesan!</p>
+          @endif
+        </div>
+        <a href="{{ route('kuis-tantangan.index') }}">
+          <button class="w-full bg-primary text-white font-semibold px-4 py-2 rounded-lg hover:bg-[#00295A]">
+            Halaman Kuis dan Tantangan
+          </button>
+        </a>
       </div>
     @else
       <form id="quizForm" class="space-y-8" action="{{ route('kuis.submit', $kuis->slug) }}" method="POST">
@@ -98,7 +228,8 @@
                 <span id="progressText">0/{{ count($soal) }}</span>
               </div>
               <div class="w-full bg-gray-200 rounded-full h-2">
-                <div id="progressBar" class="bg-primary h-2 rounded-full transition-all duration-300" style="width: 0%">
+                <div id="progressBar" class="bg-primary h-2 rounded-full transition-all duration-300"
+                  style="width: 0%">
                 </div>
               </div>
             </div>
@@ -118,6 +249,8 @@
         </div>
       </form>
     @endif
+
+
 
     <!-- Modal Konfirmasi -->
     <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
@@ -146,7 +279,7 @@
       </div>
     </div>
   </main>
-
+  <x-footer class="fill-[#EEF0F2]"></x-footer>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const form = document.getElementById('quizForm');
@@ -240,6 +373,32 @@
 
         form.submit(); // submit ke controller
       });
+    });
+
+
+
+
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+
+      // Animate score counting (optional)
+      const scoreElement = document.getElementById('score-display');
+      const finalScore = {{ isset($skor) ? $skor : 0 }};
+      let currentScore = 0;
+      const increment = Math.ceil(finalScore / 20);
+
+      const countUp = setInterval(() => {
+        currentScore += increment;
+        if (currentScore >= finalScore) {
+          currentScore = finalScore;
+          clearInterval(countUp);
+        }
+        scoreElement.textContent = currentScore;
+      }, 80);
     });
   </script>
 

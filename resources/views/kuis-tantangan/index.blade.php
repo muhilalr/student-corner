@@ -12,14 +12,14 @@
     <div class="max-w-6xl mx-auto px-4">
       <div class="text-center mb-12">
         <h2 class="text-4xl font-bold text-gray-800 mb-4">Kuis Reguler</h2>
-        <p class="text-xl text-gray-600">Asah kemampuan statistik Anda dengan berbagai topik menarik</p>
+        <p class="text-xl text-gray-600 font-semibold">Asah kemampuan statistik Anda dengan berbagai topik menarik</p>
       </div>
       <div class="splide mt-8 relative" aria-label="Splide Basic Example">
         <div class="splide__track mx-4 sm:mx-16 pb-10">
           <ul class="splide__list">
             @foreach ($kuis as $item)
               <li class="splide__slide px-2">
-                <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-md flex flex-col h-full">
+                <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-md flex flex-col justify-between h-full">
                   <img src="{{ asset('storage/' . $item->gambar) }}" alt="" width="500"
                     class="aspect-[3/2] rounded-lg object-cover" />
                   <h3 class="text-xl font-bold text-gray-800 my-2">{{ $item->judul }}</h3>
@@ -44,7 +44,7 @@
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
         <h2 class="text-4xl font-bold text-gray-800 mb-4">Tantangan Bulanan</h2>
-        <p class="text-xl text-gray-600">Kompetisi bulanan dengan hadiah menarik menanti Anda!</p>
+        <p class="text-xl text-gray-600 font-semibold">Kompetisi bulanan dengan hadiah menarik menanti Anda!</p>
       </div>
 
       <!-- Current Challenge -->
@@ -259,24 +259,7 @@
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-    <div class="container mx-auto px-4 text-center">
-      <h2 class="text-4xl font-bold mb-4">Siap Menjadi Master Statistik?</h2>
-      <p class="text-xl mb-8 opacity-90">Bergabunglah dengan ribuan pengguna lain dan tingkatkan kemampuan statistik
-        Anda!</p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <button
-          class="bg-white text-blue-600 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition duration-300 shadow-lg">
-          <i class="fas fa-rocket mr-2"></i>Mulai Sekarang
-        </button>
-        <button
-          class="glass-effect text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:bg-opacity-20 transition duration-300">
-          <i class="fas fa-info-circle mr-2"></i>Pelajari Lebih Lanjut
-        </button>
-      </div>
-    </div>
-  </section>
+  <x-footer class="fill-gray-50"></x-footer>
 
   <script>
     // Simple animations and interactions

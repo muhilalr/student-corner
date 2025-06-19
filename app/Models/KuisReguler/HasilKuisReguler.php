@@ -14,6 +14,8 @@ class HasilKuisReguler extends Model
         'id_user',
         'id_kuis_reguler',
         'skor',
+        'jawaban_benar',
+        'jawaban_salah',
     ];
 
     public function user()

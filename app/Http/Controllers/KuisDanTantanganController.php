@@ -32,10 +32,11 @@ class KuisDanTantanganController extends Controller
             ->first();
 
         if ($hasil) {
-            // Jika sudah submit, hanya tampilkan ucapan dan skor
             return view('kuis-tantangan.soal', [
                 'kuis' => $kuis,
-                'skor' => $hasil->skor,
+                'skor' => session('skor', $hasil->skor),
+                'jawaban_benar' => $hasil->jawaban_benar,
+                'jawaban_salah' => $hasil->jawaban_salah,
                 'sudahSubmit' => true,
             ]);
         }
@@ -85,37 +86,47 @@ class KuisDanTantanganController extends Controller
                 ->with('info', 'Anda sudah mengerjakan kuis ini.');
         }
 
-        // Ambil soal untuk memproses jawaban
+        // Ambil soal
         $soal = DB::table('soal_kuis_regulers')
             ->where('id_kuis_reguler', $kuis->id)
             ->select('id', 'jawaban', 'tipe_soal')
             ->get();
 
-        $skor = 0;
+        $jawabanBenar = 0;
+        $jawabanSalah = 0;
 
         foreach ($soal as $item) {
             $key = 'jawaban_' . $item->id;
             $jawabanUser = strtolower(trim($request->input($key)));
-            $jawabanBenar = strtolower(trim($item->jawaban));
+            $jawabanKunci = strtolower(trim($item->jawaban));
 
-            if ($jawabanUser === $jawabanBenar) {
-                $skor++;
+            if ($jawabanUser === $jawabanKunci) {
+                $jawabanBenar++;
+            } else {
+                $jawabanSalah++;
             }
         }
 
         $jumlahSoal = $soal->count();
-        $skorFinal = round(($skor / $jumlahSoal) * 100);
+        $skorFinal = round(($jawabanBenar / $jumlahSoal) * 100);
 
-        // Simpan hasil
+        // Simpan hasil ke database
         DB::table('hasil_kuis_regulers')->insert([
             'id_user' => $user->id,
             'id_kuis_reguler' => $kuis->id,
             'skor' => $skorFinal,
+            'jawaban_benar' => $jawabanBenar,
+            'jawaban_salah' => $jawabanSalah,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         return redirect()->route('kuis-tantangan.soal', $slug)
-            ->with('success', 'Jawaban berhasil disimpan.');
+            ->with([
+                'success' => 'Jawaban berhasil disimpan.',
+                'jawaban_benar' => $jawabanBenar,
+                'jawaban_salah' => $jawabanSalah,
+                'skor' => $skorFinal,
+            ]);
     }
 }
