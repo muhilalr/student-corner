@@ -48,95 +48,63 @@
       </div>
 
       <!-- Current Challenge -->
-      <div class="bg-gradient-to-r from-orange-400 to-red-500 rounded-3xl p-8 mb-8 text-white relative overflow-hidden">
+      <div class="bg-primary rounded-3xl p-8 mb-8 text-white relative overflow-hidden">
         <div class="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -mr-16 -mt-16"></div>
         <div class="absolute bottom-0 left-0 w-24 h-24 bg-white bg-opacity-10 rounded-full -ml-12 -mb-12"></div>
         <div class="relative z-10">
-          <div class="flex items-center justify-between mb-6">
-            <div>
-              <h3 class="text-3xl font-bold mb-2">Tantangan Juni 2025</h3>
-              <p class="text-lg opacity-90">Statistik Lanjutan & Analisis Data</p>
+          @if ($tantangan)
+            <div class="flex flex-col items-center justify-center mb-6">
+              <h3 class="text-3xl font-bold mb-2">{{ $tantangan->judul }}</h3>
+              <p class="text-lg opacity-90">{{ $tantangan->deskripsi }}</p>
             </div>
-            <div class="text-right">
-              <div class="bg-white bg-opacity-20 px-4 py-2 rounded-full">
-                <i class="fas fa-trophy text-2xl pulse-animation"></i>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                <div class="flex items-center">
+                  <i class="fas fa-calendar-alt text-2xl mr-3"></i>
+                  <div>
+                    <p class="text-sm opacity-80">Berakhir dalam</p>
+                    <p class="text-xl font-bold">
+                      {{ round($hariTersisa) }}
+                      Hari</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div class="bg-white bg-opacity-20 rounded-lg p-4">
-              <div class="flex items-center">
-                <i class="fas fa-calendar-alt text-2xl mr-3"></i>
-                <div>
-                  <p class="text-sm opacity-80">Berakhir dalam</p>
-                  <p class="text-xl font-bold">12 hari</p>
+              <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                <div class="flex items-center">
+                  <i class="fas fa-users text-2xl mr-3"></i>
+                  <div>
+                    <p class="text-sm opacity-80">Partisipan</p>
+                    <p class="text-xl font-bold">{{ $jumlahUser }} Orang</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                <div class="flex items-center">
+                  <i class="fas fa-gift text-2xl mr-3"></i>
+                  <div>
+                    <p class="text-sm opacity-80">Soal</p>
+                    <p class="text-xl font-bold">{{ $tantangan->soal_tantangan_bulanan->count() }} Soal</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="bg-white bg-opacity-20 rounded-lg p-4">
-              <div class="flex items-center">
-                <i class="fas fa-users text-2xl mr-3"></i>
-                <div>
-                  <p class="text-sm opacity-80">Peserta</p>
-                  <p class="text-xl font-bold">2,340</p>
+            <a href="{{ route('tantangan-bulanan.soal', $tantangan->slug) }}">
+              <button
+                class="bg-button w-full text-white px-8 py-3 rounded-full font-bold hover:bg-[#02a66b] transition duration-300 shadow-lg">
+                Mulai Kuis Sekarang
+              </button>
+            </a>
+          @else
+            <div class="my-16">
+              <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                <div class="flex flex-col justify-center items-center">
+                  <h3 class="text-3xl font-bold mb-2">Tantangan Bulanan Belum Tersedia Saat Ini</h3>
+                  <p class="text-lg font-semibold opacity-90">Silahkan kembali lagi nanti</p>
                 </div>
               </div>
             </div>
-            <div class="bg-white bg-opacity-20 rounded-lg p-4">
-              <div class="flex items-center">
-                <i class="fas fa-gift text-2xl mr-3"></i>
-                <div>
-                  <p class="text-sm opacity-80">Hadiah Utama</p>
-                  <p class="text-xl font-bold">Rp 1,000,000</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button
-            class="bg-white text-orange-600 px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition duration-300 shadow-lg">
-            <i class="fas fa-bolt mr-2"></i>Ikut Tantangan Sekarang
-          </button>
-        </div>
-      </div>
+          @endif
 
-      <!-- Previous Challenges -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-gray-100 rounded-2xl p-6">
-          <div class="flex items-center mb-4">
-            <div class="bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center mr-4">
-              <i class="fas fa-check text-gray-600"></i>
-            </div>
-            <div>
-              <h4 class="text-lg font-bold text-gray-800">Tantangan Mei 2025</h4>
-              <p class="text-gray-600">Selesai • 1,890 peserta</p>
-            </div>
-          </div>
-          <p class="text-gray-700 mb-4">Regresi Linear dan Korelasi Data</p>
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-600">Pemenang: Ahmad Rizki (950 poin)</span>
-            <button class="text-blue-600 hover:text-blue-800 transition duration-300">
-              Lihat Hasil
-            </button>
-          </div>
-        </div>
-
-        <div class="bg-gray-100 rounded-2xl p-6">
-          <div class="flex items-center mb-4">
-            <div class="bg-gray-300 w-12 h-12 rounded-full flex items-center justify-center mr-4">
-              <i class="fas fa-check text-gray-600"></i>
-            </div>
-            <div>
-              <h4 class="text-lg font-bold text-gray-800">Tantangan April 2025</h4>
-              <p class="text-gray-600">Selesai • 2,150 peserta</p>
-            </div>
-          </div>
-          <p class="text-gray-700 mb-4">Distribusi Normal dan Standardisasi</p>
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-gray-600">Pemenang: Sari Indah (925 poin)</span>
-            <button class="text-blue-600 hover:text-blue-800 transition duration-300">
-              Lihat Hasil
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -146,113 +114,86 @@
   <section class="py-16 bg-gray-50">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold text-gray-800 mb-4">Papan Peringkat</h2>
-        <p class="text-xl text-gray-600">Para ahli statistik terbaik bulan ini</p>
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">Leaderboard Tantangan Bulanan</h2>
+        <p class="text-xl font-semibold text-gray-600">Partisipan teratas yang mengikuti setiap tantangan bulanan</p>
       </div>
 
       <div class="max-w-4xl mx-auto">
         <!-- Top 3 -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <!-- 2nd Place -->
-          <div class="bg-white rounded-2xl p-6 text-center card-hover order-2 md:order-1">
-            <div class="relative inline-block mb-4">
-              <img src="https://images.unsplash.com/photo-1494790108755-2616b60f-3274?w=80&h=80&fit=crop&crop=face"
-                alt="2nd Place" class="w-20 h-20 rounded-full mx-auto object-cover">
-              <div
-                class="absolute -top-2 -right-2 bg-gray-400 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
-                2
-              </div>
-            </div>
-            <h3 class="text-xl font-bold text-gray-800 mb-1">Maria Santos</h3>
-            <p class="text-gray-600 mb-2">Mahasiswa Statistika</p>
-            <p class="text-2xl font-bold text-gray-600">875 poin</p>
-          </div>
+          @foreach ($topUsers->take(3) as $index => $user)
+            @php
+              $ranking = $index + 1;
 
-          <!-- 1st Place -->
-          <div
-            class="bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl p-6 text-center card-hover text-white order-1 md:order-2 transform md:scale-105">
-            <div class="relative inline-block mb-4">
-              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
-                alt="1st Place" class="w-24 h-24 rounded-full mx-auto object-cover">
-              <div
-                class="absolute -top-2 -right-2 bg-yellow-300 text-yellow-800 w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold">
-                <i class="fas fa-crown"></i>
-              </div>
-            </div>
-            <h3 class="text-2xl font-bold mb-1">Ahmad Rizki</h3>
-            <p class="text-yellow-100 mb-2">Data Scientist</p>
-            <p class="text-3xl font-bold">950 poin</p>
-            <div class="mt-4">
-              <i class="fas fa-trophy text-2xl pulse-animation"></i>
-            </div>
-          </div>
+              $bgColor = match ($ranking) {
+                  1 => 'bg-gradient-to-br from-yellow-400 to-yellow-600 text-white',
+                  2 => 'bg-gradient-to-br from-gray-400 to-gray-600 text-white',
+                  3 => 'bg-gradient-to-br from-amber-600 to-amber-700 text-white',
+                  default => 'bg-white text-gray-800',
+              };
 
-          <!-- 3rd Place -->
-          <div class="bg-white rounded-2xl p-6 text-center card-hover order-3">
-            <div class="relative inline-block mb-4">
-              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face"
-                alt="3rd Place" class="w-20 h-20 rounded-full mx-auto object-cover">
-              <div
-                class="absolute -top-2 -right-2 bg-orange-400 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
-                3
+              $iconBg = match ($ranking) {
+                  1 => 'bg-yellow-300 text-yellow-800',
+                  2 => 'bg-gray-400 text-white',
+                  3 => 'bg-amber-500 text-white',
+                  default => 'bg-gray-300 text-white',
+              };
+
+              $scoreColor = match ($ranking) {
+                  1 => 'text-white',
+                  2 => 'text-white',
+                  3 => 'text-white',
+                  default => 'text-gray-800',
+              };
+            @endphp
+
+            <div
+              class="{{ $bgColor }} rounded-2xl p-6 text-center card-hover order-{{ $ranking == 2 ? 1 : ($ranking == 1 ? 2 : 3) }} md:order-{{ $ranking }}">
+              <div class="relative inline-block mb-4">
+                <img src="{{ asset('storage/' . $user->user->foto) }}" alt="User"
+                  class="w-{{ $ranking == 1 ? '24' : '20' }} h-{{ $ranking == 1 ? '24' : '20' }} rounded-full mx-auto object-cover">
+                <div
+                  class="absolute -top-2 -right-2 {{ $iconBg }} w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
+                  {{ $ranking }}
+                </div>
               </div>
+              <h3 class="text-xl font-bold mb-1">{{ $user->user->name }}</h3>
+              <p class="text-2xl font-bold {{ $scoreColor }}">{{ $user->total_skor }} poin</p>
+
+              @if ($ranking == 1)
+                <div class="mt-4">
+                  <i class="fas fa-trophy text-2xl pulse-animation"></i>
+                </div>
+              @endif
             </div>
-            <h3 class="text-xl font-bold text-gray-800 mb-1">Lisa Chen</h3>
-            <p class="text-gray-600 mb-2">Peneliti</p>
-            <p class="text-2xl font-bold text-orange-600">820 poin</p>
-          </div>
+          @endforeach
         </div>
+
+
 
         <!-- Remaining Rankings -->
         <div class="bg-white rounded-2xl shadow-lg">
-          <div class="p-6 border-b">
+          <div class="p-6 border-b flex items-center justify-between">
             <h3 class="text-xl font-bold text-gray-800">Peringkat Lengkap</h3>
+            <h3 class="text-xl font-bold text-gray-800">Skor</h3>
           </div>
           <div class="divide-y">
-            <div class="p-4 flex items-center justify-between hover:bg-gray-50 transition duration-300">
-              <div class="flex items-center">
-                <span
-                  class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-sm font-bold text-gray-600 mr-4">4</span>
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face"
-                  alt="User" class="w-10 h-10 rounded-full mr-3 object-cover">
-                <div>
-                  <p class="font-semibold text-gray-800">David Kumar</p>
-                  <p class="text-sm text-gray-600">Analyst</p>
+            @foreach ($topUsers->skip(3) as $index => $user)
+              <div class="p-4 flex items-center justify-between hover:bg-gray-50 transition duration-300">
+                <div class="flex items-center">
+                  <span
+                    class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-sm font-bold text-gray-600 mr-4">
+                    {{ $index + 1 }}
+                  </span>
+                  <img src="{{ asset('storage/' . $user->user->foto) }}" alt="User"
+                    class="w-10 h-10 rounded-full mr-3 object-cover">
+                  <div>
+                    <p class="font-bold text-gray-800">{{ $user->user->name }}</p>
+                  </div>
                 </div>
+                <span class="text-lg font-bold text-gray-800">{{ $user->total_skor }} poin</span>
               </div>
-              <span class="text-lg font-bold text-gray-800">785 poin</span>
-            </div>
-            <div class="p-4 flex items-center justify-between hover:bg-gray-50 transition duration-300">
-              <div class="flex items-center">
-                <span
-                  class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-sm font-bold text-gray-600 mr-4">5</span>
-                <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?w=40&h=40&fit=crop&crop=face"
-                  alt="User" class="w-10 h-10 rounded-full mr-3 object-cover">
-                <div>
-                  <p class="font-semibold text-gray-800">Nina Putri</p>
-                  <p class="text-sm text-gray-600">Mahasiswa</p>
-                </div>
-              </div>
-              <span class="text-lg font-bold text-gray-800">750 poin</span>
-            </div>
-            <div class="p-4 flex items-center justify-between hover:bg-gray-50 transition duration-300">
-              <div class="flex items-center">
-                <span
-                  class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-sm font-bold text-gray-600 mr-4">6</span>
-                <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=40&h=40&fit=crop&crop=face"
-                  alt="User" class="w-10 h-10 rounded-full mr-3 object-cover">
-                <div>
-                  <p class="font-semibold text-gray-800">Budi Santoso</p>
-                  <p class="text-sm text-gray-600">Professor</p>
-                </div>
-              </div>
-              <span class="text-lg font-bold text-gray-800">720 poin</span>
-            </div>
-          </div>
-          <div class="p-6 text-center border-t">
-            <button class="text-blue-600 hover:text-blue-800 font-semibold transition duration-300">
-              Lihat Semua Peringkat
-            </button>
+            @endforeach
           </div>
         </div>
       </div>
@@ -260,36 +201,4 @@
   </section>
 
   <x-footer class="fill-gray-50"></x-footer>
-
-  <script>
-    // Simple animations and interactions
-    document.addEventListener('DOMContentLoaded', function() {
-      // Smooth scrolling for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          e.preventDefault();
-          document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-          });
-        });
-      });
-
-      // Counter animation for stats
-      const counters = document.querySelectorAll('.text-3xl');
-      counters.forEach(counter => {
-        const target = parseInt(counter.textContent.replace(/[^0-9]/g, ''));
-        let current = 0;
-        const increment = target / 100;
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
-          }
-          counter.textContent = Math.floor(current).toLocaleString() + (counter.textContent.includes('+') ?
-            '+' : '');
-        }, 20);
-      });
-    });
-  </script>
 </x-layout-web>

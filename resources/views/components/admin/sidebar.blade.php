@@ -134,6 +134,35 @@
           </ul>
         </li>
 
+        <li class="nav-item">
+          <a href="#" class="nav-link active">
+            <p>
+              Kuis Tantangan Bulanan
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('admin_kuis-tantangan-bulanan.index') }}"
+                class="nav-link {{ Route::is('admin_kuis-tantangan-bulanan.index') ? 'active' : '' }}">
+                <p>Topik Kuis Reguler</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('admin_soal-kuis-tantangan-bulanan.index') }}"
+                class="nav-link {{ Route::is('admin_soal-kuis-tantangan-bulanan.index') ? 'active' : '' }}">
+                <p>Soal Kuis Tamtangan Bulanan</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('admin_opsi-pilgan-tantangan-bulanan.index') }}"
+                class="nav-link {{ Route::is('admin_opsi-pilgan-tantangan-bulanan.index') ? 'active' : '' }}">
+                <p>Opsi Soal Pilihan Ganda</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
 
         <li class="nav-item">
           <a href="{{ route('admin_logout') }}" class="nav-link">

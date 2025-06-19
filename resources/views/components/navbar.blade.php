@@ -51,11 +51,11 @@
         </div>
         <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-md">
           <li><a href="{{ route('kalkulator-statistik.index') }}">Kalkulator Statistik</a></li>
-          <li><a>Visualisasi Data</a></li>
+          <li><a href="{{ route('visualisasi.index') }}">Visualisasi Data</a></li>
           <li><a>Simulasi Statistik</a></li>
         </ul>
       </div>
-      <a href="#"
+      <a href="{{ route('kuis-tantangan.index') }}"
         class="bg-white hover:bg-[#EEF0F2] flex px-4 py-2 text-base text-slate-700 font-medium rounded-md">Kuis &
         Tantangan</a>
       <a href="{{ route('program-magang.index', $info_magang->slug) }}"

@@ -38,7 +38,6 @@ Route::prefix('visualisasi-data')->name('visualisasi.')->group(function () {
 
 Route::get('/kuis-dan-tantangan-bulanan', [KuisDanTantanganController::class, 'index'])->name('kuis-tantangan.index');
 
-Route::get('/quiz/result', [KuisDanTantanganController::class, 'result'])->name('quiz.result');
 // Route::get('/kalkulator-statistik', fn() => view('kalkulator-statistik.index'))->name('kalkulator-statistik.index');
 // Route::get('/kalkulator-statistik/kalkulator-mean-median-modus', fn() => view('kalkulator-statistik.mean'))->name('kalkulator-statistik.mean');
 // Route::get('/kalkulator-statistik/kalkulator-kombinasi', fn() => view('kalkulator-statistik.kombinasi'))->name('kalkulator-statistik.kombinasi');
@@ -50,6 +49,7 @@ Route::get('/quiz/result', [KuisDanTantanganController::class, 'result'])->name(
 
 Route::middleware('auth')->group(function () {
     Route::get('/profil/{slug}', [ProfilController::class, 'show'])->name('profil.show');
+    Route::get('/profil/{slug}/edit', [ProfilController::class, 'edit'])->name('profil.edit');
     Route::resource('profil', ProfilController::class);
     Route::get('/program-magang/daftar-magang', [PendaftaranMagangController::class, 'index'])
         ->name('daftar-magang.index');
@@ -58,9 +58,11 @@ Route::middleware('auth')->group(function () {
         ->name('daftar-magang.store');
     Route::get('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}', [KuisDanTantanganController::class, 'showSoalKuisReguler'])->name('kuis-tantangan.soal');
     Route::post('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}', [KuisDanTantanganController::class, 'submit'])->name('kuis.submit');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/kuis-dan-tantangan-bulanan/kuis-tantangan-bulanan/{slug}', [KuisDanTantanganController::class, 'showSoalTantanganBulanan'])->name('tantangan-bulanan.soal');
+    Route::post('/kuis-dan-tantangan-bulanan/kuis-tantangan-bulanan/{slug}', [KuisDanTantanganController::class, 'submitTantanganBulanan'])->name('tantangan-bulanan.submit');
+    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::get('/program-magang/{slug}', [InformasiMagangController::class, 'show'])->name('program-magang.index');
 

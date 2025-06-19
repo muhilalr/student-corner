@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('judul');
             $table->text('deskripsi');
-            $table->string('gambar');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

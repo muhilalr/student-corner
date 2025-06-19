@@ -21,7 +21,7 @@ class SoalKuisTantanganBulanan extends Model
         return $this->belongsTo(KuisTantanganBulanan::class, 'id_kuis_tantangan_bulanan');
     }
 
-    public function opsi_tantangan_bulanan()
+    public function opsi()
     {
         return $this->hasMany(OpsiSoalKuisTantanganBulanan::class, 'id_soal_tantangan');
     }

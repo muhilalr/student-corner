@@ -22,7 +22,7 @@
           <h2 class="text-3xl font-bold mb-2">
             <span>🎉</span> Selamat!
           </h2>
-          <p class="text-gray-600 font-medium text-lg">Kuis telah berhasil diselesaikan</p>
+          <p class="text-gray-600 font-medium text-lg">Tantangan bulanan telah berhasil diselesaikan</p>
         </div>
 
         <!-- Score Display -->
@@ -138,7 +138,8 @@
         </a>
       </div>
     @else
-      <form id="quizForm" class="space-y-8" action="{{ route('kuis.submit', $kuis->slug) }}" method="POST">
+      <form id="quizForm" class="space-y-8" action="{{ route('tantangan-bulanan.submit', $kuis->slug) }}"
+        method="POST">
         @csrf
         <input type="hidden" name="kuis_id" value="{{ $kuis->id }}">
         @foreach ($soal as $index => $item)

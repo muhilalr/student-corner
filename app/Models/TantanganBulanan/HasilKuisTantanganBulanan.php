@@ -14,6 +14,8 @@ class HasilKuisTantanganBulanan extends Model
         'id_user',
         'id_kuis_tantangan_bulanan',
         'skor',
+        'jawaban_benar',
+        'jawaban_salah',
     ];
 
     public function user()

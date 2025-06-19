@@ -12,9 +12,14 @@ class KuisTantanganBulanan extends Model
     protected $fillable = [
         'judul',
         'deskripsi',
-        'gambar',
         'tanggal_mulai',
         'tanggal_selesai',
+        'slug',
+    ];
+
+    protected $casts = [
+        'tanggal_mulai' => 'date',
+        'tanggal_selesai' => 'date',
     ];
 
     public function soal_tantangan_bulanan()

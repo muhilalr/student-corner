@@ -60,9 +60,25 @@ class ProfilController extends Controller
      */
     public function edit($slug)
     {
-        $user = User::where('slug', $slug)->firstOrFail();
+        // Pisahkan ID dan nama-slug
+        [$id, $nameSlug] = explode('-', $slug, 2);
+
+        // Ambil user berdasarkan ID
+        $user = \App\Models\User::findOrFail($id);
+
+        // Validasi slug dari nama
+        if (Str::slug($user->name) !== $nameSlug) {
+            abort(404); // atau bisa redirect ke URL yang benar
+        }
+
+        // Validasi bahwa hanya pemilik akun yang bisa edit
+        if (Auth::id() !== $user->id) {
+            abort(403);
+        }
+
         return view('profil.edit', compact('user'));
     }
+
 
     /**
      * Update the specified resource in storage.
