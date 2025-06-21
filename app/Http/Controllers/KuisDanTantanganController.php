@@ -24,7 +24,9 @@ class KuisDanTantanganController extends Controller
 
         $hariTersisa = $tantangan ? Carbon::now()->diffInDays($tantangan->tanggal_selesai, false) : null;
 
-        $jumlahUser = HasilKuisTantanganBulanan::all()->count();
+        $jumlahUser = HasilKuisTantanganBulanan::where('id_kuis_tantangan_bulanan', $tantangan->id)
+            ->distinct('id_user') // menghitung user unik
+            ->count('id_user');
 
         // Leaderboard total skor semua user
         $topUsers = HasilKuisTantanganBulanan::select('id_user', DB::raw('SUM(skor) as total_skor'))

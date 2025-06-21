@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ProgresBelajar\VideoDilihat;
 use Illuminate\Testing\Fluent\Concerns\Has;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class VideoPembelajaran extends Model
 {
@@ -80,5 +81,10 @@ class VideoPembelajaran extends Model
     public function subjek_materi()
     {
         return $this->belongsTo(SubjekMateri::class, 'subjek_materi_id');
+    }
+
+    public function video_dilihat()
+    {
+        return $this->hasMany(VideoDilihat::class, 'id_video');
     }
 }

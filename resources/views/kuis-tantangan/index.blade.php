@@ -115,7 +115,7 @@
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
         <h2 class="text-4xl font-bold text-gray-800 mb-4">Leaderboard Tantangan Bulanan</h2>
-        <p class="text-xl font-semibold text-gray-600">Partisipan teratas yang mengikuti setiap tantangan bulanan</p>
+        <p class="text-xl font-semibold text-gray-600">Partisipan teratas tantangan bulanan</p>
       </div>
 
       <div class="max-w-4xl mx-auto">
@@ -145,13 +145,26 @@
                   3 => 'text-white',
                   default => 'text-gray-800',
               };
+
+              // Urutan layout visual: 2 kiri, 1 tengah, 3 kanan
+              $orderClass = match ($ranking) {
+                  1 => 'order-2 md:order-2 -translate-y-8', // naik sedikit
+                  2 => 'order-1 md:order-1',
+                  3 => 'order-3 md:order-3',
+                  default => '',
+              };
             @endphp
 
             <div
-              class="{{ $bgColor }} rounded-2xl p-6 text-center card-hover order-{{ $ranking == 2 ? 1 : ($ranking == 1 ? 2 : 3) }} md:order-{{ $ranking }}">
+              class="{{ $bgColor }} {{ $orderClass }} rounded-2xl p-6 text-center card-hover transform transition-all duration-300">
               <div class="relative inline-block mb-4">
-                <img src="{{ asset('storage/' . $user->user->foto) }}" alt="User"
-                  class="w-{{ $ranking == 1 ? '24' : '20' }} h-{{ $ranking == 1 ? '24' : '20' }} rounded-full mx-auto object-cover">
+                @if ($user->user->foto == null)
+                  <img src="{{ Avatar::create($user->user->name)->toBase64() }}" alt="User"
+                    class="w-{{ $ranking == 1 ? '24' : '20' }} h-{{ $ranking == 1 ? '24' : '20' }} rounded-full mx-auto object-cover">
+                @else
+                  <img src="{{ asset('storage/' . $user->user->foto) }}" alt="User"
+                    class="w-{{ $ranking == 1 ? '24' : '20' }} h-{{ $ranking == 1 ? '24' : '20' }} rounded-full mx-auto object-cover">
+                @endif
                 <div
                   class="absolute -top-2 -right-2 {{ $iconBg }} w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
                   {{ $ranking }}
@@ -171,6 +184,7 @@
 
 
 
+
         <!-- Remaining Rankings -->
         <div class="bg-white rounded-2xl shadow-lg">
           <div class="p-6 border-b flex items-center justify-between">
@@ -185,8 +199,13 @@
                     class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-sm font-bold text-gray-600 mr-4">
                     {{ $index + 1 }}
                   </span>
-                  <img src="{{ asset('storage/' . $user->user->foto) }}" alt="User"
-                    class="w-10 h-10 rounded-full mr-3 object-cover">
+                  @if ($user->user->foto == null)
+                    <img src="{{ Avatar::create($user->user->name)->toBase64() }}" alt="User"
+                      class="w-10 h-10 rounded-full mr-3 object-cover">
+                  @else
+                    <img src="{{ asset('storage/' . $user->user->foto) }}" alt="User"
+                      class="w-10 h-10 rounded-full mr-3 object-cover">
+                  @endif
                   <div>
                     <p class="font-bold text-gray-800">{{ $user->user->name }}</p>
                   </div>

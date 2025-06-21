@@ -5,7 +5,9 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Str;
 use Illuminate\Notifications\Notifiable;
+use App\Models\ProgresBelajar\VideoDilihat;
 use App\Models\KuisReguler\HasilKuisReguler;
+use App\Models\ProgresBelajar\ArtikelDibaca;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\TantanganBulanan\HasilKuisTantanganBulanan;
@@ -67,6 +69,16 @@ class User extends Authenticatable
     public function hasil_kuis_tantangan_bulanan()
     {
         return $this->hasMany(HasilKuisTantanganBulanan::class, 'id_user');
+    }
+
+    public function artikel_dibaca()
+    {
+        return $this->hasMany(ArtikelDibaca::class, 'id_user');
+    }
+
+    public function video_dilihat()
+    {
+        return $this->hasMany(VideoDilihat::class, 'id_user');
     }
 
     public function getSlugAttribute()

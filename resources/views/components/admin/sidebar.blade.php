@@ -151,7 +151,7 @@
             <li class="nav-item">
               <a href="{{ route('admin_soal-kuis-tantangan-bulanan.index') }}"
                 class="nav-link {{ Route::is('admin_soal-kuis-tantangan-bulanan.index') ? 'active' : '' }}">
-                <p>Soal Kuis Tamtangan Bulanan</p>
+                <p>Soal Kuis Tantangan Bulanan</p>
               </a>
             </li>
             <li class="nav-item">
