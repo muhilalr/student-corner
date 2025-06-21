@@ -19,6 +19,12 @@ class InformasiMagangController extends Controller
         return view('admin.informasi-magang.index', compact('info'));
     }
 
+    public function indexUser()
+    {
+        $info = InformasiMagang::sole();
+        return view('program-magang.index', compact('info'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -38,11 +44,7 @@ class InformasiMagangController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug)
-    {
-        $info = InformasiMagang::where('slug', $slug)->firstOrFail();
-        return view('program-magang.index', compact('info'));
-    }
+    public function show() {}
 
     /**
      * Show the form for editing the specified resource.
@@ -64,13 +66,11 @@ class InformasiMagangController extends Controller
             'info_kontak' => 'required',
         ]);
 
-        $slug = 'informasi-magang';
         $informasi_magang->update([
             'deskripsi' => $request->deskripsi,
             'persyaratan' => $request->persyaratan,
             'benefit' => $request->benefit,
             'info_kontak' => $request->info_kontak,
-            'slug' => $slug,
         ]);
         return redirect()->route('admin_informasi-magang.index')->with('success', 'Data berhasil diubah');
     }

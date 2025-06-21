@@ -21,7 +21,6 @@ class InformasiMagangFactory extends Factory
             'persyaratan' => $this->faker->paragraph(),
             'benefit' => $this->faker->paragraph(),
             'info_kontak' => $this->faker->paragraph(),
-            'slug' => 'informasi-magang'
         ];
     }
 }

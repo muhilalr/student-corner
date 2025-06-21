@@ -55,6 +55,45 @@ class ProfilController extends Controller
         return view('profil.index', compact('user'));
     }
 
+    public function showArtikelDibaca($slug)
+    {
+        [$id, $nameSlug] = explode('-', $slug, 2);
+
+        $user = User::findOrFail($id);
+
+        if (Str::slug($user->name) !== $nameSlug) {
+            abort(404);
+        }
+
+        if (Auth::id() !== $user->id) {
+            abort(403);
+        }
+
+        // Ambil daftar artikel yang sudah dibaca oleh user
+        $artikelDibaca = $user->artikel_dibaca()->latest()->paginate(6);
+
+        return view('profil.artikel-dibaca', compact('user', 'artikelDibaca'));
+    }
+
+    public function showVideoDilihat($slug)
+    {
+        [$id, $nameSlug] = explode('-', $slug, 2);
+
+        $user = User::findOrFail($id);
+
+        if (Str::slug($user->name) !== $nameSlug) {
+            abort(404);
+        }
+
+        if (Auth::id() !== $user->id) {
+            abort(403);
+        }
+
+        // Ambil daftar artikel yang sudah dibaca oleh user
+        $videoDilihat = $user->video_dilihat()->latest()->paginate(6);
+        return view('profil.video-dilihat', compact('user', 'videoDilihat'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */

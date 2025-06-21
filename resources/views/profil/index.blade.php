@@ -1,44 +1,16 @@
 <x-layout-web>
-  <section class="w-full flex px-4 md:px-8 lg:px-20 py-16 bg-[#EEF0F2] min-h-screen">
+  <section class="w-full flex px-4 md:px-8 lg:px-10 py-16 bg-[#EEF0F2] min-h-screen">
     <div class="max-w-7xl mx-auto w-full">
       <!-- Header -->
       <div class="mb-8">
         <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Profil Saya</h1>
-        <p class="text-gray-600">Kelola informasi profil dan preferensi akun Anda</p>
+        <p class="text-gray-600">Lihat dan kelola informasi akun Anda</p>
       </div>
 
       <!-- Main Content Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <!-- Sidebar Navigation -->
-        <div class="lg:col-span-1">
-          <div class="bg-white rounded-2xl shadow-xl">
-            <div class="p-6">
-              <h3 class="text-lg font-semibold text-gray-900 mb-4">Menu Profil</h3>
-              <nav class="space-y-2">
-                <!-- Profil Saya - Active -->
-                <a href="#"
-                  class="flex items-center gap-3 px-4 py-3 bg-primary text-white rounded-lg transition-colors duration-200">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                  </svg>
-                  <span class="font-medium">Profil Saya</span>
-                </a>
-
-                <!-- Progres Belajar -->
-                <a href="#"
-                  class="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors duration-200">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
-                    </path>
-                  </svg>
-                  <span class="font-medium">Progres Belajar</span>
-                </a>
-              </nav>
-            </div>
-          </div>
-        </div>
+        <x-user.sidebar />
 
         <!-- Main Profile Content -->
         <div class="lg:col-span-3">

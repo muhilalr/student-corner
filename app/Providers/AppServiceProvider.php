@@ -25,7 +25,6 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
             $view->with('subjek_materi', SubjekMateri::all());
-            $view->with('info_magang', InformasiMagang::where('slug', 'informasi-magang')->firstOrFail());
         });
         Paginator::useBootstrapFive();
     }

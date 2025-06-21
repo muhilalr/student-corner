@@ -23,10 +23,10 @@
     <!-- Desktop Navigation Links -->
     <div class="hidden space-x-4 lg:space-x-5 md:flex">
       <a href="{{ route('home') }}"
-        class="bg-white hover:bg-[#EEF0F2] flex px-4 py-2 text-base text-slate-700 font-medium rounded-md">Home</a>
+        class="bg-white hover:bg-gray-100 flex px-4 py-2 text-base text-slate-700 font-medium rounded-md">Home</a>
       <div class="dropdown dropdown-hover">
         <div tabindex="0" role="button"
-          class="bg-white hover:bg-[#EEF0F2] flex gap-1 pl-4 pr-2 py-2 text-base text-slate-700 font-medium rounded-md">
+          class="bg-white hover:bg-gray-100 flex gap-1 pl-4 pr-2 py-2 text-base text-slate-700 font-medium rounded-md">
           Konten
           Edukasi
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
@@ -42,7 +42,7 @@
       </div>
       <div class="dropdown dropdown-hover">
         <div tabindex="0" role="button"
-          class="bg-white hover:bg-[#EEF0F2] flex gap-1 pl-4 pr-2 py-2 text-base text-slate-700 font-medium rounded-md">
+          class="bg-white hover:bg-gray-100 flex gap-1 pl-4 pr-2 py-2 text-base text-slate-700 font-medium rounded-md">
           Alat
           Interaktif
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
@@ -56,10 +56,10 @@
         </ul>
       </div>
       <a href="{{ route('kuis-tantangan.index') }}"
-        class="bg-white hover:bg-[#EEF0F2] flex px-4 py-2 text-base text-slate-700 font-medium rounded-md">Kuis &
+        class="bg-white hover:bg-gray-100 flex px-4 py-2 text-base text-slate-700 font-medium rounded-md">Kuis &
         Tantangan</a>
-      <a href="{{ route('program-magang.index', $info_magang->slug) }}"
-        class="bg-white hover:bg-[#EEF0F2] flex px-4 py-2 text-base text-slate-700 font-medium rounded-md">Internship</a>
+      <a href="{{ route('program-magang.index') }}"
+        class="bg-white hover:bg-gray-100 flex px-4 py-2 text-base text-slate-700 font-medium rounded-md">Internship</a>
     </div>
 
     <!-- Sign Up Button (Desktop) -->

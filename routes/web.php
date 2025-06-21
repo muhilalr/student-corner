@@ -46,10 +46,12 @@ Route::get('/kuis-dan-tantangan-bulanan', [KuisDanTantanganController::class, 'i
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::get('/program-magang/informasi-magang', [InformasiMagangController::class, 'indexUser'])->name('program-magang.index');
 Route::middleware('auth')->group(function () {
     Route::get('/profil/{slug}', [ProfilController::class, 'show'])->name('profil.show');
     Route::get('/profil/{slug}/edit', [ProfilController::class, 'edit'])->name('profil.edit');
+    Route::get('/profil/{slug}/artikel-dibaca', [ProfilController::class, 'showArtikelDibaca'])->name('profil.artikel');
+    Route::get('/profil/{slug}/video-dilihat', [ProfilController::class, 'showVideoDilihat'])->name('profil.video');
     Route::resource('profil', ProfilController::class);
     Route::get('/program-magang/daftar-magang', [PendaftaranMagangController::class, 'index'])
         ->name('daftar-magang.index');
@@ -64,7 +66,7 @@ Route::middleware('auth')->group(function () {
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::get('/program-magang/{slug}', [InformasiMagangController::class, 'show'])->name('program-magang.index');
+
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

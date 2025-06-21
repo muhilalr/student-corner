@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('persyaratan');
             $table->text('benefit');
             $table->text('info_kontak');
-            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

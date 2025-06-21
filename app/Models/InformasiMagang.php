@@ -14,6 +14,5 @@ class InformasiMagang extends Model
         'persyaratan',
         'benefit',
         'info_kontak',
-        'slug',
     ];
 }

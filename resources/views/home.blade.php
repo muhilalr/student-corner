@@ -231,7 +231,7 @@
           </p>
         </div>
         <div class="w-full flex justify-center md:justify-start">
-          <a href="{{ route('program-magang.index', $info_magang->slug) }}">
+          <a href="{{ route('program-magang.index') }}">
             <button
               class="rounded-md border border-orange-500 px-3 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-orange-500 transition-colors duration-300 hover:bg-orange-500 hover:text-white">
               Daftar Sekarang!
