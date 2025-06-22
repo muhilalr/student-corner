@@ -63,7 +63,7 @@
 
             <!-- Generate Button -->
             <button id="generateBtn"
-              class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed hidden">
+              class="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-[#00295A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed hidden">
               <span id="generateBtnText">Generate Histogram</span>
               <div id="generateBtnLoader" class="hidden">
                 <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg"
@@ -408,7 +408,7 @@
         },
         grid: {
           show: true,
-          borderColor: '#E5E7EB',
+          borderColor: ['#008FFB'],
           strokeDashArray: 3
         }
       };

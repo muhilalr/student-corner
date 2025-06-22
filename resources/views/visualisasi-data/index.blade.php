@@ -31,6 +31,47 @@
         </p>
       </div>
     </a>
+    <a href="{{ route('visualisasi.scatter') }}" class="block">
+      <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
+        <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-purple-400">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="64" height="64" fill="none" />
+            <circle cx="12" cy="52" r="4" fill="white" />
+            <circle cx="20" cy="34" r="3" fill="white" />
+            <circle cx="32" cy="44" r="5" fill="white" />
+            <circle cx="44" cy="24" r="4" fill="white" />
+            <circle cx="52" cy="12" r="3" fill="white" />
+            <circle cx="36" cy="16" r="2" fill="white" />
+          </svg>
+        </div>
+        <h3 class="mb-2 text-base sm:text-lg font-semibold text-gray-800">Scatter Plot</h3>
+        <p class="text-justify text-xs sm:text-sm text-gray-500">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nesciunt quod qui! Reprehenderit maiores
+          incidunt qui consectetur voluptatibus cum corrupti?
+        </p>
+      </div>
+    </a>
+    <a href="{{ route('visualisasi.piechart') }}" class="block">
+      <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
+        <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-red-400">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+            style="fill: rgba(255, 255, 255, 1)">
+            <path
+              d="M13 2.051V11h8.949c-.47-4.717-4.232-8.479-8.949-8.949zm4.969 17.953c2.189-1.637 3.694-4.14 3.98-7.004h-8.183l4.203 7.004z">
+            </path>
+            <path
+              d="M11 12V2.051C5.954 2.555 2 6.824 2 12c0 5.514 4.486 10 10 10a9.93 9.93 0 0 0 4.255-.964s-5.253-8.915-5.254-9.031A.02.02 0 0 0 11 12z">
+            </path>
+          </svg>
+
+        </div>
+        <h3 class="mb-2 text-base sm:text-lg font-semibold text-gray-800">Pie Chart</h3>
+        <p class="text-justify text-xs sm:text-sm text-gray-500">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nesciunt quod qui! Reprehenderit maiores
+          incidunt qui consectetur voluptatibus cum corrupti?
+        </p>
+      </div>
+    </a>
   </section>
   <x-footer class="fill-[#EEF0F2]" />
 </x-layout-web>

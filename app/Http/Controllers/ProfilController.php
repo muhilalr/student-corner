@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use App\Models\KuisReguler\HasilKuisReguler;
+use App\Models\TantanganBulanan\HasilKuisTantanganBulanan;
 
 class ProfilController extends Controller
 {
@@ -92,6 +94,42 @@ class ProfilController extends Controller
         // Ambil daftar artikel yang sudah dibaca oleh user
         $videoDilihat = $user->video_dilihat()->latest()->paginate(6);
         return view('profil.video-dilihat', compact('user', 'videoDilihat'));
+    }
+
+    public function showKuisRegulerDiselesaikan($slug)
+    {
+        [$id, $nameSlug] = explode('-', $slug, 2);
+
+        $user = User::findOrFail($id);
+
+        if (Str::slug($user->name) !== $nameSlug) {
+            abort(404);
+        }
+
+        if (Auth::id() !== $user->id) {
+            abort(403);
+        }
+
+        $hasilReguler = HasilKuisReguler::with('kuis_reguler')->where('id_user', $user->id)->latest()->paginate(6);
+        return view('profil.kuis-diselesaikan.kuis-reguler', compact('user', 'hasilReguler'));
+    }
+
+    public function showKuisTantanganDiselesaikan($slug)
+    {
+        [$id, $nameSlug] = explode('-', $slug, 2);
+
+        $user = User::findOrFail($id);
+
+        if (Str::slug($user->name) !== $nameSlug) {
+            abort(404);
+        }
+
+        if (Auth::id() !== $user->id) {
+            abort(403);
+        }
+
+        $hasilTantangan = HasilKuisTantanganBulanan::with('kuis_tantangan_bulanan')->where('id_user', $user->id)->latest()->paginate(6);
+        return view('profil.kuis-diselesaikan.kuis-tantangan-bulanan', compact('user', 'hasilTantangan'));
     }
 
     /**

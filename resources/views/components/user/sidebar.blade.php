@@ -33,12 +33,23 @@
               class="flex items-center gap-3 pl-4 py-3 {{ Route::is('profil.video') ? 'bg-primary text-white hover:bg-primary' : '' }} text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200">
               <span class="font-bold">Video Dilihat</span>
             </a>
-            <a href="#"
-              class="flex items-center gap-3 pl-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200">
-              <span class="font-bold">Kuis Dikerjakan</span>
-            </a>
+            <div class="collapse collapse-arrow text-gray-700 rounded-lg transition-colors duration-200">
+              <input type="checkbox" />
+              <div class="collapse-title flex items-center gap-3">
+                <span class="font-bold">Kuis Diselesaikan</span>
+              </div>
+              <div class="collapse">
+                <a href="{{ route('profil.kuis-reguler', Auth::user()->slug) }}"
+                  class="flex items-center gap-3 pl-4 py-3 {{ Route::is('profil.kuis-reguler') ? 'bg-primary text-white hover:bg-primary' : '' }} text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200">
+                  <span class="font-bold">Kuis Reguler</span>
+                </a>
+                <a href="{{ route('profil.kuis-tantangan', Auth::user()->slug) }}"
+                  class="flex items-center gap-3 pl-4 py-3 {{ Route::is('profil.kuis-tantangan') ? 'bg-primary text-white hover:bg-primary' : '' }} text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200">
+                  <span class="font-bold">Kuis Tantangan Bulanan</span>
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
       </nav>
     </div>
   </div>

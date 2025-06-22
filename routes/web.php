@@ -12,6 +12,8 @@ use App\Http\Controllers\VisualisasiDataController;
 use App\Http\Controllers\KuisDanTantanganController;
 use App\Http\Controllers\Admin\InformasiMagangController;
 use App\Http\Controllers\Admin\PendaftaranMagangController;
+use App\Http\Controllers\VisualisasiData\ScatterController;
+use App\Http\Controllers\VisualisasiData\PieChartController;
 use App\Http\Controllers\VisualisasiData\HistogramController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -34,6 +36,12 @@ Route::prefix('visualisasi-data')->name('visualisasi.')->group(function () {
     Route::get('/histogram', [HistogramController::class, 'histogram'])->name('histogram');
     Route::post('/histogram/upload', [HistogramController::class, 'uploadData'])->name('histogram.upload');
     Route::post('/histogram/generate', [HistogramController::class, 'generateHistogram'])->name('histogram.generate');
+    Route::get('/scatter', [ScatterController::class, 'scatter'])->name('scatter');
+    Route::post('/scatter/upload', [ScatterController::class, 'uploadData'])->name('scatter.upload');
+    Route::post('/scatter/generate', [ScatterController::class, 'generate'])->name('scatter.generate');
+    Route::get('/piechart', [PieChartController::class, 'index'])->name('piechart');
+    Route::post('/piechart/upload', [PieChartController::class, 'uploadData'])->name('piechart.upload');
+    Route::post('/piechart/generate', [PieChartController::class, 'generatePieChart'])->name('piechart.generate');
 });
 
 Route::get('/kuis-dan-tantangan-bulanan', [KuisDanTantanganController::class, 'index'])->name('kuis-tantangan.index');
@@ -52,6 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profil/{slug}/edit', [ProfilController::class, 'edit'])->name('profil.edit');
     Route::get('/profil/{slug}/artikel-dibaca', [ProfilController::class, 'showArtikelDibaca'])->name('profil.artikel');
     Route::get('/profil/{slug}/video-dilihat', [ProfilController::class, 'showVideoDilihat'])->name('profil.video');
+    Route::get('/profil/{slug}/kuis-diselesaikan/kuis-reguler', [ProfilController::class, 'showKuisRegulerDiselesaikan'])->name('profil.kuis-reguler');
+    Route::get('/profil/{slug}/kuis-diselesaikan/kuis-tantangan-bulanan', [ProfilController::class, 'showKuisTantanganDiselesaikan'])->name('profil.kuis-tantangan');
     Route::resource('profil', ProfilController::class);
     Route::get('/program-magang/daftar-magang', [PendaftaranMagangController::class, 'index'])
         ->name('daftar-magang.index');
