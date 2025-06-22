@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Models\KuisReguler\KuisReguler;
 use App\Http\Controllers\Admin\ArtikelController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Admin\KuisReguler\KuisRegulerController;
 use App\Http\Controllers\Admin\KuisReguler\SoalKuisRegulerController;
 use App\Http\Controllers\Admin\KuisTantangan\SoalTantanganBulananController;
 use App\Http\Controllers\Admin\KuisTantangan\TantanganBulananController;
+use App\Models\InformasiMagang;
 
 Route::prefix('admin')->name('admin_')->group(function () {
   Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('login');
@@ -23,9 +25,9 @@ Route::prefix('admin')->name('admin_')->group(function () {
   Route::middleware(['auth:admin'])->group(function () {
     Route::get('/dashboard', [SubjekMateriController::class, 'index'])->middleware('role:admin')->name('dashboard');
 
-    Route::get('/operator/dashboard', fn() => view('operator.dashboard'))->middleware('role:operator')->name('operator.dashboard');
-    Route::get('/magang/dashboard', fn() => view('admin.magang'))->middleware('role:operator magang')->name('magang.dashboard');
-
+    Route::get('/operator/dashboard', [SubjekMateriController::class, 'index'])->middleware('role:operator')->name('operator.dashboard');
+    Route::get('/operator-magang/dashboard', [InformasiMagangController::class, 'index'])->middleware('role:operator magang')->name('magang.dashboard');
+    Route::resource('data-admin', AdminController::class);
     Route::resource('subjek-materi', SubjekMateriController::class);
     Route::resource('artikel', ArtikelController::class);
     Route::resource('subjudul-artikel', SubJudulArtikelController::class);

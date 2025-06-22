@@ -13,10 +13,10 @@
   <!-- Accessibility Styles -->
   <style>
     /* Accessibility Custom Styles */
-    .accessibility-cursor {
-      cursor: url('https://cdn.jsdelivr.net/gh/jamestomasino/big-cursor/cursors/cursor-large.cur'), auto !important;
+    .accessibility-cursor,
+    .accessibility-cursor * {
+      cursor: url('{{ asset('gambar/cursor.png') }}'), auto;
     }
-
 
     .high-saturation {
       filter: saturate(200%) !important;
@@ -24,10 +24,6 @@
 
     .low-saturation {
       filter: saturate(50%) !important;
-    }
-
-    .monochrome {
-      filter: grayscale(100%) !important;
     }
 
     /* Accessibility button animation */
@@ -181,27 +177,6 @@
               </div>
             </label>
           </div>
-
-          <!-- Monochrome -->
-          <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-            <div class="flex items-center space-x-3">
-              <div class="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" class="text-gray-600">
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                </svg>
-              </div>
-              <div>
-                <div class="font-medium text-gray-800">Monokrom</div>
-              </div>
-            </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input id="monochrome" type="checkbox" class="sr-only peer" name="saturation">
-              <div
-                class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-button rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-button">
-              </div>
-            </label>
-          </div>
         </div>
       </div>
 
@@ -251,7 +226,6 @@
     const bigCursorToggle = document.getElementById('bigCursor');
     const highSaturationToggle = document.getElementById('highSaturation');
     const lowSaturationToggle = document.getElementById('lowSaturation');
-    const monochromeToggle = document.getElementById('monochrome');
     const resetAll = document.getElementById('resetAll');
     const mainBody = document.getElementById('main-body');
 
@@ -304,7 +278,6 @@
     highSaturationToggle.addEventListener('change', () => {
       if (highSaturationToggle.checked) {
         lowSaturationToggle.checked = false;
-        monochromeToggle.checked = false;
         currentSaturation = 'high';
       } else {
         currentSaturation = 'normal';
@@ -316,20 +289,7 @@
     lowSaturationToggle.addEventListener('change', () => {
       if (lowSaturationToggle.checked) {
         highSaturationToggle.checked = false;
-        monochromeToggle.checked = false;
         currentSaturation = 'low';
-      } else {
-        currentSaturation = 'normal';
-      }
-      applySaturation();
-      saveSettings();
-    });
-
-    monochromeToggle.addEventListener('change', () => {
-      if (monochromeToggle.checked) {
-        highSaturationToggle.checked = false;
-        lowSaturationToggle.checked = false;
-        currentSaturation = 'mono';
       } else {
         currentSaturation = 'normal';
       }
@@ -347,7 +307,6 @@
       bigCursorToggle.checked = false;
       highSaturationToggle.checked = false;
       lowSaturationToggle.checked = false;
-      monochromeToggle.checked = false;
 
       // Apply changes
       applyFontSize();
@@ -375,7 +334,7 @@
 
     function applySaturation() {
       const wrapper = document.getElementById('accessibilityWrapper');
-      wrapper.classList.remove('high-saturation', 'low-saturation', 'monochrome');
+      wrapper.classList.remove('high-saturation', 'low-saturation');
 
       switch (currentSaturation) {
         case 'high':
@@ -383,9 +342,6 @@
           break;
         case 'low':
           wrapper.classList.add('low-saturation');
-          break;
-        case 'mono':
-          wrapper.classList.add('monochrome');
           break;
       }
 
@@ -430,9 +386,6 @@
           break;
         case 'low':
           lowSaturationToggle.checked = true;
-          break;
-        case 'mono':
-          monochromeToggle.checked = true;
           break;
       }
     }
