@@ -14,6 +14,14 @@ document.addEventListener("DOMContentLoaded", function () {
             type: "loop",
             perPage: 3,
             gap: "1rem",
+            breakpoints: {
+                1024: {
+                    perPage: 2, // tablet
+                },
+                640: {
+                    perPage: 1, // sm dan di bawahnya
+                },
+            },
         }).mount();
     });
 });

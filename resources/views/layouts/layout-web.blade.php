@@ -12,6 +12,10 @@
 
   <!-- Accessibility Styles -->
   <style>
+    /* * {
+      border: solid red 1px;
+    } */
+
     /* Accessibility Custom Styles */
     .accessibility-cursor,
     .accessibility-cursor * {

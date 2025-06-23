@@ -1,18 +1,16 @@
 <x-layout-web>
   <!-- Hero Section -->
   <section class="bg-white">
-    <div class="container mx-auto py-8 sm:py-12 px-4 sm:pr-6 sm:pl-16">
+    <div class="container mx-auto py-32 lg:py-12 px-4 sm:pr-6 sm:pl-16">
       <div class="flex flex-col items-center md:flex-row">
         <!-- Left Content -->
         <div data-aos="fade-right" data-aos-duration="1000" class="mb-10 w-full text-center md:text-left md:mb-0 md:w-1/2">
-          <h1 class="mb-4 text-3xl sm:text-4xl md:text-5xl font-bold text-primary">
+          <h1 class="mb-4 text-5xl font-bold text-primary">
             Tempat Asyik Untuk
             <br />Literasi Statistik
           </h1>
-          <p class="mb-8 text-base sm:text-lg text-gray-600">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa temporibus maiores possimus quisquam
-            recusandae ipsum accusamus
-            molestiae? Neque debitis repudiandae magnam quaerat, ut sint beatae?
+          <p class="mb-8 text-lg text-gray-600">
+            Mari jelajahi dunia statistik dengan cara yang lebih seru dan menyenangkan
           </p>
         </div>
 
@@ -34,8 +32,7 @@
 
           <!-- Main Illustration (People on bean bags) -->
           <div class="relative z-10 flex justify-center">
-            <img src="{{ asset('gambar/home/Analysis-cuate.svg') }}" alt="Ilustrasi"
-              class="w-64 sm:w-80 md:w-96 lg:w-full max-w-md" />
+            <img src="{{ asset('gambar/home/Analysis-cuate.svg') }}" alt="Ilustrasi" class="w-96 lg:w-full max-w-md" />
           </div>
         </div>
       </div>
@@ -45,11 +42,11 @@
 
   <!-- Section Konten Edukasi -->
   <section class="w-full bg-primary py-8 sm:py-16">
-    <div data-aos="fade-up" data-aos-duration="1500" class="mx-auto max-w-6xl px-4">
+    <div class="mx-auto max-w-6xl px-4">
       <!-- Section Heading -->
       <div class="mb-8 sm:mb-12 text-center">
-        <h1 class="mb-2 text-2xl font-bold text-white">Konten Edukasi</h1>
-        <p class="mx-auto max-w-xl text-base  text-slate-300">
+        <h1 class="mb-2 text-3xl lg:text-4xl font-bold text-white">Konten Edukasi</h1>
+        <p class="mx-auto max-w-xl text-base font-semibold text-slate-300">
           Eksplor dan pelajari lebih banyak berdasarkan topik yang kamu inginkan
         </p>
       </div>
@@ -86,22 +83,21 @@
   <!-- Akhir Section Konten Edukasi -->
 
   <!-- Section Alat Interaktif -->
-  <section class="w-full bg-[#EEF0F2] pt-8 sm:pt-16">
-    <div data-aos="fade-up" data-aos-duration="1500" class="mx-auto max-w-6xl px-4 sm:px-10">
+  <section class="w-full mb-10 lg:mb-0 bg-[#EEF0F2] pt-8 sm:pt-16">
+    <div class="mx-auto max-w-6xl px-4 sm:px-10">
       <!-- Section Heading -->
       <div class="mb-8 sm:mb-12 text-center">
-        <h2 class="mb-2 text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800">Alat Bantu Interaktif</h2>
-        <p class="mx-auto max-w-xl text-xs sm:text-sm text-gray-500">
+        <h2 class="mb-2 text-2xl md:text-4xl font-bold text-gray-800">Alat Bantu Interaktif</h2>
+        <p class="mx-auto font-semibold text-base text-gray-500">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus sapiente optio
         </p>
       </div>
 
       <!-- Services Cards Grid -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
-        <!-- SEO Services Card -->
+      <div class="flex flex-col lg:flex-row items-center justify-center gap-6">
+        <!-- Kalkulator -->
         <a href="{{ route('kalkulator-statistik.index') }}" class="w-full sm:w-auto">
-          <div
-            class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
+          <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg">
             <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-yellow-400">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                 style="fill: rgba(255, 255, 255, 1)">
@@ -117,10 +113,10 @@
             </p>
           </div>
         </a>
-        <!-- Marketing Card -->
+        <!-- Visualisasi -->
         <a href="{{ route('visualisasi.index') }}">
           <div
-            class="w-full sm:w-auto rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
+            class="w-full sm:w-auto rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg">
             <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-green-400">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                 style="fill: rgba(255, 255, 255, 1)">
@@ -138,7 +134,7 @@
             </p>
           </div>
         </a>
-        <!-- Viral Campaign Card -->
+        <!-- Simulasi -->
         <div
           class="w-full sm:w-auto rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg">
           <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-purple-400">
@@ -159,18 +155,16 @@
   <!-- Akhir Section Alat Interaktif -->
 
   <!-- Section kuis dan tantangan -->
-  <section class="flex min-h-screen items-center justify-center bg-[#EEF0F2]">
+  <section class="flex mb-10 lg:min-h-screen items-center justify-center bg-[#EEF0F2]">
     <div class="flex w-full max-w-6xl flex-col overflow-hidden rounded-xl bg-white shadow-lg md:flex-row">
       <!-- Left side - Illustration -->
       <div class="relative flex w-full items-center justify-center bg-primary p-6 md:w-1/2">
-        <img src="{{ asset('gambar/home/Yes or no-amico.svg') }}" alt="" data-aos="fade-up"
-          data-aos-duration="1500" class="w-48 sm:w-64 md:w-80 lg:w-96" />
+        <img src="{{ asset('gambar/home/Yes or no-amico.svg') }}" alt=""class="w-96" />
       </div>
 
       <!-- Right side - Content -->
-      <div data-aos="fade-up" data-aos-duration="1500"
-        class="flex w-full flex-col items-center justify-center gap-4 sm:gap-5 p-4 sm:p-8 md:w-1/2">
-        <div class="mb-2 sm:mb-4">
+      <div class="flex w-full flex-col items-center justify-center gap-5 p-8 md:w-1/2">
+        <div class="flex flex-col items-center justify-center mb-4">
           <h1 class="mb-2 sm:mb-4 text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">Kuis dan Tantangan Untuk
             Kamu!</h1>
           <p class="text-justify text-xs sm:text-sm text-gray-600">
@@ -182,11 +176,11 @@
           </p>
         </div>
         <!-- Buttons -->
-        <div class="w-full">
+        <div class="w-full flex items-center justify-center">
           <a href="{{ route('kuis-tantangan.index') }}">
             <button
-              class="rounded-md border border-orange-500 px-3 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-orange-500 transition-colors duration-300 hover:bg-orange-500 hover:text-white">
-              Read more
+              class="rounded-md border border-orange-500 px-6 py-3 lg:px-4 lg:py-2 text-sm font-medium text-orange-500 transition-colors duration-300 hover:bg-orange-500 hover:text-white">
+              Lihat Selengkapnya
             </button>
           </a>
         </div>
@@ -196,24 +190,21 @@
   <!-- Akhir Section kuis dan tantangan -->
 
   <!-- Section Magang -->
-  <section class=" bg-white ">
-    <div class="flex flex-col md:flex-row min-h-screen items-center justify-center px-4">
+  <section class="bg-white ">
+    <div class="flex flex-col md:flex-row lg:min-h-screen items-center justify-center px-4">
       <!-- Left side illustration (only visible on larger screens) -->
-      <div data-aos="fade-up" data-aos-duration="1500"
-        class="hidden md:flex items-center justify-center rounded-md w-full md:w-1/2">
+      <div class="hidden md:flex items-center justify-center rounded-md w-full md:w-1/2">
         <img src="{{ asset('gambar/home/Analysis-pana.svg') }}" alt=""
           class="w-64 sm:w-80 md:w-96 lg:w-full max-w-lg" />
       </div>
 
       <!-- Illustration (only visible on mobile) -->
-      <div data-aos="fade-up" data-aos-duration="1500"
-        class="flex md:hidden items-center justify-center w-full mb-8">
-        <img src="{{ asset('gambar/home/Analysis-pana.svg') }}" alt="" class="w-64" />
+      <div class="flex md:hidden items-center justify-center w-full mb-8">
+        <img src="{{ asset('gambar/home/Analysis-pana.svg') }}" alt="" class="w-96" />
       </div>
 
       <!-- Right side - Content -->
-      <div data-aos="fade-up" data-aos-duration="1500"
-        class="flex w-full flex-col items-center md:items-start justify-center p-4 sm:p-8 md:w-1/2">
+      <div class="flex w-full flex-col items-center md:items-start justify-center p-4 sm:p-8 md:w-1/2">
         <div class="mb-6 sm:mb-8">
           <h1 class="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 text-center md:text-left">
             <span class="text-orange-500">Internship</span> Program
@@ -233,7 +224,7 @@
         <div class="w-full flex justify-center md:justify-start">
           <a href="{{ route('program-magang.index') }}">
             <button
-              class="rounded-md border border-orange-500 px-3 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-orange-500 transition-colors duration-300 hover:bg-orange-500 hover:text-white">
+              class="rounded-md border border-orange-500 px-6 py-3 lg:px-4 lg:py-2 text-sm font-medium text-orange-500 transition-colors duration-300 hover:bg-orange-500 hover:text-white">
               Daftar Sekarang!
             </button>
           </a>

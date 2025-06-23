@@ -1,19 +1,17 @@
 <!-- Navigation Bar -->
-<nav class="sticky top-0 z-50 bg-white px-4 sm:px-6 py-4 border-b ">
+<nav class="sticky top-0 z-50 bg-white px-6 py-8 lg:py-4 border-b">
   <div class="container mx-auto flex items-center justify-between">
     <!-- Logo -->
-
-    <div class="mr-1 text-xl font-bold text-orange-500">Pojok Literasi Statistik</div>
-
+    <div class="mr-1 text-lg lg:text-xl font-bold text-orange-500">Pojok Literasi Statistik</div>
 
     <!-- Mobile Menu Button (Hamburger) -->
     <div class="md:hidden">
-      <button onclick="toggleMenu()" class="text-gray-500 hover:text-orange-500 focus:outline-none">
-        <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+      <button onclick="toggleMobileMenu()" class="text-gray-500 hover:text-orange-500 focus:outline-none">
+        <svg id="hamburger-icon" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-        <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none"
+        <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 hidden" fill="none"
           viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
@@ -113,27 +111,132 @@
       </div>
     @endif
   </div>
+</nav>
 
-  <!-- Mobile Menu (Slide Down) -->
-  <div id="mobile-menu" class="md:hidden hidden">
-    <div class="mt-4 space-y-1 border-t px-2 pt-2 pb-3">
+<!-- Mobile Sidebar Overlay -->
+<div id="mobile-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
+
+<!-- Mobile Sidebar -->
+<div id="mobile-sidebar"
+  class="fixed top-0 left-0 h-full w-80 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-50 md:hidden overflow-y-auto">
+  <div class="p-4">
+    <!-- Sidebar Header -->
+    <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+      <div class="text-lg font-bold text-orange-500">Pojok Literasi Statistik</div>
+      <button onclick="toggleMobileMenu()" class="text-gray-500 hover:text-orange-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Menu Items -->
+    <div class="space-y-2">
+      <!-- Home -->
       <a href="#"
-        class="block rounded-md px-4 py-2 text-gray-700 hover:bg-orange-100 hover:text-orange-500">Home</a>
-      <a href="#"
-        class="block rounded-md px-4 py-2 text-gray-700 hover:bg-orange-100 hover:text-orange-500">Konten Edukasi</a>
-      <a href="#" class="block rounded-md px-4 py-2 text-gray-700 hover:bg-orange-100 hover:text-orange-500">Alat
-        Interaktif</a>
-      <a href="#" class="block rounded-md px-4 py-2 text-gray-700 hover:bg-orange-100 hover:text-orange-500">Kuis
-        dan
-        Tantangan</a>
-      <a href="#"
-        class="block rounded-md px-4 py-2 text-gray-700 hover:bg-orange-100 hover:text-orange-500">Internship</a>
-      <div class="px-4 py-2">
-        <a href="{{ route('login') }}">
-          <button class="w-full rounded-md bg-button px-4 py-2 font-medium text-white">Login</button>
-        </a>
+        class="block w-full text-left px-4 py-3 text-slate-700 font-medium hover:bg-gray-100 rounded-md transition-colors">
+        Home
+      </a>
+
+      <!-- Konten Edukasi -->
+      <div class="w-full">
+        <button onclick="toggleSubmenu('konten-submenu')"
+          class="flex items-center justify-between w-full px-4 py-3 text-slate-700 font-medium hover:bg-gray-100 rounded-md transition-colors">
+          <span>Konten Edukasi</span>
+          <svg id="konten-arrow" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="konten-submenu" class="hidden ml-4 mt-2 space-y-1">
+          <div class="text-sm text-slate-600 font-medium mb-2 pl-3 border-b border-gray-300 py-2">Pilih Topik</div>
+          <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Statistik
+            Deskriptif</a>
+          <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Probabilitas</a>
+          <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Distribusi
+            Data</a>
+        </div>
       </div>
+
+      <!-- Alat Interaktif -->
+      <div class="w-full">
+        <button onclick="toggleSubmenu('alat-submenu')"
+          class="flex items-center justify-between w-full px-4 py-3 text-slate-700 font-medium hover:bg-gray-100 rounded-md transition-colors">
+          <span>Alat Interaktif</span>
+          <svg id="alat-arrow" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="alat-submenu" class="hidden ml-4 mt-2 space-y-1">
+          <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Kalkulator
+            Statistik</a>
+          <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Visualisasi
+            Data</a>
+          <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Simulasi
+            Statistik</a>
+        </div>
+      </div>
+
+      <!-- Kuis & Tantangan -->
+      <a href="#"
+        class="block w-full text-left px-4 py-3 text-slate-700 font-medium hover:bg-gray-100 rounded-md transition-colors">
+        Kuis & Tantangan
+      </a>
+
+      <!-- Internship -->
+      <a href="#"
+        class="block w-full text-left px-4 py-3 text-slate-700 font-medium hover:bg-gray-100 rounded-md transition-colors">
+        Internship
+      </a>
+    </div>
+
+    <!-- Login Button (Mobile) -->
+    <div class="mt-6 pt-4 border-t border-gray-200">
+      <a href="#" class="block w-full">
+        <button
+          class="w-full rounded-md bg-orange-500 hover:bg-orange-600 px-4 py-3 font-medium text-white transition-colors">
+          Login
+        </button>
+      </a>
     </div>
   </div>
-</nav>
-<!-- End of Navigation Bar -->
+</div>
+
+<script>
+  function toggleMobileMenu() {
+    const sidebar = document.getElementById('mobile-sidebar');
+    const overlay = document.getElementById('mobile-overlay');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+    hamburgerIcon.classList.toggle('hidden');
+    closeIcon.classList.toggle('hidden');
+  }
+
+  function toggleSubmenu(submenuId) {
+    const submenu = document.getElementById(submenuId);
+    const arrow = document.getElementById(submenuId.replace('-submenu', '-arrow'));
+
+    submenu.classList.toggle('hidden');
+    arrow.classList.toggle('rotate-180');
+  }
+
+  // Close sidebar when clicking overlay
+  document.getElementById('mobile-overlay').addEventListener('click', function() {
+    toggleMobileMenu();
+  });
+
+  // Close sidebar when pressing Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const sidebar = document.getElementById('mobile-sidebar');
+      if (!sidebar.classList.contains('-translate-x-full')) {
+        toggleMobileMenu();
+      }
+    }
+  });
+</script>
