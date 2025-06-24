@@ -64,43 +64,54 @@
     @if (Auth::check())
       @if (Auth::user()->foto)
         {{-- Jika user punya foto upload --}}
-        <div class="dropdown dropdown-end">
-          <div tabindex="0" role="button"
-            class="flex items-center gap-2 border border-gray-400 rounded-md px-2 py-1">
-            <img src="{{ asset('storage/' . Auth::user()->foto) }}" class="w-7 h-7 rounded-full">
-            <p class="text-sm text-slate-700 font-medium">
-              {{ collect(explode(' ', Auth::user()->name))->take(2)->implode(' ') }}</p>
+        <div class="hidden lg:block">
+          <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button"
+              class="flex items-center gap-2 border border-gray-400 rounded-md px-2 py-1">
+              <img src="{{ asset('storage/' . Auth::user()->foto) }}" class="w-7 h-7 rounded-full">
+              <p class="text-sm text-slate-700 font-medium">
+                {{ collect(explode(' ', Auth::user()->name))->take(2)->implode(' ') }}</p>
+            </div>
+            <ul tabindex="0"
+              class="dropdown-content menu bg-white hover:bg-gray-100 rounded-box z-1 w-52 p-2 shadow-sm border border-gray-200">
+              <li><a href="{{ route('profil.show', Auth::user()->slug) }}">Profil</a></li>
+              <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <li>
+                  <button type="submit">Logout</button>
+                </li>
+              </form>
+            </ul>
           </div>
-          <ul tabindex="0"
-            class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm border border-gray-200">
-            <li><a href="{{ route('profil.show', Auth::user()->slug) }}">Profil</a></li>
-            <form action="{{ route('logout') }}" method="POST">
-              @csrf
-              <li>
-                <button type="submit">Logout</button>
-              </li>
-            </form>
-          </ul>
         </div>
       @else
         {{-- Gunakan laravolt avatar jika tidak ada foto --}}
-        <div class="dropdown dropdown-end">
-          <div tabindex="0" role="button"
-            class="flex items-center gap-2 border border-gray-400 rounded-md px-2 py-1">
-            <img src="{{ Avatar::create(Auth::user()->name)->toBase64() }}" class="w-7 h-7 rounded-full">
-            <p class="text-sm text-slate-700 font-medium">
-              {{ collect(explode(' ', Auth::user()->name))->take(2)->implode(' ') }}</p>
+        <div class="hidden lg:block">
+          <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button"
+              class="flex items-center gap-2 border border-gray-400 rounded-md px-2 py-1">
+              <img src="{{ Avatar::create(Auth::user()->name)->toBase64() }}" class="w-7 h-7 rounded-full">
+              <p class="text-sm text-slate-700 font-medium">
+                {{ collect(explode(' ', Auth::user()->name))->take(2)->implode(' ') }}</p>
+            </div>
+            <ul tabindex="0"
+              class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm border border-gray-200">
+              <li><a href="{{ route('profil.show', Auth::user()->slug) }}">Profil</a></li>
+              <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <li>
+                  <button type="submit" class="text-red-600 hover:bg-red-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Logout
+                  </button>
+                </li>
+              </form>
+            </ul>
           </div>
-          <ul tabindex="0"
-            class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm border border-gray-200">
-            <li><a href="{{ route('profil.show', Auth::user()->slug) }}">Profil</a></li>
-            <form action="{{ route('logout') }}" method="POST">
-              @csrf
-              <li>
-                <button type="submit">Logout</button>
-              </li>
-            </form>
-          </ul>
         </div>
       @endif
     @else
@@ -121,20 +132,15 @@
   class="fixed top-0 left-0 h-full w-80 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-50 md:hidden overflow-y-auto">
   <div class="p-4">
     <!-- Sidebar Header -->
-    <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+    <div class="mb-6 pb-4 border-b border-gray-200">
       <div class="text-lg font-bold text-orange-500">Pojok Literasi Statistik</div>
-      <button onclick="toggleMobileMenu()" class="text-gray-500 hover:text-orange-500">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+
     </div>
 
     <!-- Mobile Menu Items -->
     <div class="space-y-2">
       <!-- Home -->
-      <a href="#"
+      <a href="{{ route('home') }}"
         class="block w-full text-left px-4 py-3 text-slate-700 font-medium hover:bg-gray-100 rounded-md transition-colors">
         Home
       </a>
@@ -151,11 +157,10 @@
         </button>
         <div id="konten-submenu" class="hidden ml-4 mt-2 space-y-1">
           <div class="text-sm text-slate-600 font-medium mb-2 pl-3 border-b border-gray-300 py-2">Pilih Topik</div>
-          <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Statistik
-            Deskriptif</a>
-          <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Probabilitas</a>
-          <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Distribusi
-            Data</a>
+          @foreach ($subjek_materi as $item)
+            <a href="{{ route('konten-edukasi.show', $item->slug) }}"
+              class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">{{ $item->judul }}</a>
+          @endforeach
         </div>
       </div>
 
@@ -170,9 +175,11 @@
           </svg>
         </button>
         <div id="alat-submenu" class="hidden ml-4 mt-2 space-y-1">
-          <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Kalkulator
+          <a href="{{ route('kalkulator-statistik.index') }}"
+            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Kalkulator
             Statistik</a>
-          <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Visualisasi
+          <a href="{{ route('visualisasi.index') }}"
+            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Visualisasi
             Data</a>
           <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Simulasi
             Statistik</a>
@@ -180,26 +187,69 @@
       </div>
 
       <!-- Kuis & Tantangan -->
-      <a href="#"
+      <a href="{{ route('kuis-tantangan.index') }}"
         class="block w-full text-left px-4 py-3 text-slate-700 font-medium hover:bg-gray-100 rounded-md transition-colors">
         Kuis & Tantangan
       </a>
 
       <!-- Internship -->
-      <a href="#"
+      <a href="{{ route('program-magang.index') }}"
         class="block w-full text-left px-4 py-3 text-slate-700 font-medium hover:bg-gray-100 rounded-md transition-colors">
         Internship
       </a>
     </div>
 
-    <!-- Login Button (Mobile) -->
+
+
+    <!-- Mobile Authentication Section -->
     <div class="mt-6 pt-4 border-t border-gray-200">
-      <a href="#" class="block w-full">
-        <button
-          class="w-full rounded-md bg-orange-500 hover:bg-orange-600 px-4 py-3 font-medium text-white transition-colors">
-          Login
-        </button>
-      </a>
+      @if (Auth::check())
+        <!-- User Profile Section -->
+        <div class="mb-4">
+          <div class="flex items-center gap-3 px-4 py-3 bg-gray-50 rounded-md">
+            @if (Auth::user()->foto)
+              <img src="{{ asset('storage/' . Auth::user()->foto) }}" class="w-10 h-10 rounded-full">
+            @else
+              <img src="{{ Avatar::create(Auth::user()->name)->toBase64() }}" class="w-10 h-10 rounded-full">
+            @endif
+            <div class="flex-1">
+              <p class="text-sm text-slate-700 font-medium">{{ Auth::user()->name }}</p>
+              <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
+            </div>
+          </div>
+          <div class="mt-3 space-y-2">
+            <a href="{{ route('profil.show', Auth::user()->slug) }}"
+              class="flex items-center w-full px-4 py-2 text-left text-slate-700 hover:bg-gray-100 rounded-md transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-2" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              Profil
+            </a>
+            <form action="{{ route('logout') }}" method="POST" class="w-full">
+              @csrf
+              <button type="submit"
+                class="w-full flex items-center px-4 py-2 text-left text-red-600 hover:bg-red-50 rounded-md transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-2" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Logout
+              </button>
+            </form>
+          </div>
+        </div>
+      @else
+        <!-- Login Button -->
+        <a href="{{ route('login') }}" class="block w-full">
+          <button
+            class="w-full rounded-md bg-button hover:bg-[#02a66b] px-4 py-3 font-medium text-white transition-colors">
+            Login
+          </button>
+        </a>
+      @endif
     </div>
   </div>
 </div>
