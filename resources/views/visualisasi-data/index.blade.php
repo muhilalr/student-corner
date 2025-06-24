@@ -4,7 +4,7 @@
       <h1 class="mb-4 text-3xl font-bold text-white">
         Kalkulator Statistik
       </h1>
-      <p class="mb-8 text-lg text-center text-white">
+      <p class="mb-8 text-base text-center text-white">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, dolorum debitis numquam laudantium
         perferendis magni explicabo voluptates, quia molestias cupiditate, aut maxime. Eos libero doloribus cumque
         impedit voluptas ipsum beatae.
@@ -12,7 +12,7 @@
     </div>
   </section>
 
-  <section class="bg-[#EEF0F2] text-black grid grid-cols-3 gap-7 px-20 mb-10">
+  <section class="bg-[#EEF0F2] text-black grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-7 px-20 mb-10">
     <a href="{{ route('visualisasi.histogram') }}" class="block">
       <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
         <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-yellow-400">
@@ -24,8 +24,8 @@
 
 
         </div>
-        <h3 class="mb-2 text-base sm:text-lg font-semibold text-gray-800">Histogram</h3>
-        <p class="text-justify text-xs sm:text-sm text-gray-500">
+        <h3 class="mb-2 text-lg font-semibold text-gray-800">Histogram</h3>
+        <p class="text-justify text-sm text-gray-500">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nesciunt quod qui! Reprehenderit maiores
           incidunt qui consectetur voluptatibus cum corrupti?
         </p>
@@ -44,8 +44,8 @@
             <circle cx="36" cy="16" r="2" fill="white" />
           </svg>
         </div>
-        <h3 class="mb-2 text-base sm:text-lg font-semibold text-gray-800">Scatter Plot</h3>
-        <p class="text-justify text-xs sm:text-sm text-gray-500">
+        <h3 class="mb-2 text-lg font-semibold text-gray-800">Scatter Plot</h3>
+        <p class="text-justify text-sm text-gray-500">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nesciunt quod qui! Reprehenderit maiores
           incidunt qui consectetur voluptatibus cum corrupti?
         </p>
@@ -65,8 +65,8 @@
           </svg>
 
         </div>
-        <h3 class="mb-2 text-base sm:text-lg font-semibold text-gray-800">Pie Chart</h3>
-        <p class="text-justify text-xs sm:text-sm text-gray-500">
+        <h3 class="mb-2 text-lg font-semibold text-gray-800">Pie Chart</h3>
+        <p class="text-justify text-sm text-gray-500">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nesciunt quod qui! Reprehenderit maiores
           incidunt qui consectetur voluptatibus cum corrupti?
         </p>
