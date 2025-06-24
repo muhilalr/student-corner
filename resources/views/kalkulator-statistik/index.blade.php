@@ -4,7 +4,7 @@
       <h1 class="mb-4 text-3xl font-bold text-white">
         Kalkulator Statistik
       </h1>
-      <p class="mb-8 text-lg text-center text-white">
+      <p class="mb-8 text-base text-center text-white">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, dolorum debitis numquam laudantium
         perferendis magni explicabo voluptates, quia molestias cupiditate, aut maxime. Eos libero doloribus cumque
         impedit voluptas ipsum beatae.
@@ -12,7 +12,7 @@
     </div>
   </section>
 
-  <section class="bg-[#EEF0F2] text-black grid grid-cols-3 gap-7 px-20 mb-10">
+  <section class="bg-[#EEF0F2] text-black grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-7 px-20 mb-10">
     <a href="{{ route('kalkulator-statistik.mean') }}" class="block">
       <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
         <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-yellow-400">
@@ -24,8 +24,8 @@
           </svg>
 
         </div>
-        <h3 class="mb-2 text-base sm:text-lg font-semibold text-gray-800">Mean, Median, Modus</h3>
-        <p class="text-justify text-xs sm:text-sm text-gray-500">
+        <h3 class="mb-2 text-lg font-semibold text-gray-800">Mean, Median, Modus</h3>
+        <p class="text-justify text-sm text-gray-500">
           Kalkulator mean, median, dan modus dalam statistik. Kalkulator ini untuk menghitung mean, median, modus dari
           himpunan data.
         </p>
@@ -38,8 +38,8 @@
             <text x="4" y="20" font-size="25" font-family="Arial" fill="white">σ</text>
           </svg>
         </div>
-        <h3 class="mb-2 text-base sm:text-lg font-semibold text-gray-800">Standard Deviasi</h3>
-        <p class="text-justify text-xs sm:text-sm text-gray-500">
+        <h3 class="mb-2 text-lg font-semibold text-gray-800">Standard Deviasi</h3>
+        <p class="text-justify text-sm text-gray-500">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
         </p>
       </div>
@@ -70,8 +70,8 @@
           </svg>
 
         </div>
-        <h3 class="mb-2 text-base sm:text-lg font-semibold text-gray-800">Kombinasi</h3>
-        <p class="text-justify text-xs sm:text-sm text-gray-500">
+        <h3 class="mb-2 text-lg font-semibold text-gray-800">Kombinasi</h3>
+        <p class="text-justify text-sm text-gray-500">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
         </p>
       </div>

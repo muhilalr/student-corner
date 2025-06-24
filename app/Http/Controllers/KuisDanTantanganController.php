@@ -29,17 +29,17 @@ class KuisDanTantanganController extends Controller
             $jumlahUser = HasilKuisTantanganBulanan::where('id_kuis_tantangan_bulanan', $tantangan->id)
                 ->distinct('id_user')
                 ->count('id_user');
-
-            $topUsers = HasilKuisTantanganBulanan::select('id_user', DB::raw('SUM(skor) as total_skor'))
-                ->groupBy('id_user')
-                ->orderByDesc('total_skor')
-                ->with('user')
-                ->take(10)
-                ->get();
         } else {
             $jumlahUser = 0;
-            $topUsers = collect(); // kosongkan agar tidak error saat foreach di view
+            // $topUsers = collect(); // kosongkan agar tidak error saat foreach di view
         }
+
+        $topUsers = HasilKuisTantanganBulanan::select('id_user', DB::raw('SUM(skor) as total_skor'))
+            ->groupBy('id_user')
+            ->orderByDesc('total_skor')
+            ->with('user')
+            ->take(10)
+            ->get();
 
         return view('kuis-tantangan.index', compact('kuis', 'tantangan', 'hariTersisa', 'jumlahUser', 'topUsers'));
     }

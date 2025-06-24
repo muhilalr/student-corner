@@ -5,11 +5,11 @@
       <div class="flex flex-col items-center md:flex-row">
         <!-- Left Content -->
         <div data-aos="fade-right" data-aos-duration="1000" class="mb-10 w-full text-center md:text-left md:mb-0 md:w-1/2">
-          <h1 class="mb-4 text-5xl font-bold text-primary">
+          <h1 class="mb-4 text-4xl lg:text-5xl font-bold text-primary">
             Tempat Asyik Untuk
             <br />Literasi Statistik
           </h1>
-          <p class="mb-8 text-lg text-gray-600">
+          <p class="mb-8 text-base lg:text-lg text-gray-600">
             Mari jelajahi dunia statistik dengan cara yang lebih seru dan menyenangkan
           </p>
         </div>
@@ -46,29 +46,29 @@
       <!-- Section Heading -->
       <div class="mb-8 sm:mb-12 text-center">
         <h1 class="mb-2 text-3xl lg:text-4xl font-bold text-white">Konten Edukasi</h1>
-        <p class="mx-auto max-w-xl text-base font-semibold text-slate-300">
+        <p class="mx-auto max-w-xl text-sm font-semibold text-slate-300">
           Eksplor dan pelajari lebih banyak berdasarkan topik yang kamu inginkan
         </p>
       </div>
 
       <!-- Services Cards Grid -->
       <div class="splide mt-8 relative" aria-label="Splide Basic Example">
-        <div class="splide__track mx-4 sm:mx-16 pb-10">
+        <div class="splide__track mx-5 lg:mx-16 pb-10">
           <ul class="splide__list">
             @foreach ($subjek_materi as $item)
-              <li class="splide__slide px-2">
+              <li class="splide__slide px-14 lg:px-2">
                 <!-- SEO Services Card -->
                 <div
                   class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg flex flex-col h-full">
                   <img src="{{ asset('storage/' . $item->gambar) }}" alt="" width="500"
                     class="aspect-[3/2] rounded-lg object-cover" />
-                  <h3 class="mt-4 mb-2 text-base sm:text-lg font-semibold text-gray-800">{{ $item->judul }}</h3>
-                  <p class="mb-3 text-justify text-xs sm:text-sm text-gray-500">
+                  <h3 class="mt-4 mb-2 text-lg font-semibold text-gray-800">{{ $item->judul }}</h3>
+                  <p class="mb-3 text-justify text-sm text-gray-500">
                     {{ Str::limit($item->deskripsi, 100, '...') }}
                   </p>
                   <a href="{{ route('konten-edukasi.show', $item->slug) }}">
                     <button
-                      class="rounded-md bg-button hover:bg-[#02a66b] px-3 py-1 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-white">Pelajari
+                      class="rounded-md bg-button hover:bg-[#02a66b] px-4 py-2 text-sm font-medium text-white">Pelajari
                       Selengkapnya</button>
                   </a>
                 </div>
@@ -107,8 +107,8 @@
                 <path d="M7 12h2v2H7zm0 4h2v2H7zm4-4h2v2h-2zM7 6h10v4H7zm4 10h2v2h-2zm4-4h2v6h-2z"></path>
               </svg>
             </div>
-            <h3 class="mb-2 text-base sm:text-lg font-semibold text-gray-800">Kalkulator Statistik</h3>
-            <p class="text-justify text-xs sm:text-sm text-gray-500">
+            <h3 class="mb-2 text-lg font-semibold text-gray-800">Kalkulator Statistik</h3>
+            <p class="text-justify text-sm text-gray-500">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
             </p>
           </div>
@@ -128,8 +128,8 @@
                 </path>
               </svg>
             </div>
-            <h3 class="mb-2 text-base sm:text-lg font-semibold text-gray-800">Visualisasi Data</h3>
-            <p class="text-justify text-xs sm:text-sm text-gray-500">
+            <h3 class="mb-2 text-lg font-semibold text-gray-800">Visualisasi Data</h3>
+            <p class="text-justify text-sm text-gray-500">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
             </p>
           </div>
@@ -144,8 +144,8 @@
                 d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <h3 class="mb-2 text-base sm:text-lg font-semibold text-gray-800">Simulasi Statistik</h3>
-          <p class="text-justify text-xs sm:text-sm text-gray-500">
+          <h3 class="mb-2 text-lg font-semibold text-gray-800">Simulasi Statistik</h3>
+          <p class="text-justify text-sm text-gray-500">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
           </p>
         </div>
@@ -159,15 +159,15 @@
     <div class="flex w-full max-w-6xl flex-col overflow-hidden rounded-xl bg-white shadow-lg md:flex-row">
       <!-- Left side - Illustration -->
       <div class="relative flex w-full items-center justify-center bg-primary p-6 md:w-1/2">
-        <img src="{{ asset('gambar/home/Yes or no-amico.svg') }}" alt=""class="w-96" />
+        <img src="{{ asset('gambar/home/Yes or no-amico.svg') }}" alt=""class="w-80 lg:w- " />
       </div>
 
       <!-- Right side - Content -->
       <div class="flex w-full flex-col items-center justify-center gap-5 p-8 md:w-1/2">
         <div class="flex flex-col items-center justify-center mb-4">
-          <h1 class="mb-2 sm:mb-4 text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">Kuis dan Tantangan Untuk
+          <h1 class="mb-4 text-2xl md:text-3xl font-bold text-gray-800">Kuis dan Tantangan Untuk
             Kamu!</h1>
-          <p class="text-justify text-xs sm:text-sm text-gray-600">
+          <p class="text-justify text-sm text-gray-600">
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id accusantium repudiandae cumque quidem natus ex,
             voluptatem ea
             ipsam illo optio error voluptates laudantium nam harum porro nemo non perferendis veritatis ipsum. Ea
@@ -191,7 +191,7 @@
 
   <!-- Section Magang -->
   <section class="bg-white ">
-    <div class="flex flex-col md:flex-row lg:min-h-screen items-center justify-center px-4">
+    <div class="flex pt-10 md:pt-0 flex-col md:flex-row lg:min-h-screen items-center justify-center px-4">
       <!-- Left side illustration (only visible on larger screens) -->
       <div class="hidden md:flex items-center justify-center rounded-md w-full md:w-1/2">
         <img src="{{ asset('gambar/home/Analysis-pana.svg') }}" alt=""
@@ -206,10 +206,10 @@
       <!-- Right side - Content -->
       <div class="flex w-full flex-col items-center md:items-start justify-center p-4 sm:p-8 md:w-1/2">
         <div class="mb-6 sm:mb-8">
-          <h1 class="mb-4 sm:mb-6 text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 text-center md:text-left">
+          <h1 class="mb-6 text-3xl md:text-4xl font-bold text-gray-800 text-center md:text-left">
             <span class="text-orange-500">Internship</span> Program
           </h1>
-          <p class="text-justify text-xs sm:text-sm md:text-base text-gray-600">
+          <p class="text-justify text-sm md:text-base text-gray-600">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores consectetur nihil ea itaque quibusdam,
             magnam
             id corporis qui

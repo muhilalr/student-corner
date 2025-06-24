@@ -2,8 +2,8 @@
   <!-- Hero Section -->
   <section class="bg-primary text-white py-20">
     <div class="container mx-auto text-center px-4">
-      <h1 class="text-5xl font-bold mb-4">Kuis & Tantangan Statistik</h1>
-      <p class="text-xl text-blue-100">Uji pengetahuan statistik Anda dan raih peringkat tertinggi!</p>
+      <h1 class="text-3xl lg:text-4xl font-bold mb-4">Kuis & Tantangan Statistik</h1>
+      <p class="text-base lg:text-lg text-blue-100">Uji pengetahuan statistik Anda dan raih peringkat tertinggi!</p>
     </div>
   </section>
 
@@ -11,14 +11,15 @@
   <section class="py-16 bg-gray-50">
     <div class="max-w-6xl mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold text-gray-800 mb-4">Kuis Reguler</h2>
-        <p class="text-xl text-gray-600 font-semibold">Asah kemampuan statistik Anda dengan berbagai topik menarik</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Kuis Reguler</h2>
+        <p class="text-sm lg:text-xl text-gray-600 font-semibold">Asah kemampuan statistik Anda dengan berbagai topik
+          menarik</p>
       </div>
       <div class="splide mt-8 relative" aria-label="Splide Basic Example">
-        <div class="splide__track mx-4 sm:mx-16 pb-10">
+        <div class="splide__track mx-5 lg:mx-16 pb-10">
           <ul class="splide__list">
             @foreach ($kuis as $item)
-              <li class="splide__slide px-2">
+              <li class="splide__slide px-14 lg:px-2">
                 <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-md flex flex-col justify-between h-full">
                   <img src="{{ asset('storage/' . $item->gambar) }}" alt="" width="500"
                     class="aspect-[3/2] rounded-lg object-cover" />
@@ -43,8 +44,9 @@
   <section class="py-16 bg-white">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold text-gray-800 mb-4">Tantangan Bulanan</h2>
-        <p class="text-xl text-gray-600 font-semibold">Kompetisi bulanan dengan hadiah menarik menanti Anda!</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Tantangan Bulanan</h2>
+        <p class="text-sm lg:text-xl text-gray-600 font-semibold">Kompetisi bulanan dengan hadiah menarik menanti Anda!
+        </p>
       </div>
 
       <!-- Current Challenge -->
@@ -98,7 +100,7 @@
             <div class="my-16">
               <div class="bg-white bg-opacity-20 rounded-lg p-4">
                 <div class="flex flex-col justify-center items-center">
-                  <h3 class="text-3xl font-bold mb-2">Tantangan Bulanan Belum Tersedia Saat Ini</h3>
+                  <h3 class="text-3xl text-center font-bold mb-2">Tantangan Bulanan Belum Tersedia Saat Ini</h3>
                   <p class="text-lg font-semibold opacity-90">Silahkan kembali lagi nanti</p>
                 </div>
               </div>
@@ -114,8 +116,8 @@
   <section class="py-16 bg-gray-50">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
-        <h2 class="text-4xl font-bold text-gray-800 mb-4">Leaderboard Tantangan Bulanan</h2>
-        <p class="text-xl font-semibold text-gray-600">Partisipan teratas tantangan bulanan</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Leaderboard Tantangan Bulanan</h2>
+        <p class="text-sm lg:text-xl font-semibold text-gray-600">Partisipan teratas tantangan bulanan</p>
       </div>
 
       <div class="max-w-4xl mx-auto">
@@ -181,15 +183,11 @@
             </div>
           @endforeach
         </div>
-
-
-
-
         <!-- Remaining Rankings -->
         <div class="bg-white rounded-2xl shadow-lg">
           <div class="p-6 border-b flex items-center justify-between">
-            <h3 class="text-xl font-bold text-gray-800">Peringkat Lengkap</h3>
-            <h3 class="text-xl font-bold text-gray-800">Skor</h3>
+            <h3 class="text-sm lg:text-xl font-bold text-gray-800">Peringkat Lengkap</h3>
+            <h3 class="text-sm lg:text-xl font-bold text-gray-800">Skor</h3>
           </div>
           <div class="divide-y">
             @foreach ($topUsers->skip(3) as $index => $user)

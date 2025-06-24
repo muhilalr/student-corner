@@ -35,7 +35,31 @@
 
                 <!-- Profile Info -->
                 <div class="text-center md:text-left text-white">
-                  <h2 class="text-2xl md:text-3xl font-bold mb-2">{{ $user->name }}</h2>
+                  <div class="flex flex-col md:flex-row mb-2 md:mb-0 items-center gap-1">
+                    <h2 class="text-2xl md:text-3xl font-bold">{{ $user->name }}
+                    </h2>
+                    @if ($totalSkor >= 100)
+                      <div class="tooltip flex-shrink-0" data-tip="100 Poin Tantangan Bulanan">
+                        <img src="{{ asset('gambar/100.png') }}" alt="" class="w-20 h-20">
+                      </div>
+                    @elseif ($totalSkor >= 500)
+                      <div class="tooltip flex-shrink-0" data-tip="500 Poin Tantangan Bulanan">
+                        <img src="{{ asset('gambar/500.png') }}" alt="" class="w-20 h-20">
+                      </div>
+                    @elseif ($totalSkor >= 1000)
+                      <div class="tooltip flex-shrink-0" data-tip="1000 Poin Tantangan Bulanan">
+                        <img src="{{ asset('gambar/1000.png') }}" alt="" class="w-20 h-20">
+                      </div>
+                    @elseif ($totalSkor >= 1500)
+                      <div class="tooltip flex-shrink-0" data-tip="1500 Poin Tantangan Bulanan">
+                        <img src="{{ asset('gambar/1500.png') }}" alt="" class="w-20 h-20">
+                      </div>
+                    @elseif ($totalSkor >= 2000)
+                      <div class="tooltip flex-shrink-0" data-tip="2000 Poin Tantangan Bulanan">
+                        <img src="{{ asset('gambar/2000.png') }}" alt="" class="w-20 h-20">
+                      </div>
+                    @endif
+                  </div>
                   <p class="text-blue-100 mb-4">{{ $user->email }}</p>
                 </div>
               </div>

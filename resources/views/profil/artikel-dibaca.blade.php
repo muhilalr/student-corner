@@ -24,7 +24,7 @@
 
             <!-- Profile Details -->
             <div class="p-8">
-              <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              <div class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 @forelse ($artikelDibaca as $dibaca)
                   <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
                     <img src="{{ asset('storage/' . $dibaca->artikel->gambar) }}" alt=""

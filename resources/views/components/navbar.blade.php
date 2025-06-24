@@ -1,5 +1,5 @@
 <!-- Navigation Bar -->
-<nav class="sticky top-0 z-50 bg-white px-6 py-8 lg:py-4 border-b">
+<nav class="sticky top-0 z-50 bg-white px-6 py-4 border-b">
   <div class="container mx-auto flex items-center justify-between">
     <!-- Logo -->
     <div class="mr-1 text-lg lg:text-xl font-bold text-orange-500">Pojok Literasi Statistik</div>
@@ -50,7 +50,7 @@
         <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-md">
           <li><a href="{{ route('kalkulator-statistik.index') }}">Kalkulator Statistik</a></li>
           <li><a href="{{ route('visualisasi.index') }}">Visualisasi Data</a></li>
-          <li><a>Simulasi Statistik</a></li>
+          <li><a href="{{ route('simulasi.index') }}">Simulasi Statistik</a></li>
         </ul>
       </div>
       <a href="{{ route('kuis-tantangan.index') }}"
@@ -181,7 +181,8 @@
           <a href="{{ route('visualisasi.index') }}"
             class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Visualisasi
             Data</a>
-          <a href="#" class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Simulasi
+          <a href="{{ route('simulasi.index') }}"
+            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Simulasi
             Statistik</a>
         </div>
       </div>

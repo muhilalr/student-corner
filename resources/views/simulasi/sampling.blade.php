@@ -1,5 +1,4 @@
 <x-layout-web>
-
   <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-xl shadow">
     <h2 class="text-2xl font-bold mb-4 text-orange-600">Simulasi Distribusi Sampling</h2>
 
@@ -30,7 +29,7 @@
           @enderror
         </div>
       </div>
-      <button class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition">Jalankan
+      <button class="bg-primary text-white px-4 py-2 rounded hover:bg-[#00295A] transition">Jalankan
         Simulasi</button>
     </form>
 
@@ -59,5 +58,5 @@
     @endif
   </div>
 
-
+  <x-footer class="fill-[#EEF0F2]" />
 </x-layout-web>

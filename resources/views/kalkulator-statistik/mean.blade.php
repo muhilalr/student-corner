@@ -13,7 +13,8 @@
         </div>
         <div>
           <h1 class="text-2xl font-bold text-gray-900">Kalkulator Mean, Median, Modus</h1>
-          <p class="text-gray-600">Kalkulator mean, median, dan modus dalam statistik. Kalkulator ini untuk menghitung
+          <p class="text-gray-600 text-sm text-justify">Kalkulator mean, median, dan modus dalam statistik. Kalkulator
+            ini untuk menghitung
             mean, median, modus dari himpunan data.</p>
         </div>
       </div>

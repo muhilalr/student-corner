@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function () {
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::get('/simulasi-statistik', fn() => view('simulasi.index'))->name('simulasi.index');
 Route::get('/simulasi-sampling', [SamplingSimulationController::class, 'index'])->name('simulasi.sampling');
 Route::post('/simulasi-sampling', [SamplingSimulationController::class, 'simulate'])->name('simulasi.sampling.run');
 

@@ -28,7 +28,9 @@
         </div>
         <div>
           <h1 class="text-2xl font-bold text-gray-900">Kalkulator Kombinasi</h1>
-          <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt atque eaque earum harum
+          <p class="text-gray-600 text-sm text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+            atque eaque
+            earum harum
             consectetur maxime explicabo libero quod minima quia.</p>
         </div>
       </div>

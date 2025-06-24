@@ -4,21 +4,21 @@
       <h1 class="mb-4 text-3xl font-bold text-white">
         {{ $subjek->judul }}
       </h1>
-      <p class="mb-8 text-lg text-center text-white">
+      <p class="mb-8 text-base text-justify md:text-center text-white">
         {{ $subjek->deskripsi }}
       </p>
     </div>
   </section>
 
   <section class="bg-[#EEF0F2] text-black flex justify-center items-stretch gap-5 px-5 mb-10">
-    <div class="mx-auto max-w-6xl px-4">
+    <div class="mx-auto max-w-lg lg:max-w-6xl px-4">
       @if ($artikels->count() > 0)
         <h1 class="mt-8 text-2xl font-bold text-center divider">Artikel</h1>
         <div class="splide mt-8 relative" aria-label="Splide Basic Example">
-          <div class="splide__track mx-4 sm:mx-16 pb-10">
+          <div class="splide__track mx-5 lg:mx-16 pb-10">
             <ul class="splide__list">
               @foreach ($artikels as $artikel)
-                <li class="splide__slide px-2">
+                <li class="splide__slide px-14 lg:px-2">
                   <div
                     class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg flex flex-col h-full">
                     <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="" width=""
@@ -43,10 +43,10 @@
       @if ($videos->count() > 0)
         <h1 class="mt-8 text-2xl font-bold text-center divider">Video Pembelajaran</h1>
         <div class="splide mt-8 relative" aria-label="Splide Basic Example">
-          <div class="splide__track mx-4 sm:mx-16 pb-10">
+          <div class="splide__track mx-5 lg:mx-16 pb-10">
             <ul class="splide__list">
               @foreach ($videos as $video)
-                <li class="splide__slide px-2">
+                <li class="splide__slide px-14 lg:px-2">
                   <div
                     class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg flex flex-col h-full">
                     <img src="{{ $video->thumbnail }}" alt="" width=""

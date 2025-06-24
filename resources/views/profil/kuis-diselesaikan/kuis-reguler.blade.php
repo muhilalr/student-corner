@@ -27,15 +27,15 @@
               <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 @forelse ($hasilReguler as $item)
                   <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden flex flex-col">
-                    <img src="{{ asset('storage/' . $item->gambar) }}" alt=""
+                    <img src="{{ asset('storage/' . $item->kuis_reguler->gambar) }}" alt=""
                       class="aspect-video object-cover w-full" />
 
                     <div class="p-4 flex flex-col flex-grow">
                       <h3 class="text-sm font-semibold text-gray-900 mb-1">
-                        {{ $item->judul }}
+                        {{ $item->kuis_reguler->judul }}
                       </h3>
                       <p class="text-xs text-gray-600 flex-grow">
-                        {{ Str::limit($item->deskripsi, 80, '...') }}
+                        {{ Str::limit($item->kuis_reguler->deskripsi, 80, '...') }}
                       </p>
 
                       <a href="{{ route('kuis-tantangan.soal', $item->kuis_reguler->slug) }}"

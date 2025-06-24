@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -54,7 +55,11 @@ class ProfilController extends Controller
             abort(403);
         }
 
-        return view('profil.index', compact('user'));
+        // Ambil total skor dari user ini saja
+        $totalSkor = HasilKuisTantanganBulanan::where('id_user', $user->id)
+            ->sum('skor');
+
+        return view('profil.index', compact('user', 'totalSkor'));
     }
 
     public function showArtikelDibaca($slug)
