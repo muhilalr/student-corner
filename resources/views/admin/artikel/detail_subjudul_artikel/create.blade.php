@@ -18,7 +18,7 @@
               </ul>
             </div>
           @endif
-          <form method="POST" action="{{ route('admin_detail-subjudul-artikel.store') }}">
+          <form method="POST" action="{{ route('admin_detail-subjudul-artikel.store') }}" enctype="multipart/form-data">
             <div class="card-body">
               @csrf
               <div class="form-group">
@@ -41,6 +41,10 @@
                 <label for="link_embed">Link Power BI</label>
                 <input type="text" name="link_embed" class="form-control" id="link_embed"
                   placeholder="Masukkan Link">
+              </div>
+              <div class="form-group">
+                <label for="gambar">Gambar (Optional)</label>
+                <input type="file" name="gambar" class="form-control" id="gambar" placeholder="Masukkan Gambar">
               </div>
               <div class="form-group">
                 <label for="urutan">Urutan</label>

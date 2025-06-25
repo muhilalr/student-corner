@@ -3,7 +3,9 @@
   <section class="bg-primary text-white py-20">
     <div class="container mx-auto text-center px-4">
       <h1 class="text-3xl lg:text-4xl font-bold mb-4">Kuis & Tantangan Statistik</h1>
-      <p class="text-base lg:text-lg text-blue-100">Uji pengetahuan statistik Anda dan raih peringkat tertinggi!</p>
+      <p class="text-base lg:text-lg text-blue-100">Jelajahi konsep-konsep baru dan pertajam pemahamanmu dengan kuis dan
+        tantangan yang dirancang untuk
+        menyenangkan sekaligus mendidik. Temukan seberapa jauh kamu bisa melangkah!</p>
     </div>
   </section>
 

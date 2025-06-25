@@ -13,6 +13,7 @@ class DetailSubJudulArtikel extends Model
         'sub_judul_artikel_id',
         'konten_text',
         'link_embed',
+        'gambar',
         'urutan'
     ]);
 

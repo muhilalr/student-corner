@@ -5,9 +5,8 @@
         Simulasi Statistik
       </h1>
       <p class="mb-8 text-base text-center text-white">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, dolorum debitis numquam laudantium
-        perferendis magni explicabo voluptates, quia molestias cupiditate, aut maxime. Eos libero doloribus cumque
-        impedit voluptas ipsum beatae.
+        Buat dan jalankan simulasi statistik untuk memprediksi hasil dan memahami dinamika data dalam berbagai
+        skenario.
       </p>
     </div>
   </section>
@@ -34,10 +33,10 @@
             <text x="500" y="270" font-size="12" fill="white">x̄ tinggi</text>
           </svg>
         </div>
-        <h3 class="mb-2 text-lg font-semibold text-gray-800">Simulasi Distribusi Sampling</h3>
+        <h3 class="mb-2 text-lg font-semibold text-gray-800">Simulasi Random Sampling</h3>
         <p class="text-justify text-sm text-gray-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nesciunt quod qui! Reprehenderit maiores
-          incidunt qui consectetur voluptatibus cum corrupti?
+          Jalankan simulasi pengambilan sampel acak untuk memahami bagaimana sampel merepresentasikan populasi dan
+          pengaruhnya terhadap analisis data.
         </p>
       </div>
     </a>

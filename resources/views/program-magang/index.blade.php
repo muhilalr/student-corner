@@ -11,8 +11,9 @@
         </h1>
 
         <p class="text-lg md:text-xl text-blue-100 max-w-4xl mx-auto leading-relaxed font-semibold">
-          Bergabunglah dengan program magang kami dan kembangkan karir profesional Anda bersama tim yang berpengalaman
-          dalam lingkungan kerja yang dinamis
+          Dapatkan pengalaman kerja nyata dan kembangkan keterampilan profesionalmu melalui program magang kami.
+          Belajar langsung dari para ahli, berkontribusi pada proyek-proyek inovatif, dan persiapkan dirimu untuk
+          karier yang cemerlang.
         </p>
 
         <!-- Scroll Indicator -->

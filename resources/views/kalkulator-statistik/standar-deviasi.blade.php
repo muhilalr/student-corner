@@ -10,9 +10,8 @@
         </div>
         <div>
           <h1 class="text-2xl font-bold text-gray-900">Kalkulator Standar Deviasi</h1>
-          <p class="text-gray-600 text-sm text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-            atque eaque earum harum
-            consectetur maxime explicabo libero quod minima quia.</p>
+          <p class="text-gray-600 text-sm text-justify">Hitung standar deviasi untuk mengukur penyebaran dan
+            variabilitas data Anda dari nilai rata-rata.</p>
         </div>
       </div>
     </div>

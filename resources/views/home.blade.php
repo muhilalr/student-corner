@@ -62,6 +62,7 @@
                   class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg flex flex-col h-full">
                   <img src="{{ asset('storage/' . $item->gambar) }}" alt="" width="500"
                     class="aspect-[3/2] rounded-lg object-cover" />
+
                   <h3 class="mt-4 mb-2 text-lg font-semibold text-gray-800">{{ $item->judul }}</h3>
                   <p class="mb-3 text-justify text-sm text-gray-500">
                     {{ Str::limit($item->deskripsi, 100, '...') }}
@@ -71,6 +72,7 @@
                       class="rounded-md bg-button hover:bg-[#02a66b] px-4 py-2 text-sm font-medium text-white">Pelajari
                       Selengkapnya</button>
                   </a>
+
                 </div>
               </li>
             @endforeach
@@ -89,12 +91,13 @@
       <div class="mb-8 sm:mb-12 text-center">
         <h2 class="mb-2 text-2xl md:text-4xl font-bold text-gray-800">Alat Bantu Interaktif</h2>
         <p class="mx-auto font-semibold text-base text-gray-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus sapiente optio
+          Temukan berbagai alat bantu yang dirancang untuk mempermudah analisis dan pemahaman data Anda secara
+          interaktif.
         </p>
       </div>
 
       <!-- Services Cards Grid -->
-      <div class="flex flex-col lg:flex-row items-center justify-center gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 items-center justify-center gap-6">
         <!-- Kalkulator -->
         <a href="{{ route('kalkulator-statistik.index') }}" class="w-full sm:w-auto">
           <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg">
@@ -109,14 +112,14 @@
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-800">Kalkulator Statistik</h3>
             <p class="text-justify text-sm text-gray-500">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+              Selesaikan berbagai operasi statistik, dari rata-rata hingga regresi. Dapatkan hasil instan untuk setiap
+              perhitungan data Anda.
             </p>
           </div>
         </a>
         <!-- Visualisasi -->
         <a href="{{ route('visualisasi.index') }}">
-          <div
-            class="w-full sm:w-auto rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg">
+          <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg">
             <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-green-400">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                 style="fill: rgba(255, 255, 255, 1)">
@@ -130,14 +133,13 @@
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-800">Visualisasi Data</h3>
             <p class="text-justify text-sm text-gray-500">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+              Konversikan data mentah menjadi grafik dan diagram yang interaktif untuk analisis yang lebih mudah.
             </p>
           </div>
         </a>
         <!-- Simulasi -->
         <a href="{{ route('simulasi.index') }}">
-          <div
-            class="w-full sm:w-auto rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg">
+          <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg">
             <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-purple-400">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6 text-white" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor">
@@ -147,7 +149,8 @@
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-800">Simulasi Statistik</h3>
             <p class="text-justify text-sm text-gray-500">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+              Buat dan jalankan simulasi statistik untuk memprediksi hasil dan memahami dinamika data dalam berbagai
+              skenario.
             </p>
           </div>
         </a>
@@ -161,7 +164,7 @@
     <div class="flex w-full max-w-6xl flex-col overflow-hidden rounded-xl bg-white shadow-lg md:flex-row">
       <!-- Left side - Illustration -->
       <div class="relative flex w-full items-center justify-center bg-primary p-6 md:w-1/2">
-        <img src="{{ asset('gambar/home/Yes or no-amico.svg') }}" alt=""class="w-80 lg:w- " />
+        <img src="{{ asset('gambar/home/Yes or no-amico.svg') }}" alt=""class="w-80 lg:w-96" />
       </div>
 
       <!-- Right side - Content -->
@@ -170,11 +173,8 @@
           <h1 class="mb-4 text-2xl md:text-3xl font-bold text-gray-800">Kuis dan Tantangan Untuk
             Kamu!</h1>
           <p class="text-justify text-sm text-gray-600">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id accusantium repudiandae cumque quidem natus ex,
-            voluptatem ea
-            ipsam illo optio error voluptates laudantium nam harum porro nemo non perferendis veritatis ipsum. Ea
-            laboriosam vitae saepe
-            in commodi at modi, quia nostrum quaerat dolorem asperiores totam incidunt voluptates natus cum recusandae.
+            Jelajahi konsep-konsep baru dan pertajam pemahamanmu dengan kuis dan tantangan yang dirancang untuk
+            menyenangkan sekaligus mendidik. Temukan seberapa jauh kamu bisa melangkah!
           </p>
         </div>
         <!-- Buttons -->
@@ -212,15 +212,9 @@
             <span class="text-orange-500">Internship</span> Program
           </h1>
           <p class="text-justify text-sm md:text-base text-gray-600">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores consectetur nihil ea itaque quibusdam,
-            magnam
-            id corporis qui
-            ducimus minus optio. Facilis et pariatur illo veniam odio quam consectetur possimus quis, praesentium, unde
-            quo sed. Hic odio, a
-            dignissimos, in facere obcaecati voluptates sunt explicabo aliquam aut ducimus sapiente officiis, natus ipsa
-            commodi tempora?
-            Vitae, animi. Quaerat, quam optio in omnis delectus laudantium est non consequatur earum? Illo, labore
-            culpa.
+            Dapatkan pengalaman kerja nyata dan kembangkan keterampilan profesionalmu melalui program magang kami.
+            Belajar langsung dari para ahli, berkontribusi pada proyek-proyek inovatif, dan persiapkan dirimu untuk
+            karier yang cemerlang.
           </p>
         </div>
         <div class="w-full flex justify-center md:justify-start">

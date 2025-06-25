@@ -4,7 +4,8 @@
     <div class="bg-blue-900 text-white py-8">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold">Pie Chart</h1>
-        <p class="mt-2 text-blue-100">Upload data dan buat pie chart interaktif</p>
+        <p class="mt-2 text-blue-100">Buat pie chart untuk memvisualisasikan komposisi data Anda, menunjukkan proporsi
+          masing-masing kategori dari total.</p>
       </div>
     </div>
 

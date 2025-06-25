@@ -1,11 +1,15 @@
 <x-layout-web>
-  <section class="w-full px-36 py-16">
+  <section class="w-full px-4 lg:px-36 py-16">
+    <h1 class="text-2xl lg:text-5xl mb-20 font-bold text-center">{{ $artikel->judul }}</h1>
     @foreach ($artikel->subjudul_artikel as $sub)
-      <h1 class="text-2xl font-bold">{{ $sub->sub_judul }}</h1>
+      <h1 class="text-xl text-orange-400 font-bold">{{ $sub->sub_judul }}</h1>
 
       @foreach ($sub->detail_sub_judul_artikel as $d)
-        <p class="mt-4">{{ $d->konten_text }}</p>
-        {!! $d->link_embed !!}
+        <div class="flex flex-col items-center my-4 gap-7">
+          <p class="w-full text-base lg:text-lg text-justify font-semibold">{!! nl2br(e($d->konten_text)) !!}</p>
+          {!! $d->link_embed !!}
+          <img src="{{ asset('storage/' . $d->gambar) }}" alt="" class="w-full lg:w-1/2">
+        </div>
       @endforeach
     @endforeach
 

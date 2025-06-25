@@ -2,12 +2,10 @@
   <section class="bg-primary py-16 px-16 mb-10">
     <div class="flex flex-col items-center">
       <h1 class="mb-4 text-3xl font-bold text-white">
-        Kalkulator Statistik
+        Visualisasi Data
       </h1>
       <p class="mb-8 text-base text-center text-white">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, dolorum debitis numquam laudantium
-        perferendis magni explicabo voluptates, quia molestias cupiditate, aut maxime. Eos libero doloribus cumque
-        impedit voluptas ipsum beatae.
+        Konversikan data mentah menjadi grafik dan diagram yang interaktif untuk analisis yang lebih mudah.
       </p>
     </div>
   </section>
@@ -26,8 +24,7 @@
         </div>
         <h3 class="mb-2 text-lg font-semibold text-gray-800">Histogram</h3>
         <p class="text-justify text-sm text-gray-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nesciunt quod qui! Reprehenderit maiores
-          incidunt qui consectetur voluptatibus cum corrupti?
+          Ubah data numerik Anda menjadi histogram untuk melihat distribusi frekuensi dan pola data secara visual.
         </p>
       </div>
     </a>
@@ -46,8 +43,7 @@
         </div>
         <h3 class="mb-2 text-lg font-semibold text-gray-800">Scatter Plot</h3>
         <p class="text-justify text-sm text-gray-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nesciunt quod qui! Reprehenderit maiores
-          incidunt qui consectetur voluptatibus cum corrupti?
+          Buat scatter plot untuk memvisualisasikan hubungan dan korelasi antara dua set data numerik.
         </p>
       </div>
     </a>
@@ -67,8 +63,8 @@
         </div>
         <h3 class="mb-2 text-lg font-semibold text-gray-800">Pie Chart</h3>
         <p class="text-justify text-sm text-gray-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nesciunt quod qui! Reprehenderit maiores
-          incidunt qui consectetur voluptatibus cum corrupti?
+          Buat pie chart untuk memvisualisasikan komposisi data Anda, menunjukkan proporsi masing-masing kategori dari
+          total.
         </p>
       </div>
     </a>

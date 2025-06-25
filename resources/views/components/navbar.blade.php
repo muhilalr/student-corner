@@ -33,7 +33,7 @@
         </div>
         <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-md">
           <li class="text-sm text-slate-700 font-medium mb-2 pl-3 border-b border-gray-400 py-2">Pilih Topik</li>
-          @foreach ($subjek_materi as $item)
+          @foreach ($semua_subjek_materi as $item)
             <li><a href="{{ route('konten-edukasi.show', $item->slug) }}">{{ $item->judul }}</a></li>
           @endforeach
         </ul>
@@ -157,7 +157,7 @@
         </button>
         <div id="konten-submenu" class="hidden ml-4 mt-2 space-y-1">
           <div class="text-sm text-slate-600 font-medium mb-2 pl-3 border-b border-gray-300 py-2">Pilih Topik</div>
-          @foreach ($subjek_materi as $item)
+          @foreach ($semua_subjek_materi as $item)
             <a href="{{ route('konten-edukasi.show', $item->slug) }}"
               class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">{{ $item->judul }}</a>
           @endforeach

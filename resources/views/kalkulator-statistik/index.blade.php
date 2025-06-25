@@ -5,16 +5,17 @@
         Kalkulator Statistik
       </h1>
       <p class="mb-8 text-base text-center text-white">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, dolorum debitis numquam laudantium
-        perferendis magni explicabo voluptates, quia molestias cupiditate, aut maxime. Eos libero doloribus cumque
-        impedit voluptas ipsum beatae.
+        Selesaikan berbagai operasi statistik, dari rata-rata hingga regresi. Dapatkan hasil instan untuk setiap
+        perhitungan data Anda.
       </p>
     </div>
   </section>
 
-  <section class="bg-[#EEF0F2] text-black grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:gap-7 px-20 mb-10">
-    <a href="{{ route('kalkulator-statistik.mean') }}" class="block">
-      <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
+  <section
+    class="bg-[#EEF0F2] text-black grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-7 px-20 mb-10 items-stretch">
+    <a href="{{ route('kalkulator-statistik.mean') }}" class="block h-full">
+      <div
+        class="flex flex-col justify-between h-full  rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
         <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-yellow-400">
           <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
             <!-- Garis bar di atas huruf x -->
@@ -26,13 +27,13 @@
         </div>
         <h3 class="mb-2 text-lg font-semibold text-gray-800">Mean, Median, Modus</h3>
         <p class="text-justify text-sm text-gray-500">
-          Kalkulator mean, median, dan modus dalam statistik. Kalkulator ini untuk menghitung mean, median, modus dari
-          himpunan data.
+          Alat praktis untuk menghitung mean, median, dan modus dari data Anda dengan mudah.
         </p>
       </div>
     </a>
-    <a href="{{ route('kalkulator-statistik.standar-deviasi') }}" class="block">
-      <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
+    <a href="{{ route('kalkulator-statistik.standar-deviasi') }}" class="block h-full">
+      <div
+        class="flex flex-col justify-between h-full  rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
         <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-green-400">
           <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24">
             <text x="4" y="20" font-size="25" font-family="Arial" fill="white">σ</text>
@@ -40,12 +41,13 @@
         </div>
         <h3 class="mb-2 text-lg font-semibold text-gray-800">Standard Deviasi</h3>
         <p class="text-justify text-sm text-gray-500">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+          Hitung standar deviasi untuk mengukur penyebaran dan variabilitas data Anda dari nilai rata-rata.
         </p>
       </div>
     </a>
-    <a href="{{ route('kalkulator-statistik.kombinasi') }}" class="block">
-      <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
+    <a href="{{ route('kalkulator-statistik.kombinasi') }}" class="block h-full">
+      <div
+        class="flex flex-col justify-between h-full  rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
         <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-purple-400">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
             <!-- Body kalkulator -->
@@ -72,7 +74,7 @@
         </div>
         <h3 class="mb-2 text-lg font-semibold text-gray-800">Kombinasi</h3>
         <p class="text-justify text-sm text-gray-500">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
+          Alat untuk menghitung jumlah kombinasi yang mungkin dari suatu kumpulan objek tanpa mempertimbangkan urutan.
         </p>
       </div>
     </a>

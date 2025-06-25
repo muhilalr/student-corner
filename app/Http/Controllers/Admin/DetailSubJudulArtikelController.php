@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Models\SubJudulArtikel;
 use App\Http\Controllers\Controller;
 use App\Models\DetailSubJudulArtikel;
-use App\Models\SubJudulArtikel;
+use Illuminate\Support\Facades\Storage;
 
 class DetailSubJudulArtikelController extends Controller
 {
@@ -36,8 +37,14 @@ class DetailSubJudulArtikelController extends Controller
             'sub_judul_artikel_id' => 'required|exists:sub_judul_artikels,id',
             'konten_text' => 'required',
             'link_embed' => 'nullable',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png',
             'urutan' => 'required|numeric',
         ]);
+
+        if ($request->hasFile('gambar')) {
+            $filePath = $request->file('gambar')->store('detail_subjudul_artikel', 'public');
+            $request->merge(['gambar' => $filePath]);
+        }
 
         DetailSubJudulArtikel::create([
             'sub_judul_artikel_id' => $request->sub_judul_artikel_id,
@@ -75,8 +82,18 @@ class DetailSubJudulArtikelController extends Controller
             'sub_judul_artikel_id' => 'required|exists:sub_judul_artikels,id',
             'konten_text' => 'required',
             'link_embed' => 'nullable',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png',
             'urutan' => 'required|numeric',
         ]);
+
+        if ($request->hasFile('gambar')) {
+            if ($detail_subjudul_artikel->gambar) {
+                Storage::disk('public')->delete($detail_subjudul_artikel->gambar);
+            }
+            // Storage::disk('public')->delete($detail_subjudul_artikel->gambar);
+            $filePath = $request->file('gambar')->store('detail_subjudul_artikel', 'public');
+            $detail_subjudul_artikel->gambar = $filePath;
+        }
 
         $detail_subjudul_artikel->update([
             'sub_judul_artikel_id' => $request->sub_judul_artikel_id,
@@ -93,6 +110,9 @@ class DetailSubJudulArtikelController extends Controller
      */
     public function destroy(DetailSubJudulArtikel $detail_subjudul_artikel)
     {
+        if ($detail_subjudul_artikel->gambar) {
+            Storage::disk('public')->delete($detail_subjudul_artikel->gambar);
+        }
         $detail_subjudul_artikel->delete();
         return redirect()->route('admin_detail-subjudul-artikel.index')->with('success', 'Detail Sub Judul Artikel berhasil dihapus');
     }

@@ -29,6 +29,7 @@
                       <th>Sub Judul Artikel</th>
                       <th>Konten Text</th>
                       <th>Link Embed</th>
+                      <th>Gambar</th>
                       <th>Urutan</th>
                       <th>Aksi</th>
                     </tr>
@@ -38,8 +39,16 @@
                       <tr>
                         <td>{{ $detail_subjudul->sub_judul_artikel->artikel->judul }}</td>
                         <td>{{ $detail_subjudul->sub_judul_artikel->sub_judul }}</td>
-                        <td>{{ $detail_subjudul->konten_text }}</td>
-                        <td>{{ $detail_subjudul->link_embed }}</td>
+                        <td>{{ Str::limit($detail_subjudul->konten_text, 100, '...') }}</td>
+                        <td>{{ Str::limit($detail_subjudul->link_embed, 10, '...') }}</td>
+                        <td>
+                          @if ($detail_subjudul->gambar)
+                            <img src="{{ asset('storage/' . $detail_subjudul->gambar) }}"
+                              style="max-width: 100px; max-height: 100px;">
+                          @else
+                            -
+                          @endif
+                        </td>
                         <td>{{ $detail_subjudul->urutan }}</td>
                         <td>
                           <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">

@@ -4,7 +4,8 @@
     <div class="bg-blue-900 text-white py-8">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold">Scatter Plot</h1>
-        <p class="mt-2 text-blue-100">Upload data dan buat scatter plot interaktif</p>
+        <p class="mt-2 text-blue-100">Buat scatter plot untuk memvisualisasikan hubungan dan korelasi antara dua set data
+          numerik.</p>
       </div>
     </div>
 
