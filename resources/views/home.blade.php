@@ -111,7 +111,7 @@
               </svg>
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-800">Kalkulator Statistik</h3>
-            <p class="text-justify text-sm text-gray-500">
+            <p class="text-justify text-sm font-semibold text-gray-500">
               Selesaikan berbagai operasi statistik, dari rata-rata hingga regresi. Dapatkan hasil instan untuk setiap
               perhitungan data Anda.
             </p>
@@ -132,7 +132,7 @@
               </svg>
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-800">Visualisasi Data</h3>
-            <p class="text-justify text-sm text-gray-500">
+            <p class="text-justify text-sm font-semibold text-gray-500">
               Konversikan data mentah menjadi grafik dan diagram yang interaktif untuk analisis yang lebih mudah.
             </p>
           </div>
@@ -148,7 +148,7 @@
               </svg>
             </div>
             <h3 class="mb-2 text-lg font-semibold text-gray-800">Simulasi Statistik</h3>
-            <p class="text-justify text-sm text-gray-500">
+            <p class="text-justify text-sm font-semibold text-gray-500">
               Buat dan jalankan simulasi statistik untuk memprediksi hasil dan memahami dinamika data dalam berbagai
               skenario.
             </p>
@@ -172,7 +172,7 @@
         <div class="flex flex-col items-center justify-center mb-4">
           <h1 class="mb-4 text-2xl md:text-3xl font-bold text-gray-800">Kuis dan Tantangan Untuk
             Kamu!</h1>
-          <p class="text-justify text-sm text-gray-600">
+          <p class="text-justify text-sm font-semibold text-gray-600">
             Jelajahi konsep-konsep baru dan pertajam pemahamanmu dengan kuis dan tantangan yang dirancang untuk
             menyenangkan sekaligus mendidik. Temukan seberapa jauh kamu bisa melangkah!
           </p>
@@ -211,7 +211,7 @@
           <h1 class="mb-6 text-3xl md:text-4xl font-bold text-gray-800 text-center md:text-left">
             <span class="text-orange-500">Internship</span> Program
           </h1>
-          <p class="text-justify text-sm md:text-base text-gray-600">
+          <p class="text-justify text-sm md:text-base font-semibold text-gray-600">
             Dapatkan pengalaman kerja nyata dan kembangkan keterampilan profesionalmu melalui program magang kami.
             Belajar langsung dari para ahli, berkontribusi pada proyek-proyek inovatif, dan persiapkan dirimu untuk
             karier yang cemerlang.
