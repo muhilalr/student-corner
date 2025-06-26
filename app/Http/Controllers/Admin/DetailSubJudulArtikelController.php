@@ -41,15 +41,17 @@ class DetailSubJudulArtikelController extends Controller
             'urutan' => 'required|numeric',
         ]);
 
+        $filePath = null;
+
         if ($request->hasFile('gambar')) {
             $filePath = $request->file('gambar')->store('detail_subjudul_artikel', 'public');
-            $request->merge(['gambar' => $filePath]);
         }
 
         DetailSubJudulArtikel::create([
             'sub_judul_artikel_id' => $request->sub_judul_artikel_id,
             'konten_text' => $request->konten_text,
             'link_embed' => $request->link_embed,
+            'gambar' => $filePath,
             'urutan' => $request->urutan
         ]);
 
