@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\SimulasiStatistik;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class SamplingSimulationController extends Controller
 {
     public function index()
     {
-        return view('simulasi.sampling');
+        return view('simulasi-statistik.sampling');
     }
 
     public function simulate(Request $request)
@@ -45,6 +45,6 @@ class SamplingSimulationController extends Controller
             ];
         }
 
-        return view('simulasi.sampling', compact('hasilSimulasi', 'populasiInput', 'ukuranSample', 'jumlahPengulangan'));
+        return view('simulasi-statistik.sampling', compact('hasilSimulasi', 'populasiInput', 'ukuranSample', 'jumlahPengulangan'));
     }
 }

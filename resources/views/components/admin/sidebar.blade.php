@@ -4,6 +4,11 @@
   <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
     <div class="user-panel pt-3 d-flex justify-content-center align-items-center">
+      <img src="{{ asset('/gambar/logo-bps.jpg') }}" alt="" class="w-25">
+      <h6 class="font-weight-bold text-white">BPS PROVINSI <br>KEP. BANGKA BELITUNG</h6>
+      {{-- <a href="#" class="d-block">{{ Session::get('ambilUser')->nama }}</a> --}}
+    </div>
+    <div class="user-panel pt-3 d-flex justify-content-center align-items-center">
       @role('admin')
         <h2 class="font-weight-bold text-white">Admin</h2>
       @endrole

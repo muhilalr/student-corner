@@ -100,7 +100,9 @@
   <script>
     $(function() {
       $("#example1").DataTable({
-        "responsive": true,
+        \
+        "scrollX": true,
+        "responsive": false,
         "lengthChange": false,
         "searching": false,
         "autoWidth": false,

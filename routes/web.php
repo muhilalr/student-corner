@@ -10,12 +10,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KontenEdukasiController;
 use App\Http\Controllers\VisualisasiDataController;
 use App\Http\Controllers\KuisDanTantanganController;
-use App\Http\Controllers\SamplingSimulationController;
 use App\Http\Controllers\Admin\InformasiMagangController;
 use App\Http\Controllers\Admin\PendaftaranMagangController;
 use App\Http\Controllers\VisualisasiData\ScatterController;
 use App\Http\Controllers\VisualisasiData\PieChartController;
 use App\Http\Controllers\VisualisasiData\HistogramController;
+use App\Http\Controllers\SimulasiStatistik\SimulasiSlovinController;
+use App\Http\Controllers\SimulasiStatistik\SamplingSimulationController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/konten-edukasi/{slug}', [KontenEdukasiController::class, 'show'])->name('konten-edukasi.show');
@@ -72,9 +73,14 @@ Route::middleware('auth')->group(function () {
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::get('/simulasi-statistik', fn() => view('simulasi.index'))->name('simulasi.index');
+Route::get('/simulasi-statistik', fn() => view('simulasi-statistik.index'))->name('simulasi.index');
+
 Route::get('/simulasi-sampling', [SamplingSimulationController::class, 'index'])->name('simulasi.sampling');
 Route::post('/simulasi-sampling', [SamplingSimulationController::class, 'simulate'])->name('simulasi.sampling.run');
+
+
+Route::get('/simulasi-slovin', [SimulasiSlovinController::class, 'index'])->name('simulasi.slovin');
+Route::post('/simulasi-slovin', [SimulasiSlovinController::class, 'hitung'])->name('simulasi.slovin.hitung');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';

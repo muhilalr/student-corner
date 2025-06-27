@@ -2,8 +2,13 @@
 <nav class="sticky top-0 z-50 bg-white px-6 py-4 border-b">
   <div class="container mx-auto flex items-center justify-between">
     <!-- Logo -->
-    <div class="mr-1 text-lg lg:text-xl font-bold text-orange-500">Pojok Literasi Statistik</div>
-
+    <div class="flex items-center justify-center gap-3">
+      <img src="{{ asset('/gambar/logo-bps.jpg') }}" alt="" class="w-14">
+      <div class="flex flex-col">
+        <h1 class="text-base lg:text-lg font-extrabold text-primary tracking-tighter">Pojok Literasi</h1>
+        <h1 class="text-xl lg:text-2xl font-extrabold text-primary tracking-wide md:tracking-tight">Statistik</h1>
+      </div>
+    </div>
     <!-- Mobile Menu Button (Hamburger) -->
     <div class="md:hidden">
       <button onclick="toggleMobileMenu()" class="text-gray-500 hover:text-orange-500 focus:outline-none">
@@ -132,9 +137,12 @@
   class="fixed top-0 left-0 h-full w-80 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out z-50 md:hidden overflow-y-auto">
   <div class="p-4">
     <!-- Sidebar Header -->
-    <div class="mb-6 pb-4 border-b border-gray-200">
-      <div class="text-lg font-bold text-orange-500">Pojok Literasi Statistik</div>
-
+    <div class="mb-6 pb-4 flex items-center justify-start gap-3 border-b border-gray-200">
+      <img src="{{ asset('/gambar/logo-bps.jpg') }}" alt="" class="w-16">
+      <div class="flex flex-col">
+        <h1 class="text-lg lg:text-xl font-extrabold text-primary tracking-tighter">Pojok Literasi</h1>
+        <h1 class="text-2xl lg:text-3xl font-extrabold text-primary tracking-wide md:tracking-tight">Statistik</h1>
+      </div>
     </div>
 
     <!-- Mobile Menu Items -->

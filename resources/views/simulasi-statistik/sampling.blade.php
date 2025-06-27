@@ -1,5 +1,5 @@
 <x-layout-web>
-  <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-xl shadow">
+  <div class="max-w-4xl mx-auto my-10 p-6 bg-white rounded-xl shadow">
     <h2 class="text-2xl font-bold mb-4 text-orange-600">Simulasi Distribusi Sampling</h2>
 
     <form method="POST" action="{{ route('simulasi.sampling.run') }}">
