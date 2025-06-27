@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_kuis_tantangan_bulanan');
             $table->integer('skor')->default(0);
+            $table->integer('jawaban_benar');
+            $table->integer('jawaban_salah');
             $table->timestamps();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_kuis_tantangan_bulanan')->references('id')->on('kuis_tantangan_bulanans')->onDelete('cascade');

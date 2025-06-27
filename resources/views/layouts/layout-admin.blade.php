@@ -48,7 +48,6 @@
   </div>
   <!-- ./wrapper -->
   @stack('scripts')
-
   <!-- jQuery -->
   <script src="{{ asset('template/plugins/jquery/jquery.min.js') }}"></script>
   <!-- jQuery UI 1.11.4 -->

@@ -10,6 +10,7 @@ class KuisTantanganBulanan extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id_periode',
         'judul',
         'deskripsi',
         'tanggal_mulai',
@@ -21,6 +22,11 @@ class KuisTantanganBulanan extends Model
         'tanggal_mulai' => 'date',
         'tanggal_selesai' => 'date',
     ];
+
+    public function periode()
+    {
+        return $this->belongsTo(Periode::class, 'id_periode');
+    }
 
     public function soal_tantangan_bulanan()
     {

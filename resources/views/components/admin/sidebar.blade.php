@@ -132,9 +132,15 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="{{ route('admin_periode.index') }}"
+                  class="nav-link {{ Route::is('admin_periode.index') ? 'active' : '' }}">
+                  <p>Periode Kuis Tantangan Bulanan</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ route('admin_kuis-tantangan-bulanan.index') }}"
                   class="nav-link {{ Route::is('admin_kuis-tantangan-bulanan.index') ? 'active' : '' }}">
-                  <p>Topik Kuis Reguler</p>
+                  <p>Topik Kuis Tantangan Bulanan</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -154,7 +160,7 @@
           <li class="nav-item">
             <a href="{{ route('admin_data-admin.index') }}" class="nav-link">
               <p>
-                Data Admin
+                Manajemen User
               </p>
             </a>
           </li>

@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
+use App\Models\InformasiMagang;
 use Illuminate\Support\Facades\Route;
 use App\Models\KuisReguler\KuisReguler;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\Admin\InfografisController;
 use App\Http\Controllers\Admin\SubjekMateriController;
@@ -12,11 +13,11 @@ use App\Http\Controllers\Admin\SubJudulArtikelController;
 use App\Http\Controllers\Admin\PendaftaranMagangController;
 use App\Http\Controllers\Admin\VideoPembelajaranController;
 use App\Http\Controllers\Admin\DetailSubJudulArtikelController;
+use App\Http\Controllers\Admin\KuisTantangan\PeriodeController;
 use App\Http\Controllers\Admin\KuisReguler\KuisRegulerController;
 use App\Http\Controllers\Admin\KuisReguler\SoalKuisRegulerController;
-use App\Http\Controllers\Admin\KuisTantangan\SoalTantanganBulananController;
 use App\Http\Controllers\Admin\KuisTantangan\TantanganBulananController;
-use App\Models\InformasiMagang;
+use App\Http\Controllers\Admin\KuisTantangan\SoalTantanganBulananController;
 
 Route::prefix('admin')->name('admin_')->group(function () {
   Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('login');
@@ -46,6 +47,7 @@ Route::prefix('admin')->name('admin_')->group(function () {
     Route::resource('kuis-reguler', KuisRegulerController::class);
     Route::get('/opsi-soal-pilihan-ganda', [SoalKuisRegulerController::class, 'indexOpsi'])->name('opsi-soal-pilihan-ganda.index');
     Route::resource('soal-kuis-reguler', SoalKuisRegulerController::class);
+    Route::resource('periode', PeriodeController::class);
     Route::resource('kuis-tantangan-bulanan', TantanganBulananController::class);
     Route::get('/opsi-pilgan-tantangan-bulanan', [SoalTantanganBulananController::class, 'indexOpsi'])->name('opsi-pilgan-tantangan-bulanan.index');
     Route::resource(('soal-kuis-tantangan-bulanan'), SoalTantanganBulananController::class);

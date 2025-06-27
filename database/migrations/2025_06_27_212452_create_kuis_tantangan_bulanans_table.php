@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('kuis_tantangan_bulanans', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_periode');
             $table->string('judul');
             $table->text('deskripsi');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->timestamps();
+            $table->foreign('id_periode')->references('id')->on('periodes')->onDelete('cascade');
         });
     }
 

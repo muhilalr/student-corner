@@ -2,22 +2,28 @@
 
 namespace App\Http\Controllers\Admin\KuisTantangan;
 
+use COM;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\TantanganBulanan\Periode;
 use App\Models\TantanganBulanan\KuisTantanganBulanan;
-use Carbon\Carbon;
-use COM;
 
 class TantanganBulananController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $kuis = KuisTantanganBulanan::all();
-        return view('admin.kuis-tantangan-bulanan.index', compact('kuis'));
+        $query = KuisTantanganBulanan::with('periode');
+        if ($request->filled('periode')) {
+            $query->where('id_periode', $request->periode);
+        }
+        $kuis = $query->get();
+        $listPeriode = Periode::all(); // daftar untuk dropdown
+        return view('admin.kuis-tantangan-bulanan.index', compact('kuis', 'listPeriode'));
     }
 
     /**
@@ -25,7 +31,8 @@ class TantanganBulananController extends Controller
      */
     public function create()
     {
-        return view('admin.kuis-tantangan-bulanan.create');
+        $periode = Periode::all();
+        return view('admin.kuis-tantangan-bulanan.create', compact('periode'));
     }
 
     /**
@@ -34,6 +41,7 @@ class TantanganBulananController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'periode' => 'required|exists:periodes,id',
             'judul' => 'required',
             'deskripsi' => 'required|string|max:255',
             'tanggal_mulai' => 'required|date',
@@ -43,6 +51,7 @@ class TantanganBulananController extends Controller
         $slug = Str::slug($request->judul);
 
         KuisTantanganBulanan::create([
+            'id_periode' => $request->periode,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
             'tanggal_mulai' => $request->tanggal_mulai,
@@ -66,7 +75,8 @@ class TantanganBulananController extends Controller
      */
     public function edit(KuisTantanganBulanan $kuis_tantangan_bulanan)
     {
-        return view('admin.kuis-tantangan-bulanan.edit', compact('kuis_tantangan_bulanan'));
+        $periode = Periode::all();
+        return view('admin.kuis-tantangan-bulanan.edit', compact('kuis_tantangan_bulanan', 'periode'));
     }
 
     /**
@@ -75,6 +85,7 @@ class TantanganBulananController extends Controller
     public function update(Request $request, KuisTantanganBulanan $kuis_tantangan_bulanan)
     {
         $request->validate([
+            'periode' => 'required|exists:periodes,id',
             'judul' => 'required',
             'deskripsi' => 'required|string|max:255',
             'tanggal_mulai' => 'required|date',
@@ -84,6 +95,7 @@ class TantanganBulananController extends Controller
         $slug = Str::slug($request->judul);
 
         $kuis_tantangan_bulanan->update([
+            'id_periode' => $request->periode,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
             'tanggal_mulai' => $request->tanggal_mulai,

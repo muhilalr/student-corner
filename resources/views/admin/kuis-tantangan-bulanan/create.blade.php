@@ -22,6 +22,15 @@
             <div class="card-body">
               @csrf
               <div class="form-group">
+                <label for="periode">Periode</label>
+                <select name="periode" class="form-control" required>
+                  <option value="" disabled selected>-- Pilih Periode --</option>
+                  @foreach ($periode as $item)
+                    <option value="{{ $item->id }}">{{ $item->periode }}</option>
+                  @endforeach
+                </select>
+              </div>
+              <div class="form-group">
                 <label for="judul_kuis">Judul Kuis Tantangan Bulanan</label>
                 <input type="text" name="judul" class="form-control" id="judul_kuis"
                   placeholder="Tantangan Bulanan Januari" required>

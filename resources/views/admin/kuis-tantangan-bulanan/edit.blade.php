@@ -28,6 +28,17 @@
                   @csrf
                   @method('PUT')
                   <div class="form-group">
+                    <label for="periode">Periode</label>
+                    <select name="periode" class="form-control" required>
+                      @foreach ($periode as $item)
+                        <option value="{{ $item->id }}"
+                          {{ $kuis_tantangan_bulanan->id_periode == $item->id ? 'selected' : '' }}>
+                          {{ $item->periode }}
+                        </option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="form-group">
                     <label for="judul_kuis">Judul Kuis Tantangan Bulanan</label>
                     <input type="text" name="judul" class="form-control" id="judul_kuis"
                       value="{{ $kuis_tantangan_bulanan->judul }}" placeholder="Tantangan Bulanan Januari" required>

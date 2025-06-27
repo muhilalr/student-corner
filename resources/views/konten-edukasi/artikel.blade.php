@@ -6,7 +6,7 @@
 
       @foreach ($sub->detail_sub_judul_artikel as $d)
         <div class="flex flex-col items-center my-4 gap-7">
-          <p class="w-full text-base lg:text-lg text-justify font-semibold">{!! nl2br(e($d->konten_text)) !!}</p>
+          <p class="w-full text-base lg:text-lg text-justify font-semibold">{!! $d->konten_text !!}</p>
           {!! $d->link_embed !!}
           <img src="{{ asset('storage/' . $d->gambar) }}" alt="" class="w-full lg:w-1/2">
         </div>

@@ -124,7 +124,7 @@
 
       <div class="max-w-4xl mx-auto">
         <!-- Top 3 -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 md:gap-6 mb-8">
           @foreach ($topUsers->take(3) as $index => $user)
             @php
               $ranking = $index + 1;
@@ -152,9 +152,9 @@
 
               // Urutan layout visual: 2 kiri, 1 tengah, 3 kanan
               $orderClass = match ($ranking) {
-                  1 => 'order-2 md:order-2 -translate-y-8', // naik sedikit
-                  2 => 'order-1 md:order-1',
-                  3 => 'order-3 md:order-3',
+                  1 => 'md:order-2 md:order-2 -translate-y-8', // naik sedikit
+                  2 => 'md:order-1 md:order-1',
+                  3 => 'md:order-3 md:order-3',
                   default => '',
               };
             @endphp
