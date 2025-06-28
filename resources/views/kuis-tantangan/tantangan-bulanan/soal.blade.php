@@ -154,7 +154,12 @@
                   {{ $item->tipe_soal }}
                 </span>
               </div>
-              <h2 class="text-xl sm:text-2xl font-bold leading-tight">
+              @if ($item->gambar)
+                <div class="max-w-md mx-auto mb-4">
+                  <img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar Soal" class="w-full object-cover">
+                </div>
+              @endif
+              <h2 class="text-base lg:text-xl font-bold leading-tight">
                 {{ $item->soal }}
               </h2>
             </div>

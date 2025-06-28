@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin\KuisTantangan;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Models\TantanganBulanan\KuisTantanganBulanan;
-use App\Models\TantanganBulanan\OpsiSoalKuisTantanganBulanan;
 use App\Models\TantanganBulanan\SoalKuisTantanganBulanan;
+use App\Models\TantanganBulanan\OpsiSoalKuisTantanganBulanan;
 
 class SoalTantanganBulananController extends Controller
 {
@@ -41,14 +42,22 @@ class SoalTantanganBulananController extends Controller
     {
         $request->validate([
             'kuis_tantangan_bulanan' => 'required|exists:kuis_tantangan_bulanans,id',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png',
             'soal' => 'required|string',
             'tipe_soal' => 'required|in:Pilihan Ganda,Isian Singkat',
             'jawaban' => 'required|string',
         ]);
 
+        $filePath = null;
+
+        if ($request->hasFile('gambar')) {
+            $filePath = $request->file('gambar')->store('gambar_soal_kuis_tantangan_bulanan', 'public');
+        }
+
         // Simpan ke tabel soal_kuis_regulers
         $soal = SoalKuisTantanganBulanan::create([
             'id_kuis_tantangan_bulanan' => $request->kuis_tantangan_bulanan,
+            'gambar' => $filePath,
             'soal' => $request->soal,
             'tipe_soal' => $request->tipe_soal,
             'jawaban' => $request->jawaban,
@@ -91,16 +100,24 @@ class SoalTantanganBulananController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SoalKuisTantanganBulanan $soal)
     {
         $request->validate([
             'kuis_tantangan_bulanan' => 'required|exists:kuis_tantangan_bulanans,id',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png',
             'soal' => 'required|string',
             'tipe_soal' => 'required|in:Pilihan Ganda,Isian Singkat',
             'jawaban' => 'required',
         ]);
 
-        $soal = SoalKuisTantanganBulanan::findOrFail($id);
+        if ($request->hasFile('gambar')) {
+            if ($soal->gambar) {
+                Storage::disk('public')->delete($soal->gambar);
+            }
+            $filePath = $request->file('gambar')->store('gambar_soal_kuis_tantangan_bulanan', 'public');
+            $soal->gambar = $filePath;
+        }
+
         $soal->update([
             'id_kuis_tantangan_bulanan' => $request->kuis_tantangan_bulanan,
             'soal' => $request->soal,
@@ -131,6 +148,9 @@ class SoalTantanganBulananController extends Controller
      */
     public function destroy(SoalKuisTantanganBulanan $soal_kuis_tantangan_bulanan)
     {
+        if ($soal_kuis_tantangan_bulanan->gambar) {
+            Storage::disk('public')->delete($soal_kuis_tantangan_bulanan->gambar);
+        }
         $soal_kuis_tantangan_bulanan->delete();
         return redirect()->route('admin_soal-kuis-tantangan-bulanan.index')->with('success', 'Soal berhasil dihapus.');
     }

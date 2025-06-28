@@ -7,7 +7,8 @@
             <h3 class="card-title">Edit Soal Kuis Reguler</h3>
           </div>
 
-          <form method="POST" action="{{ route('admin_soal-kuis-reguler.update', $soal->id) }}">
+          <form method="POST" action="{{ route('admin_soal-kuis-reguler.update', $soal->id) }}"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="card-body">
@@ -21,7 +22,10 @@
                   @endforeach
                 </select>
               </div>
-
+              <div class="form-group">
+                <label for="gambar">Gambar</label>
+                <input type="file" name="gambar" class="form-control" id="gambar" placeholder="Masukkan Gambar">
+              </div>
               <div class="form-group">
                 <label for="soal">Soal</label>
                 <input type="text" name="soal" class="form-control" value="{{ $soal->soal }}" required>

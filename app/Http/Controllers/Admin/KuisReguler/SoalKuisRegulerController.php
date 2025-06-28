@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\KuisReguler;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\KuisReguler\KuisReguler;
+use Illuminate\Support\Facades\Storage;
 use App\Models\KuisReguler\SoalKuisReguler;
 use App\Models\KuisReguler\OpsiSoalKuisReguler;
 
@@ -41,14 +42,22 @@ class SoalKuisRegulerController extends Controller
     {
         $request->validate([
             'kuis_reguler' => 'required|exists:kuis_regulers,id',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png',
             'soal' => 'required|string',
             'tipe_soal' => 'required|in:Pilihan Ganda,Isian Singkat',
             'jawaban' => 'required|string',
         ]);
 
+        $filePath = null;
+
+        if ($request->hasFile('gambar')) {
+            $filePath = $request->file('gambar')->store('gambar_soal_kuis_reguler', 'public');
+        }
+
         // Simpan ke tabel soal_kuis_regulers
         $soal = SoalKuisReguler::create([
             'id_kuis_reguler' => $request->kuis_reguler,
+            'gambar' => $filePath,
             'soal' => $request->soal,
             'tipe_soal' => $request->tipe_soal,
             'jawaban' => $request->jawaban,
@@ -91,16 +100,25 @@ class SoalKuisRegulerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SoalKuisReguler $soal)
     {
         $request->validate([
             'kuis_reguler' => 'required|exists:kuis_regulers,id',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png',
             'soal' => 'required|string',
             'tipe_soal' => 'required|in:Pilihan Ganda,Isian Singkat',
             'jawaban' => 'required',
         ]);
 
-        $soal = SoalKuisReguler::findOrFail($id);
+        if ($request->hasFile('gambar')) {
+            if ($soal->gambar) {
+                Storage::disk('public')->delete($soal->gambar);
+            }
+            $filePath = $request->file('gambar')->store('gambar_soal_kuis_reguler', 'public');
+            $soal->gambar = $filePath;
+        }
+
+
         $soal->update([
             'id_kuis_reguler' => $request->kuis_reguler,
             'soal' => $request->soal,
@@ -131,6 +149,9 @@ class SoalKuisRegulerController extends Controller
      */
     public function destroy(SoalKuisReguler $soal_kuis_reguler)
     {
+        if ($soal_kuis_reguler->gambar) {
+            Storage::disk('public')->delete($soal_kuis_reguler->gambar);
+        }
         $soal_kuis_reguler->delete();
         return redirect()->route('admin_soal-kuis-reguler.index')->with('success', 'Soal berhasil dihapus.');
     }

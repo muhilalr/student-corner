@@ -17,7 +17,8 @@
             </div>
           @endif
 
-          <form method="POST" action="{{ route('admin_soal-kuis-tantangan-bulanan.store') }}">
+          <form method="POST" action="{{ route('admin_soal-kuis-tantangan-bulanan.store') }}"
+            enctype="multipart/form-data">
             @csrf
             <div class="card-body">
               <div class="form-group">
@@ -29,7 +30,10 @@
                   @endforeach
                 </select>
               </div>
-
+              <div class="form-group">
+                <label for="gambar">Gambar (Optional)</label>
+                <input type="file" name="gambar" class="form-control" id="gambar" placeholder="Masukkan Gambar">
+              </div>
               <div class="form-group">
                 <label for="soal">Soal</label>
                 <input type="text" name="soal" class="form-control" id="soal"

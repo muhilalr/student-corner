@@ -220,30 +220,32 @@
   </section>
 
   <x-footer class="fill-gray-50"></x-footer>
-  <script>
-    const tanggalSelesai = new Date("{{ \Carbon\Carbon::parse($tantangan->tanggal_selesai)->toIso8601String() }}")
-      .getTime();
+  @if ($tantangan)
+    <script>
+      const tanggalSelesai = new Date("{{ \Carbon\Carbon::parse($tantangan->tanggal_selesai)->toIso8601String() }}")
+        .getTime();
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const selisih = tanggalSelesai - now;
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const selisih = tanggalSelesai - now;
 
-      if (selisih <= 0) {
-        document.getElementById("countdown").innerText = "Waktu habis";
-        clearInterval(timer);
-        return;
+        if (selisih <= 0) {
+          document.getElementById("countdown").innerText = "Waktu habis";
+          clearInterval(timer);
+          return;
+        }
+
+        const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+        const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
+        const detik = Math.floor((selisih % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerText =
+          `${hari} Hari ${jam} Jam ${menit} Menit ${detik} Detik`;
       }
 
-      const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
-      const jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
-      const detik = Math.floor((selisih % (1000 * 60)) / 1000);
-
-      document.getElementById("countdown").innerText =
-        `${hari} Hari ${jam} Jam ${menit} Menit ${detik} Detik`;
-    }
-
-    const timer = setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
+      const timer = setInterval(updateCountdown, 1000);
+      updateCountdown();
+    </script>
+  @endif
 </x-layout-web>

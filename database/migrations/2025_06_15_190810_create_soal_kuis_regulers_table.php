@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('soal_kuis_regulers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_kuis_reguler');
+            $table->string('gambar')->nullable();
             $table->text('soal');
             $table->enum('tipe_soal', ['Pilihan Ganda', 'Isian Singkat']);
             $table->text('jawaban');

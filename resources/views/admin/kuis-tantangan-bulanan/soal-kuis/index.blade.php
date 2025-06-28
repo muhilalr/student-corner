@@ -26,6 +26,7 @@
                     <tr>
                       <th>Judul Tantangan</th>
                       <th>Deskripsi</th>
+                      <th>Gambar</th>
                       <th>Soal</th>
                       <th>Tipe Soal</th>
                       <th>Jawaban</th>
@@ -37,6 +38,13 @@
                       <tr>
                         <td>{{ $item->kuis_tantangan_bulanan->judul }}</td>
                         <td>{{ $item->kuis_tantangan_bulanan->deskripsi }}</td>
+                        <td>
+                          @if ($item->gambar)
+                            <img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar Subjek"
+                              style="max-width: 100px; max-height: 100px;">
+                          @else
+                            -
+                          @endif
                         <td>{{ $item->soal }}</td>
                         <td>{{ $item->tipe_soal }}</td>
                         <td>{{ $item->jawaban }}</td>

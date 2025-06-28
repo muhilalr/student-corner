@@ -24,6 +24,7 @@
                   <thead class="text-center">
                     <tr>
                       <th>Topik Kuis</th>
+                      <th>Gambar</th>
                       <th>Soal</th>
                       <th>Tipe Soal</th>
                       <th>Jawaban</th>
@@ -34,6 +35,14 @@
                     @foreach ($soal as $item)
                       <tr>
                         <td>{{ $item->kuis_reguler->judul }}</td>
+                        <td>
+                          @if ($item->gambar)
+                            <img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar Soal"
+                              style="max-width: 100px; max-height: 100px;">
+                          @else
+                            -
+                          @endif
+                        </td>
                         <td>{{ $item->soal }}</td>
                         <td>{{ $item->tipe_soal }}</td>
                         <td>{{ $item->jawaban }}</td>

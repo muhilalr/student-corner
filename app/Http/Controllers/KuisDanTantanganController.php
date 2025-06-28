@@ -73,7 +73,7 @@ class KuisDanTantanganController extends Controller
         // Ambil soal dan opsi
         $soal = DB::table('soal_kuis_regulers')
             ->where('id_kuis_reguler', $kuis->id)
-            ->select('id', 'soal', 'jawaban', 'tipe_soal')
+            ->select('id', 'gambar', 'soal', 'jawaban', 'tipe_soal')
             ->get()
             ->map(function ($item) {
                 if ($item->tipe_soal === 'Pilihan Ganda') {
@@ -187,7 +187,7 @@ class KuisDanTantanganController extends Controller
         // Ambil soal dan opsi
         $soal = DB::table('soal_kuis_tantangan_bulanans')
             ->where('id_kuis_tantangan_bulanan', $kuis->id)
-            ->select('id', 'soal', 'jawaban', 'tipe_soal')
+            ->select('id', 'gambar', 'soal', 'jawaban', 'tipe_soal')
             ->get()
             ->map(function ($item) {
                 if ($item->tipe_soal === 'Pilihan Ganda') {

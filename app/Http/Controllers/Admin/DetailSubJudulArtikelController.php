@@ -92,7 +92,6 @@ class DetailSubJudulArtikelController extends Controller
             if ($detail_subjudul_artikel->gambar) {
                 Storage::disk('public')->delete($detail_subjudul_artikel->gambar);
             }
-            // Storage::disk('public')->delete($detail_subjudul_artikel->gambar);
             $filePath = $request->file('gambar')->store('detail_subjudul_artikel', 'public');
             $detail_subjudul_artikel->gambar = $filePath;
         }

@@ -11,6 +11,7 @@ class SoalKuisTantanganBulanan extends Model
 
     protected $fillable = [
         'id_kuis_tantangan_bulanan',
+        'gambar',
         'soal',
         'tipe_soal',
         'jawaban',

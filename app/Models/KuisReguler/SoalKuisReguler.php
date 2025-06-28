@@ -11,6 +11,7 @@ class SoalKuisReguler extends Model
 
     protected $fillable = [
         'id_kuis_reguler',
+        'gambar',
         'soal',
         'tipe_soal',
         'jawaban',
