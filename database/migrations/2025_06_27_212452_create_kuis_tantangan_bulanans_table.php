@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('deskripsi');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
+            $table->enum('status', ['aktif', 'nonaktif'])->default('nonaktif');
             $table->string('slug');
             $table->timestamps();
             $table->foreign('id_periode')->references('id')->on('periodes')->onDelete('cascade');

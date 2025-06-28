@@ -45,6 +45,7 @@
                       <th>Deskripsi</th>
                       <th>Tanggal Mulai</th>
                       <th>Tanggal Selesai</th>
+                      <th>Status</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -56,6 +57,13 @@
                         <td>{{ $item->deskripsi }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->tanggal_mulai)->format('d-m-Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->tanggal_selesai)->format('d-m-Y') }}</td>
+                        <td>
+                          @if ($item->status == 'aktif')
+                            <span class="badge badge-success">Aktif</span>
+                          @else
+                            <span class="badge badge-danger">Non-Aktif</span>
+                          @endif
+                        </td>
                         <td>
                           <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
                             <a href="{{ route('admin_kuis-tantangan-bulanan.edit', $item->id) }}"

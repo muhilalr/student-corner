@@ -59,6 +59,14 @@
                     <input type="date" name="tanggal_selesai" class="form-control" id="tgl_selesai"
                       value="{{ $kuis_tantangan_bulanan->tanggal_selesai }}" required>
                   </div>
+                  <div class="form-group">
+                    <label for="status">Status</label>
+                    <select name="status" id="status" class="form-control" required>
+                      <option value="" disabled selected>-- Update Status --</option>
+                      <option value="aktif">Aktif</option>
+                      <option value="nonaktif">Non-Aktif</option>
+                    </select>
+                  </div>
                 </div>
                 <!-- /.card-body -->
 

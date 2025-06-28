@@ -56,6 +56,7 @@ class TantanganBulananController extends Controller
             'deskripsi' => $request->deskripsi,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
+            'status' => 'nonaktif',
             'slug' => $slug
         ]);
 
@@ -90,7 +91,19 @@ class TantanganBulananController extends Controller
             'deskripsi' => 'required|string|max:255',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'status' => 'required|in:aktif,nonaktif',
         ]);
+
+        // Cek apakah user ingin mengubah status menjadi "aktif"
+        if ($request->status === 'aktif') {
+            $adaAktifLain = KuisTantanganBulanan::where('status', 'aktif')
+                ->where('id', '!=', $kuis_tantangan_bulanan->id)
+                ->exists();
+
+            if ($adaAktifLain) {
+                return redirect()->back()->withInput()->withErrors(['status' => 'Ada tantangan bulanan lain yang aktif']);
+            }
+        }
 
         $slug = Str::slug($request->judul);
 
@@ -100,6 +113,7 @@ class TantanganBulananController extends Controller
             'deskripsi' => $request->deskripsi,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
+            'status' => $request->status,
             'slug' => $slug
         ]);
 

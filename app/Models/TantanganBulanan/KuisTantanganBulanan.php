@@ -15,6 +15,7 @@ class KuisTantanganBulanan extends Model
         'deskripsi',
         'tanggal_mulai',
         'tanggal_selesai',
+        'status',
         'slug',
     ];
 

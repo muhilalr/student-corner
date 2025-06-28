@@ -17,29 +17,30 @@ class KuisDanTantanganController extends Controller
     {
         $kuis = KuisReguler::with('soal_reguler')->get();
 
-        $tantangan = KuisTantanganBulanan::where('tanggal_mulai', '<=', now())
+        // Ambil tantangan aktif yang sedang berlangsung
+        $tantangan = KuisTantanganBulanan::where('status', 'aktif')
+            ->where('tanggal_mulai', '<=', now())
             ->where('tanggal_selesai', '>=', now())
-            ->latest()
             ->first();
 
         $hariTersisa = $tantangan ? Carbon::now()->diffInDays($tantangan->tanggal_selesai, false) : null;
 
-        // Cek apakah ada tantangan aktif
+        $jumlahUser = 0;
+        $topUsers = collect();
+
         if ($tantangan) {
             $jumlahUser = HasilKuisTantanganBulanan::where('id_kuis_tantangan_bulanan', $tantangan->id)
                 ->distinct('id_user')
                 ->count('id_user');
-        } else {
-            $jumlahUser = 0;
-            // $topUsers = collect(); // kosongkan agar tidak error saat foreach di view
-        }
 
-        $topUsers = HasilKuisTantanganBulanan::select('id_user', DB::raw('SUM(skor) as total_skor'))
-            ->groupBy('id_user')
-            ->orderByDesc('total_skor')
-            ->with('user')
-            ->take(10)
-            ->get();
+            $topUsers = HasilKuisTantanganBulanan::select('id_user', DB::raw('SUM(skor) as total_skor'))
+                ->where('id_kuis_tantangan_bulanan', $tantangan->id) // filter berdasarkan tantangan aktif
+                ->groupBy('id_user')
+                ->orderByDesc('total_skor')
+                ->with('user')
+                ->take(10)
+                ->get();
+        }
 
         return view('kuis-tantangan.index', compact('kuis', 'tantangan', 'hariTersisa', 'jumlahUser', 'topUsers'));
     }
