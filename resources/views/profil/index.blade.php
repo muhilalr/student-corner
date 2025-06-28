@@ -38,30 +38,60 @@
                   <div class="flex flex-col md:flex-row mb-2 md:mb-0 items-center gap-1">
                     <h2 class="text-2xl md:text-3xl font-bold">{{ $user->name }}
                     </h2>
-                    @if ($totalSkor >= 100)
-                      <div class="tooltip flex-shrink-0" data-tip="100 Poin Tantangan Bulanan">
-                        <img src="{{ asset('gambar/100.png') }}" alt="" class="w-20 h-20">
-                      </div>
-                    @elseif ($totalSkor >= 500)
-                      <div class="tooltip flex-shrink-0" data-tip="500 Poin Tantangan Bulanan">
-                        <img src="{{ asset('gambar/500.png') }}" alt="" class="w-20 h-20">
-                      </div>
-                    @elseif ($totalSkor >= 1000)
-                      <div class="tooltip flex-shrink-0" data-tip="1000 Poin Tantangan Bulanan">
-                        <img src="{{ asset('gambar/1000.png') }}" alt="" class="w-20 h-20">
+                    @if ($totalSkor >= 2000)
+                      <div class="tooltip flex-shrink-0" data-tip="2000 Poin Tantangan Bulanan">
+                        <img src="{{ asset('gambar/2000.png') }}" alt="" class="w-20 h-20">
                       </div>
                     @elseif ($totalSkor >= 1500)
                       <div class="tooltip flex-shrink-0" data-tip="1500 Poin Tantangan Bulanan">
                         <img src="{{ asset('gambar/1500.png') }}" alt="" class="w-20 h-20">
                       </div>
-                    @elseif ($totalSkor >= 2000)
-                      <div class="tooltip flex-shrink-0" data-tip="2000 Poin Tantangan Bulanan">
-                        <img src="{{ asset('gambar/2000.png') }}" alt="" class="w-20 h-20">
+                    @elseif ($totalSkor >= 1000)
+                      <div class="tooltip flex-shrink-0" data-tip="1000 Poin Tantangan Bulanan">
+                        <img src="{{ asset('gambar/1000.png') }}" alt="" class="w-20 h-20">
+                      </div>
+                    @elseif ($totalSkor >= 500)
+                      <div class="tooltip flex-shrink-0" data-tip="500 Poin Tantangan Bulanan">
+                        <img src="{{ asset('gambar/500.png') }}" alt="" class="w-20 h-20">
+                      </div>
+                    @elseif ($totalSkor >= 100)
+                      <div class="tooltip flex-shrink-0" data-tip="100 Poin Tantangan Bulanan">
+                        <img src="{{ asset('gambar/100.png') }}" alt="" class="w-20 h-20">
                       </div>
                     @endif
                   </div>
                   <p class="text-blue-100 mb-4">{{ $user->email }}</p>
                 </div>
+              </div>
+              <div class="bg-white bg-opacity-10 p-4 rounded-lg mt-4">
+                <p class="text-sm text-blue-100 leading-relaxed">
+                  🏆 <strong>Sistem Badge</strong>: Dapatkan lencana keren berdasarkan total poin tantangan bulanan
+                  kamu!
+                </p>
+                <ul class="list-disc list-inside text-sm text-blue-100 mt-2 space-y-1">
+                  <li class="flex items-center gap-3 before:content-['•'] before:text-blue-100 before:text-xl">
+                    <span><strong>100 Poin :</strong></span>
+                    <img src="{{ asset('gambar/100.png') }}" alt="Badge 100" class="w-5 h-5">
+                  </li>
+                  <li class="flex items-center gap-3 before:content-['•'] before:text-blue-100 before:text-xl">
+                    <span><strong>500 Poin :</strong></span>
+                    <img src="{{ asset('gambar/500.png') }}" alt="Badge 500" class="w-5 h-5">
+                  </li>
+                  <li class="flex items-center gap-2 before:content-['•'] before:text-blue-100 before:text-xl">
+                    <span><strong>1000 Poin :</strong></span>
+                    <img src="{{ asset('gambar/1000.png') }}" alt="Badge 1000" class="w-5 h-5">
+                  </li>
+                  <li class="flex items-center gap-2 before:content-['•'] before:text-blue-100 before:text-xl">
+                    <span><strong>1500 Poin :</strong></span>
+                    <img src="{{ asset('gambar/1500.png') }}" alt="Badge 1500" class="w-5 h-5">
+                  </li>
+                  <li class="flex items-center gap-2 before:content-['•'] before:text-blue-100 before:text-xl">
+                    <span><strong>2000 Poin :</strong></span>
+                    <img src="{{ asset('gambar/2000.png') }}" alt="Badge 2000" class="w-5 h-5">
+                  </li>
+                </ul>
+                <p class="text-xs text-blue-200 mt-2 italic">Ikuti kuis setiap bulan untuk mengumpulkan poin dan
+                  naik peringkat!</p>
               </div>
             </div>
 
