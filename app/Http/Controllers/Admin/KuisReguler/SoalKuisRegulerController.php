@@ -14,9 +14,21 @@ class SoalKuisRegulerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $soal = SoalKuisReguler::with('kuis_reguler')->paginate(10);
+        $search = $request->input('search');
+
+        $soal = SoalKuisReguler::with('kuis_reguler')
+            ->when($search, function ($query, $search) {
+                $query->where('soal', 'like', '%' . $search . '%')
+                    ->orWhere('jawaban', 'like', '%' . $search . '%')
+                    ->orWhereHas('kuis_reguler', function ($q) use ($search) {
+                        $q->where('judul', 'like', '%' . $search . '%');
+                    });
+            })
+            ->latest()
+            ->paginate(10);
+
         return view('admin.kuis-reguler.soal-kuis.index', compact('soal'));
     }
 

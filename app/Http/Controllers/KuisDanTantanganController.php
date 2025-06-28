@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\KuisReguler\KuisReguler;
+use App\Models\TantanganBulanan\Periode;
 use App\Models\KuisReguler\SoalKuisReguler;
-use App\Models\TantanganBulanan\HasilKuisTantanganBulanan;
 use App\Models\TantanganBulanan\KuisTantanganBulanan;
+use App\Models\TantanganBulanan\HasilKuisTantanganBulanan;
 
 class KuisDanTantanganController extends Controller
 {
@@ -17,24 +18,35 @@ class KuisDanTantanganController extends Controller
     {
         $kuis = KuisReguler::with('soal_reguler')->get();
 
-        // Ambil tantangan aktif yang sedang berlangsung
-        $tantangan = KuisTantanganBulanan::where('status', 'aktif')
-            ->where('tanggal_mulai', '<=', now())
-            ->where('tanggal_selesai', '>=', now())
-            ->first();
+        // Ambil periode leaderboard yang aktif
+        $periode = Periode::where('status_leaderboard', 'aktif')->first();
 
-        $hariTersisa = $tantangan ? Carbon::now()->diffInDays($tantangan->tanggal_selesai, false) : null;
-
+        $tantangan = null;
+        $hariTersisa = null;
         $jumlahUser = 0;
         $topUsers = collect();
 
-        if ($tantangan) {
-            $jumlahUser = HasilKuisTantanganBulanan::where('id_kuis_tantangan_bulanan', $tantangan->id)
+        if ($periode) {
+            // Ambil tantangan yang sedang berlangsung (opsional untuk info di halaman)
+            $tantangan = KuisTantanganBulanan::where('id_periode', $periode->id)
+                ->where('status', 'aktif')
+                ->where('tanggal_mulai', '<=', now())
+                ->where('tanggal_selesai', '>=', now())
+                ->first();
+
+            $hariTersisa = $tantangan ? Carbon::now()->diffInDays($tantangan->tanggal_selesai, false) : null;
+
+            // Ambil semua id kuis dalam periode aktif
+            $kuisIds = KuisTantanganBulanan::where('id_periode', $periode->id)->pluck('id');
+
+            // Hitung peserta unik
+            $jumlahUser = HasilKuisTantanganBulanan::whereIn('id_kuis_tantangan_bulanan', $kuisIds)
                 ->distinct('id_user')
                 ->count('id_user');
 
+            // Ambil top 10 user berdasarkan total skor dari seluruh kuis dalam periode
             $topUsers = HasilKuisTantanganBulanan::select('id_user', DB::raw('SUM(skor) as total_skor'))
-                ->where('id_kuis_tantangan_bulanan', $tantangan->id) // filter berdasarkan tantangan aktif
+                ->whereIn('id_kuis_tantangan_bulanan', $kuisIds)
                 ->groupBy('id_user')
                 ->orderByDesc('total_skor')
                 ->with('user')
@@ -42,7 +54,14 @@ class KuisDanTantanganController extends Controller
                 ->get();
         }
 
-        return view('kuis-tantangan.index', compact('kuis', 'tantangan', 'hariTersisa', 'jumlahUser', 'topUsers'));
+        return view('kuis-tantangan.index', compact(
+            'kuis',
+            'tantangan',
+            'hariTersisa',
+            'jumlahUser',
+            'topUsers',
+            'periode'
+        ));
     }
 
     public function showSoalKuisReguler($slug)

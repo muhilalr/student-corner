@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('periodes', function (Blueprint $table) {
             $table->id();
             $table->integer('periode')->unique();
+            $table->enum('status_leaderboard', ['aktif', 'nonaktif'])->default('nonaktif');
             $table->timestamps();
         });
     }

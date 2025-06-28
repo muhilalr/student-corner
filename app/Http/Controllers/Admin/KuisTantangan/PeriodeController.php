@@ -17,6 +17,24 @@ class PeriodeController extends Controller
         return view('admin.kuis-tantangan-bulanan.periode.index', compact('periods'));
     }
 
+    public function setLeaderboard($id)
+    {
+        // Reset semua periode
+        Periode::query()->update(['status_leaderboard' => 'nonaktif']);
+
+        // Set yang dipilih menjadi aktif
+        Periode::where('id', $id)->update(['status_leaderboard' => 'aktif']);
+
+        return redirect()->route('admin_periode.index')->with('success', 'Periode berhasil dijadikan leaderboard aktif.');
+    }
+
+    public function nonaktifkanLeaderboard()
+    {
+        Periode::query()->update(['status_leaderboard' => 'nonaktif']);
+
+        return redirect()->route('admin_periode.index')->with('success', 'Leaderboard berhasil dinonaktifkan.');
+    }
+
     /**
      * Show the form for creating a new resource.
      */

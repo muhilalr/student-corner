@@ -48,6 +48,10 @@ Route::prefix('admin')->name('admin_')->group(function () {
     Route::get('/opsi-soal-pilihan-ganda', [SoalKuisRegulerController::class, 'indexOpsi'])->name('opsi-soal-pilihan-ganda.index');
     Route::resource('soal-kuis-reguler', SoalKuisRegulerController::class);
     Route::resource('periode', PeriodeController::class);
+    Route::post('/periode/set-leaderboard/{id}', [PeriodeController::class, 'setLeaderboard'])
+      ->name('periode.setLeaderboard');
+    Route::post('/periode/nonaktifkan-leaderboard', [PeriodeController::class, 'nonaktifkanLeaderboard'])
+      ->name('periode.nonaktifkanLeaderboard');
     Route::resource('kuis-tantangan-bulanan', TantanganBulananController::class);
     Route::get('/opsi-pilgan-tantangan-bulanan', [SoalTantanganBulananController::class, 'indexOpsi'])->name('opsi-pilgan-tantangan-bulanan.index');
     Route::resource(('soal-kuis-tantangan-bulanan'), SoalTantanganBulananController::class);

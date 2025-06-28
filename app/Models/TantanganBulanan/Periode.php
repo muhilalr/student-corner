@@ -12,6 +12,7 @@ class Periode extends Model
 
     protected $fillable = [
         'periode',
+        'status_leaderboard'
     ];
 
     public function kuis()

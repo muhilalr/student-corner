@@ -14,9 +14,20 @@ class SoalTantanganBulananController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $soal = SoalKuisTantanganBulanan::with('kuis_tantangan_bulanan')->paginate(10);
+        $search = $request->input('search');
+        $soal = SoalKuisTantanganBulanan::with('kuis_tantangan_bulanan')
+            ->when($search, function ($query, $search) {
+                $query->where('soal', 'like', '%' . $search . '%')
+                    ->orWhere('jawaban', 'like', '%' . $search . '%')
+                    ->orWhereHas('kuis_tantangan_bulanan', function ($q) use ($search) {
+                        $q->where('judul', 'like', '%' . $search . '%');
+                    });
+            })
+            ->latest()
+            ->paginate(10);
+
         return view('admin.kuis-tantangan-bulanan.soal-kuis.index', compact('soal'));
     }
 

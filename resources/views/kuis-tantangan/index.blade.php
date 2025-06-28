@@ -119,7 +119,8 @@
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
         <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Leaderboard Tantangan Bulanan</h2>
-        <p class="text-sm lg:text-xl font-semibold text-gray-600">Partisipan teratas tantangan bulanan</p>
+        <p class="text-sm lg:text-xl font-semibold text-gray-600">Partisipan Teratas Tantangan Bulanan Periode
+          {{ $periode->periode }}</p>
       </div>
 
       <div class="max-w-4xl mx-auto">
@@ -162,7 +163,7 @@
             <div
               class="{{ $bgColor }} {{ $orderClass }} rounded-2xl p-6 text-center card-hover transform transition-all duration-300">
               <div class="relative inline-block mb-4">
-                @if ($user->user->foto == null)
+                @if (empty($user->user->foto))
                   <img src="{{ Avatar::create($user->user->name)->toBase64() }}" alt="User"
                     class="w-{{ $ranking == 1 ? '24' : '20' }} h-{{ $ranking == 1 ? '24' : '20' }} rounded-full mx-auto object-cover">
                 @else

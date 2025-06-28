@@ -17,24 +17,25 @@
               <!-- /.card-header -->
 
               <div class="card-body">
-                <div class="mb-3 d-flex justify-content-end"><a
-                    href="{{ route('admin_kuis-tantangan-bulanan.create') }}" class="btn btn-primary"><span><i
-                        class="fas fa-plus mr-2"></i></span>Tambah Data</a>
-                </div>
                 <div class="mb-3 d-flex justify-content-between">
-                  <form method="GET" action="{{ route('admin_kuis-tantangan-bulanan.index') }}"
-                    class="d-flex align-items-center">
-                    <label for="periode" class="mr-2 mb-0 font-weight-bold">Filter Periode:</label>
-                    <select name="periode" id="periode" class="form-control mr-2">
-                      <option value="">Semua</option>
-                      @foreach ($listPeriode as $periode)
-                        <option value="{{ $periode->id }}" {{ request('periode') == $periode->id ? 'selected' : '' }}>
-                          {{ $periode->periode }}
-                        </option>
-                      @endforeach
-                    </select>
+                  <form method="GET" action="{{ route('admin_kuis-tantangan-bulanan.index') }}" class="form-inline">
+                    <label for="periode" class="font-weight-bold mr-2">Filter Periode:</label>
+                    <div class="form-group mr-2 mb-0">
+                      <select name="periode" id="periode" class="form-control">
+                        <option value="">Semua</option>
+                        @foreach ($listPeriode as $periode)
+                          <option value="{{ $periode->id }}"
+                            {{ request('periode') == $periode->id ? 'selected' : '' }}>
+                            {{ $periode->periode }}
+                          </option>
+                        @endforeach
+                      </select>
+                    </div>
                     <button type="submit" class="btn btn-secondary">Terapkan</button>
                   </form>
+
+                  <a href="{{ route('admin_kuis-tantangan-bulanan.create') }}" class="btn btn-primary"><span><i
+                        class="fas fa-plus mr-2"></i></span>Tambah Data</a>
                 </div>
 
                 <table id="example1" class="table table-bordered table-striped">
