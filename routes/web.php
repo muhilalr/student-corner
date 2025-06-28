@@ -18,11 +18,13 @@ use App\Http\Controllers\VisualisasiData\HistogramController;
 use App\Http\Controllers\SimulasiStatistik\SimulasiSlovinController;
 use App\Http\Controllers\SimulasiStatistik\SamplingSimulationController;
 
+// Route Konten Edukasi
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/konten-edukasi/{slug}', [KontenEdukasiController::class, 'show'])->name('konten-edukasi.show');
 Route::get('/konten-edukasi/{subjek_slug}/artikel/{slug}', [KontenEdukasiController::class, 'showArtikel'])->name('konten-edukasi.showArtikel');
 Route::get('/konten-edukasi/{subjek_slug}/video/{slug}', [KontenEdukasiController::class, 'showVideo'])->name('konten-edukasi.showVideo');
 
+// Route Kalkulator
 Route::prefix('kalkulator-statistik')->group(function () {
     Route::get('/', fn() => view('kalkulator-statistik.index'))->name('kalkulator-statistik.index');
     Route::get('/kalkulator-mean-median-modus', fn() => view('kalkulator-statistik.mean'))->name('kalkulator-statistik.mean');
@@ -30,9 +32,7 @@ Route::prefix('kalkulator-statistik')->group(function () {
     Route::get('/kalkulator-standar-deviasi', fn() => view('kalkulator-statistik.standar-deviasi'))->name('kalkulator-statistik.standar-deviasi');
 });
 
-// routes/web.php
-
-
+// Route Visualisasi Data
 Route::prefix('visualisasi-data')->name('visualisasi.')->group(function () {
     Route::get('/', fn() => view('visualisasi-data.index'))->name('index');
     Route::get('/histogram', [HistogramController::class, 'histogram'])->name('histogram');
@@ -52,7 +52,10 @@ Route::get('/kuis-dan-tantangan-bulanan', [KuisDanTantanganController::class, 'i
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/program-magang/informasi-magang', [InformasiMagangController::class, 'indexUser'])->name('program-magang.index');
+
+
 Route::middleware('auth')->group(function () {
+    // Route Profil
     Route::get('/profil/{slug}', [ProfilController::class, 'show'])->name('profil.show');
     Route::get('/profil/{slug}/edit', [ProfilController::class, 'edit'])->name('profil.edit');
     Route::get('/profil/{slug}/artikel-dibaca', [ProfilController::class, 'showArtikelDibaca'])->name('profil.artikel');
@@ -60,11 +63,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profil/{slug}/kuis-diselesaikan/kuis-reguler', [ProfilController::class, 'showKuisRegulerDiselesaikan'])->name('profil.kuis-reguler');
     Route::get('/profil/{slug}/kuis-diselesaikan/kuis-tantangan-bulanan', [ProfilController::class, 'showKuisTantanganDiselesaikan'])->name('profil.kuis-tantangan');
     Route::resource('profil', ProfilController::class);
+
+    // Route Pendaftaran Magang
     Route::get('/program-magang/daftar-magang', [PendaftaranMagangController::class, 'index'])
         ->name('daftar-magang.index');
-
     Route::post('/program-magang/daftar-magang', [PendaftaranMagangController::class, 'store'])
         ->name('daftar-magang.store');
+
+    // Route Kuis dan Tantangan Bulanan
     Route::get('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}', [KuisDanTantanganController::class, 'showSoalKuisReguler'])->name('kuis-tantangan.soal');
     Route::post('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}', [KuisDanTantanganController::class, 'submit'])->name('kuis.submit');
     Route::get('/kuis-dan-tantangan-bulanan/kuis-tantangan-bulanan/{slug}', [KuisDanTantanganController::class, 'showSoalTantanganBulanan'])->name('tantangan-bulanan.soal');
@@ -73,14 +79,15 @@ Route::middleware('auth')->group(function () {
     // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::get('/simulasi-statistik', fn() => view('simulasi-statistik.index'))->name('simulasi.index');
 
-Route::get('/simulasi-sampling', [SamplingSimulationController::class, 'index'])->name('simulasi.sampling');
-Route::post('/simulasi-sampling', [SamplingSimulationController::class, 'simulate'])->name('simulasi.sampling.run');
+Route::prefix('simulasi-statistik')->name('simulasi.')->group(function () {
+    Route::get('/', fn() => view('simulasi-statistik.index'))->name('index');
+    Route::get('/simulasi-random-sampling', [SamplingSimulationController::class, 'index'])->name('sampling');
+    Route::post('/simulasi-random-sampling', [SamplingSimulationController::class, 'simulate'])->name('sampling.run');
+    Route::get('/simulasi-ukuran-sampel-slovin', [SimulasiSlovinController::class, 'index'])->name('slovin');
+    Route::post('/simulasi-ukuran-sampel-slovin', [SimulasiSlovinController::class, 'hitung'])->name('slovin.hitung');
+});
 
-
-Route::get('/simulasi-slovin', [SimulasiSlovinController::class, 'index'])->name('simulasi.slovin');
-Route::post('/simulasi-slovin', [SimulasiSlovinController::class, 'hitung'])->name('simulasi.slovin.hitung');
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
