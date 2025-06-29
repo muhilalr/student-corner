@@ -51,9 +51,11 @@
                   Deskripsi Program</h3>
               </div>
               <div class="bg-blue-50/50 rounded-2xl p-6 border-l-4 border-blue-500">
-                <div class="prose prose-lg text-gray-700 leading-relaxed">
-                  <p>{{ $info->deskripsi }}</p>
+
+                <div class="prose lg:prose-lg max-w-none text-base lg:text-lg text-justify font-semibold">
+                  {!! $info->deskripsi !!}
                 </div>
+
               </div>
             </div>
 
@@ -71,8 +73,8 @@
                   Persyaratan</h3>
               </div>
               <div class="bg-green-50/50 rounded-2xl p-6 border-l-4 border-green-500">
-                <div class="prose prose-lg text-gray-700 leading-relaxed">
-                  <p>{{ $info->persyaratan }}</p>
+                <div class="prose lg:prose-lg max-w-none text-base lg:text-lg text-justify font-semibold">
+                  {!! $info->persyaratan !!}
                 </div>
               </div>
             </div>
@@ -91,8 +93,8 @@
                   Benefit</h3>
               </div>
               <div class="bg-purple-50/50 rounded-2xl p-6 border-l-4 border-purple-500">
-                <div class="prose prose-lg text-gray-700 leading-relaxed">
-                  <p>{{ $info->benefit }}</p>
+                <div class="prose lg:prose-lg max-w-none text-base lg:text-lg text-justify font-semibold">
+                  {!! $info->benefit !!}
                 </div>
               </div>
             </div>
@@ -111,8 +113,8 @@
                   Info Kontak</h3>
               </div>
               <div class="bg-orange-50/50 rounded-2xl p-6 border-l-4 border-orange-500">
-                <div class="prose prose-lg text-gray-700 leading-relaxed">
-                  <p>{{ $info->info_kontak }}</p>
+                <div class="prose lg:prose-lg max-w-none text-base lg:text-lg text-justify font-semibold">
+                  {!! $info->info_kontak !!}
                 </div>
               </div>
             </div>

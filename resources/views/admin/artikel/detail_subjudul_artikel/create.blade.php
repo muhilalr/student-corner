@@ -35,7 +35,7 @@
               <div class="form-group">
                 <label for="konten_text">Konten</label>
                 <textarea name="konten_text" class="form-control" id="editor" placeholder="Masukkan Konten Teks" cols="30"
-                  rows="10" required></textarea>
+                  rows="10"></textarea>
               </div>
               <div class="form-group">
                 <label for="link_embed">Link Power BI</label>

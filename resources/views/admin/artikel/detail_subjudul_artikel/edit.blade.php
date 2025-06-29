@@ -37,8 +37,8 @@
               </div>
               <div class="form-group">
                 <label for="konten_text">Konten</label>
-                <textarea name="konten_text" class="form-control" id="konten_text" placeholder="Masukkan Konten Teks" cols="30"
-                  rows="10" required>{{ $detail_subjudul_artikel->konten_text }}</textarea>
+                <textarea name="konten_text" class="form-control" id="editor" placeholder="Masukkan Konten Teks" cols="30"
+                  rows="10">{{ $detail_subjudul_artikel->konten_text }}</textarea>
               </div>
               <div class="form-group">
                 <label for="link_embed">Link Power BI</label>
@@ -66,4 +66,32 @@
       </div><!-- /.container-fluid -->
     </section>
   </div>
+  @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/@ckeditor/ckeditor5-build-classic@35.3.0/build/ckeditor.js"></script>
+    <script>
+      ClassicEditor
+        .create(document.querySelector('#editor'), {
+          toolbar: [
+            'heading', '|',
+            'bold', 'italic', 'underline', 'strikethrough', '|',
+            'fontColor', 'fontSize', '|',
+            'link', 'bulletedList', 'numberedList', '|',
+            'alignment',
+            'insertTable', '|',
+            'undo', 'redo'
+          ],
+          fontSize: {
+            options: [9, 11, 13, 'default', 17, 19, 21],
+            supportAllValues: false
+          },
+          fontColor: {
+            columns: 5,
+            documentColors: 5
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    </script>
+  @endpush
 </x-layout-admin>

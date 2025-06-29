@@ -41,6 +41,10 @@
       opacity: 0;
       visibility: hidden;
     }
+
+    /* * {
+      border: solid 1px red;
+    } */
   </style>
 
   <title>Student Corner</title>

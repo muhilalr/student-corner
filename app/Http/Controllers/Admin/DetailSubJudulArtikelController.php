@@ -13,9 +13,23 @@ class DetailSubJudulArtikelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $detail_subjuduls = DetailSubJudulArtikel::with('sub_judul_artikel.artikel')->get();
+        $search = $request->input('search');
+        $detail_subjuduls = DetailSubJudulArtikel::with('sub_judul_artikel.artikel')
+            ->when($search, function ($query, $search) {
+                $query->where('konten_text', 'like', '%' . $search . '%')
+                    ->orWhere('link_embed', 'like', '%' . $search . '%')
+                    ->orWhere('urutan', 'like', '%' . $search . '%')
+                    ->orWhereHas('sub_judul_artikel', function ($q) use ($search) {
+                        $q->where('sub_judul', 'like', '%' . $search . '%');
+                    })
+                    ->orWhereHas('sub_judul_artikel.artikel', function ($q) use ($search) {
+                        $q->where('judul', 'like', '%' . $search . '%');
+                    });
+            })
+            ->latest()
+            ->paginate(10);
         return view('admin.artikel.detail_subjudul_artikel.index', compact('detail_subjuduls'));
     }
 

@@ -18,9 +18,15 @@
               <!-- /.card-header -->
 
               <div class="card-body">
-                <div class="mb-3 d-flex justify-content-end"><a
-                    href="{{ route('admin_detail-subjudul-artikel.create') }}" class="btn btn-primary"><span><i
-                        class="fas fa-plus mr-2"></i></span>Tambah Data</a>
+                <div class="mb-3 d-flex justify-content-between">
+                  <form action="{{ route('admin_detail-subjudul-artikel.index') }}" method="GET" class="form-inline">
+                    <input type="text" name="search" value="{{ request('search') }}" class="form-control mr-2"
+                      placeholder="Cari ...">
+                    <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                  </form>
+                  <a href="{{ route('admin_detail-subjudul-artikel.create') }}" class="btn btn-primary">
+                    <span><i class="fas fa-plus mr-2"></i></span>Tambah Data
+                  </a>
                 </div>
                 <div class="table-responsive">
                   <table id="example1" class="table table-bordered table-striped" style="min-width: 1000px;">

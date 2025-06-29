@@ -13,9 +13,19 @@ class VideoPembelajaranController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $videos = VideoPembelajaran::with('subjek_materi')->get();
+        $search = $request->input('search');
+        $videos = VideoPembelajaran::with('subjek_materi')
+            ->when($search, function ($query, $search) {
+                $query->where('judul', 'like', '%' . $search . '%')
+                    ->orWhere('deskripsi', 'like', '%' . $search . '%')
+                    ->orWhereHas('subjek_materi', function ($q) use ($search) {
+                        $q->where('judul', 'like', '%' . $search . '%');
+                    });
+            })
+            ->latest()
+            ->paginate(10);
         return view('admin.video-pembelajaran.index', compact('videos'));
     }
 

@@ -15,9 +15,19 @@ class ArtikelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $artikels = Artikel::with('subjek_materi')->get();
+        $search = $request->input('search');
+        $artikels = Artikel::with('subjek_materi')
+            ->when($search, function ($query, $search) {
+                $query->where('judul', 'like', '%' . $search . '%')
+                    ->orWhere('deskripsi', 'like', '%' . $search . '%')
+                    ->orWhereHas('subjek_materi', function ($q) use ($search) {
+                        $q->where('judul', 'like', '%' . $search . '%');
+                    });
+            })
+            ->latest()
+            ->paginate(10);
         return view('admin.artikel.index', compact('artikels'));
     }
 

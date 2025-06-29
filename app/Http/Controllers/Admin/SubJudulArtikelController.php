@@ -12,9 +12,19 @@ class SubJudulArtikelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $subjuduls = SubJudulArtikel::with('artikel')->get();
+        $search = $request->input('search');
+        $subjuduls = SubJudulArtikel::with('artikel')
+            ->when($search, function ($query, $search) {
+                $query->where('sub_judul', 'like', '%' . $search . '%')
+                    ->orWhere('urutan', 'like', '%' . $search . '%')
+                    ->orWhereHas('artikel', function ($q) use ($search) {
+                        $q->where('judul', 'like', '%' . $search . '%');
+                    });
+            })
+            ->latest()
+            ->paginate(10);
         return view('admin.artikel.sub_judul_artikel.index', compact('subjuduls'));
     }
 

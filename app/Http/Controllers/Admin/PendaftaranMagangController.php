@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\PendaftaranMagang as MailPendaftaranMagang;
+use Intervention\Image\Colors\Rgb\Channels\Red;
 
 class PendaftaranMagangController extends Controller
 {
@@ -29,9 +30,15 @@ class PendaftaranMagangController extends Controller
         return view('program-magang.daftar-magang', compact('pendaftaran'));
     }
 
-    public function index_admin()
+    public function index_admin(Request $request)
     {
-        $pendaftaran = PendaftaranMagang::all();
+        $search = $request->input('search');
+        $pendaftaran = PendaftaranMagang::query()
+            ->when($search, function ($query, $search) {
+                $query->where('nama', 'like', '%' . $search . '%');
+            })
+            ->latest()
+            ->paginate(10);
         return view('admin.pendaftaran-magang.index', compact('pendaftaran'));
     }
 

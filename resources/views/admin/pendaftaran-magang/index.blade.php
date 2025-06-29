@@ -17,6 +17,13 @@
               <!-- /.card-header -->
 
               <div class="card-body">
+                <div class="mb-3 d-flex justify-content-between">
+                  <form action="{{ route('admin_informasi-magang.index') }}" method="GET" class="form-inline">
+                    <input type="text" name="search" value="{{ request('search') }}" class="form-control mr-2"
+                      placeholder="Cari Nama...">
+                    <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                  </form>
+                </div>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead class="text-center">
                     <tr>
