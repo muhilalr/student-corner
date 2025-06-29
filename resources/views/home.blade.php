@@ -46,7 +46,7 @@
       <!-- Section Heading -->
       <div class="mb-8 sm:mb-12 text-center">
         <h1 class="mb-2 text-3xl lg:text-4xl font-bold text-white">Konten Edukasi</h1>
-        <p class="mx-auto max-w-xl text-sm font-semibold text-slate-300">
+        <p class="mx-auto max-w-xl text-sm md:text-base font-semibold text-slate-300">
           Eksplor dan pelajari lebih banyak berdasarkan topik yang kamu inginkan
         </p>
       </div>
@@ -172,7 +172,7 @@
         <div class="flex flex-col items-center justify-center mb-4">
           <h1 class="mb-4 text-2xl md:text-3xl font-bold text-gray-800">Kuis dan Tantangan Untuk
             Kamu!</h1>
-          <p class="text-justify text-sm font-semibold text-gray-600">
+          <p class="text-center text-sm md:text-base font-semibold text-gray-600">
             Jelajahi konsep-konsep baru dan pertajam pemahamanmu dengan kuis dan tantangan yang dirancang untuk
             menyenangkan sekaligus mendidik. Temukan seberapa jauh kamu bisa melangkah!
           </p>

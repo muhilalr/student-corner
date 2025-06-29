@@ -21,7 +21,7 @@
     </form>
 
     @isset($n)
-      <div class="mt-6 p-4 bg-green-100 rounded border border-green-400">
+      <div class="mt-6 p-4 text-center bg-green-100 rounded border border-green-400">
         <h2 class="text-xl font-semibold mb-2">Hasil Perhitungan</h2>
         <p>Populasi (N): <strong>{{ $N }}</strong></p>
         <p>Margin of Error (e): <strong>{{ $e }}</strong></p>
