@@ -34,7 +34,7 @@
                           <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
                             <a href="{{ route('admin_data-admin.edit', $admin->id) }}" class="btn btn-warning"><span><i
                                   class="fas fa-edit"></i></span></a>
-                            <form action="{{ route('admin_data-admin.destroy', $admin->id) }}" method="POST"
+                            {{-- <form action="{{ route('admin_data-admin.destroy', $admin->id) }}" method="POST"
                               class="m-0">
                               @csrf
                               @method('DELETE')
@@ -42,7 +42,7 @@
                                 onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                 <span><i class="fas fa-trash"></i></span>
                               </button>
-                            </form>
+                            </form> --}}
                           </div>
                         </td>
                       </tr>
