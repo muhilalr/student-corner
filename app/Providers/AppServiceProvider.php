@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\SubjekMateri;
+use Illuminate\Support\Carbon;
 use App\Models\InformasiMagang;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
@@ -27,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
             $view->with('semua_subjek_materi', SubjekMateri::all());
         });
         Paginator::useBootstrapFive();
+        Carbon::setLocale('id');
     }
 }

@@ -209,7 +209,7 @@
       <div class="flex w-full flex-col items-center md:items-start justify-center p-4 sm:p-8 md:w-1/2">
         <div class="mb-6 sm:mb-8">
           <h1 class="mb-6 text-3xl md:text-4xl font-bold text-gray-800 text-center md:text-left">
-            <span class="text-orange-500">Internship</span> Program
+            Magang dan Riset
           </h1>
           <p class="text-justify text-sm md:text-base font-semibold text-gray-600">
             Dapatkan pengalaman kerja nyata dan kembangkan keterampilan profesionalmu melalui program magang kami.

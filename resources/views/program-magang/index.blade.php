@@ -6,8 +6,7 @@
       <div class="text-center">
 
         <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
-          <span class="text-orange-500">Internship</span>
-          <span class="text-white">Program</span>
+          Magang dan Riset
         </h1>
 
         <p class="text-lg md:text-xl text-blue-100 max-w-4xl mx-auto leading-relaxed font-semibold">

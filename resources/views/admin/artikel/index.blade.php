@@ -34,6 +34,7 @@
                       <th>Judul Artikel</th>
                       <th>Deskripsi</th>
                       <th>Gambar</th>
+                      <th>Ditambahkan Tanggal</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -45,6 +46,7 @@
                         <td>{{ $artikel->deskripsi }}</td>
                         <td><img src="{{ asset('storage/' . $artikel->gambar) }}" alt="Gambar Subjek"
                             style="max-width: 100px; max-height: 100px;"></td>
+                        <td>{{ \Carbon\Carbon::parse($artikel->created_at)->format('d-m-Y') }}</td>
                         <td>
                           <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
                             <a href="{{ route('admin_artikel.edit', $artikel->id) }}" class="btn btn-warning"><span><i

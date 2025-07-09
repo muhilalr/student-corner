@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('artikels', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('subjek_materi_id');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->string('judul');
             $table->text('deskripsi');
             $table->string('gambar');

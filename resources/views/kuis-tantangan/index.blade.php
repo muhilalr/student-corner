@@ -119,8 +119,10 @@
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
         <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">Leaderboard Tantangan Bulanan</h2>
-        <p class="text-sm lg:text-xl font-semibold text-gray-600">Partisipan Teratas Tantangan Bulanan Periode
-          {{ $periode->periode }}</p>
+        @if ($periode)
+          <p class="text-sm lg:text-xl font-semibold text-gray-600">Partisipan Teratas Tantangan Bulanan Periode
+            {{ $periode->periode }}</p>
+        @endif
       </div>
 
       <div class="max-w-4xl mx-auto">

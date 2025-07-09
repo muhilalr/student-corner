@@ -29,16 +29,16 @@
               Mailbox: bps1900@bps.go.id <br>
             </p>
             <div class="mt-6 flex justify-center md:justify-start space-x-3">
-              <a href="#">
+              <a href="https://www.facebook.com/bpsstatistics/#">
                 <img src="{{ asset('/gambar/facebook.svg') }}" alt="" width="50">
               </a>
-              <a href="#">
+              <a href="https://www.instagram.com/bps_statistics/">
                 <img src="{{ asset('/gambar/instagram.svg') }}" alt="" width="50">
               </a>
-              <a href="#">
+              <a href="https://x.com/bps_statistics">
                 <img src="{{ asset('/gambar/twitter.svg') }}" alt="" width="50">
               </a>
-              <a href="#">
+              <a href="https://www.youtube.com/channel/UCn4IaaxHaaP-mAjZzrAtixA">
                 <img src="{{ asset('/gambar/youtube.svg') }}" alt="" width="50">
               </a>
             </div>
@@ -47,28 +47,44 @@
             <div>
               <h3 class="mb-4 font-semibold text-white">Tentang Kami</h3>
               <ul class="space-y-2">
-                <li><a href="#" class="text-base text-gray-300 hover:text-white">Profil BPS</a></li>
-                <li><a href="#" class="text-base text-gray-300 hover:text-white">PPID</a></li>
-                <li><a href="#" class="text-base text-gray-300 hover:text-white">Kebijakan Diseminasi</a>
+                <li><a
+                    href="https://ppid.bps.go.id/app/konten/0000/Profil-BPS.html?_gl=1*p3mr9h*_ga*NzE4NTQ5ODUuMTc0MDQ4ODA5OA..*_ga_XXTTVXWHDB*czE3NTIwMzEyMTEkbzQ3JGcxJHQxNzUyMDMxMzg2JGoyNiRsMCRoMA.."
+                    class="text-base text-gray-300 hover:text-white">Profil BPS</a></li>
+                <li><a
+                    href="https://ppid.bps.go.id/?mfd=0000&_gl=1*13meggc*_ga*NzE4NTQ5ODUuMTc0MDQ4ODA5OA..*_ga_XXTTVXWHDB*czE3NTIwNDU4MzMkbzQ4JGcwJHQxNzUyMDQ1ODMzJGo2MCRsMCRoMA.."
+                    class="text-base text-gray-300 hover:text-white">PPID</a></li>
+                <li><a
+                    href="https://ppid.bps.go.id/app/konten/0000/Layanan-BPS.html?_gl=1*1ma3czt*_ga*NzE4NTQ5ODUuMTc0MDQ4ODA5OA..*_ga_XXTTVXWHDB*czE3NTIwMzEyMTEkbzQ3JGcxJHQxNzUyMDMxMzg2JGoyNiRsMCRoMA..#pills-3"
+                    class="text-base text-gray-300 hover:text-white">Kebijakan Diseminasi</a>
                 </li>
               </ul>
             </div>
             <div>
               <h3 class="mb-4 font-semibold text-white">Tautan Lainnya</h3>
               <ul class="space-y-2">
-                <li><a href="#" class="text-base text-gray-300 hover:text-white">ASEAN Stats</a></li>
-                <li><a href="#" class="text-base text-gray-300 hover:text-white">Forum Masyarakat Statistik</a>
+                <li><a href="https://www.aseanstats.org/" class="text-base text-gray-300 hover:text-white">ASEAN
+                    Stats</a></li>
+                <li><a href="https://fmsindonesia.id/" class="text-base text-gray-300 hover:text-white">Forum Masyarakat
+                    Statistik</a>
                 </li>
-                <li><a href="#" class="text-base text-gray-300 hover:text-white">Reformasi Birokrasi</a>
+                <li><a
+                    href="https://rb.bps.go.id/?_gl=1*uz7jwy*_ga*NzE4NTQ5ODUuMTc0MDQ4ODA5OA..*_ga_XXTTVXWHDB*czE3NTIwNDU4MzMkbzQ4JGcwJHQxNzUyMDQ1ODMzJGo2MCRsMCRoMA.."
+                    class="text-base text-gray-300 hover:text-white">Reformasi Birokrasi</a>
                 </li>
-                <li><a href="#" class="text-base text-gray-300 hover:text-white">Layanan Pengadaan Secara
+                <li><a href="https://spse.inaproc.id/bps" class="text-base text-gray-300 hover:text-white">Layanan
+                    Pengadaan Secara
                     Elektronik</a>
                 </li>
-                <li><a href="#" class="text-base text-gray-300 hover:text-white">Politeknik Statistika STIS</a>
+                <li><a href="https://www.stis.ac.id/" class="text-base text-gray-300 hover:text-white">Politeknik
+                    Statistika STIS</a>
                 </li>
-                <li><a href="#" class="text-base text-gray-300 hover:text-white">Pusdiklat BPS</a>
+                <li><a
+                    href="https://pusdiklat.bps.go.id/?_gl=1*a9fkn2*_ga*NzE4NTQ5ODUuMTc0MDQ4ODA5OA..*_ga_XXTTVXWHDB*czE3NTIwNDU4MzMkbzQ4JGcxJHQxNzUyMDQ2MTY5JGo2MCRsMCRoMA.."
+                    class="text-base text-gray-300 hover:text-white">Pusdiklat BPS</a>
                 </li>
-                <li><a href="#" class="text-base text-gray-300 hover:text-white">JDIH BPS</a>
+                <li><a
+                    href="https://jdih.web.bps.go.id/public/index.php?_gl=1*96b6fl*_ga*NzE4NTQ5ODUuMTc0MDQ4ODA5OA..*_ga_XXTTVXWHDB*czE3NTIwNDU4MzMkbzQ4JGcxJHQxNzUyMDQ2MTY5JGo2MCRsMCRoMA.."
+                    class="text-base text-gray-300 hover:text-white">JDIH BPS</a>
                 </li>
               </ul>
             </div>

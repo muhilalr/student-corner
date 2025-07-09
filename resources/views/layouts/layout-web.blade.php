@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <meta name="csrf-token" content="{{ csrf_token() }}" />
+  <link rel="icon" href="{{ asset('gambar/logo-bps.jpg') }}" type="image/jpg">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -47,7 +48,7 @@
     } */
   </style>
 
-  <title>Student Corner</title>
+  <title>Pojok Literasi Statistik</title>
 </head>
 
 <body class="bg-[#EEF0F2]" id="main-body">

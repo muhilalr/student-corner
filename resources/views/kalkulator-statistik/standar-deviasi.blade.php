@@ -115,21 +115,21 @@
   <script>
     let calculationType = 'sampel';
 
-    function formatInput() {
-      const input = document.getElementById('dataInput');
-      let value = input.value;
+    // function formatInput() {
+    //   const input = document.getElementById('dataInput');
+    //   let value = input.value;
 
-      // Remove any non-numeric characters except commas, periods, and spaces
-      value = value.replace(/[^0-9,.\s-]/g, '');
+    //   // Remove any non-numeric characters except commas, periods, and spaces
+    //   value = value.replace(/[^0-9,.\s-]/g, '');
 
-      // Replace multiple spaces/commas with single comma
-      value = value.replace(/[\s,]+/g, ', ');
+    //   // Replace multiple spaces/commas with single comma
+    //   value = value.replace(/[\s,]+/g, ', ');
 
-      // Remove trailing comma and space
-      value = value.replace(/,\s*$/, '');
+    //   // Remove trailing comma and space
+    //   value = value.replace(/,\s*$/, '');
 
-      input.value = value;
-    }
+    //   input.value = value;
+    // }
 
     function setCalculationType(type) {
       calculationType = type;
