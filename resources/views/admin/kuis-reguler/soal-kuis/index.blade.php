@@ -32,10 +32,7 @@
                   <thead class="text-center">
                     <tr>
                       <th>Topik Kuis</th>
-                      <th>Gambar</th>
-                      <th>Soal</th>
-                      <th>Tipe Soal</th>
-                      <th>Jawaban</th>
+                      <th>File Soal</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -44,16 +41,11 @@
                       <tr>
                         <td>{{ $item->kuis_reguler->judul }}</td>
                         <td>
-                          @if ($item->gambar)
-                            <img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar Soal"
-                              style="max-width: 100px; max-height: 100px;">
-                          @else
-                            -
-                          @endif
+                          <a href="{{ asset('storage/file_soal_kuis_reguler/' . $item->file_soal) }}"
+                            class="btn btn-sm btn-success" download>
+                            {{ $item->file_soal }}
+                          </a>
                         </td>
-                        <td>{{ $item->soal }}</td>
-                        <td>{{ $item->tipe_soal }}</td>
-                        <td>{{ $item->jawaban }}</td>
                         <td>
                           <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
                             <a href="{{ route('admin_soal-kuis-reguler.edit', $item->id) }}"
