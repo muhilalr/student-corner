@@ -36,6 +36,11 @@
                 <input type="file" name="gambar" class="form-control" id="gambar"
                   placeholder="Masukkan Gambar Kuis" required>
               </div>
+              <div class="form-group">
+                <label for="durasi_menit">Durasi Pengerjaan (menit)</label>
+                <input type="number" name="durasi_menit" id="durasi_menit" class="form-control" required
+                  placeholder="Masukkan Durasi Pengerjaan">
+              </div>
             </div>
             <!-- /.card-body -->
 

@@ -13,12 +13,14 @@ class SoalKuisRegulerImport implements ToCollection, WithHeadingRow
     public $idKuis;
     public $fileSoal;
     public $imageMap;
+    public $uploadBatchId;
 
-    public function __construct($idKuis, $fileSoal, $imageMap)
+    public function __construct($idKuis, $fileSoal, $imageMap, $uploadBatchId)
     {
         $this->idKuis = $idKuis;
         $this->fileSoal = $fileSoal;
         $this->imageMap = $imageMap;
+        $this->uploadBatchId = $uploadBatchId;
     }
 
     public function collection(Collection $rows)
@@ -27,6 +29,7 @@ class SoalKuisRegulerImport implements ToCollection, WithHeadingRow
             $soal = new SoalKuisReguler();
             $soal->id_kuis_reguler = $this->idKuis;
             $soal->file_soal = $this->fileSoal;
+            $soal->upload_batch_id = $this->uploadBatchId;
             $soal->soal = $row['soal'] ?? '';
             $soal->tipe_soal = $row['tipe_soal'] ?? 'Isian Singkat';
             $soal->jawaban = $row['jawaban'] ?? '';

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('judul');
             $table->text('deskripsi');
             $table->string('gambar');
+            $table->integer('durasi_menit')->default(15);
             $table->string('slug')->unique();
             $table->timestamps();
         });

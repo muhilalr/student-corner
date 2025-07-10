@@ -46,6 +46,10 @@ Route::prefix('admin')->name('admin_')->group(function () {
       ->name('daftar-magang.destroy');
     Route::resource('kuis-reguler', KuisRegulerController::class);
     Route::get('/opsi-soal-pilihan-ganda', [SoalKuisRegulerController::class, 'indexOpsi'])->name('opsi-soal-pilihan-ganda.index');
+    Route::get('/soal-kuis-reguler/edit-batch/{batchId}', [SoalKuisRegulerController::class, 'editBatch'])->name('soal-kuis-reguler.edit-batch');
+    Route::put('/soal-kuis-reguler/update-batch/{batchId}', [SoalKuisRegulerController::class, 'updateBatch'])->name('soal-kuis-reguler.update-batch');
+    Route::delete('/admin/soal-kuis-reguler/destroy-batch/{batchId}', [SoalKuisRegulerController::class, 'destroyBatch'])->name('soal-kuis-reguler.destroy-batch');
+
     Route::resource('soal-kuis-reguler', SoalKuisRegulerController::class);
     Route::resource('periode', PeriodeController::class);
     Route::post('/periode/set-leaderboard/{id}', [PeriodeController::class, 'setLeaderboard'])

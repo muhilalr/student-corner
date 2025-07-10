@@ -35,7 +35,8 @@ class KuisRegulerController extends Controller
         $request->validate([
             'judul' => 'required',
             'deskripsi' => 'required|string|max:255',
-            'gambar' => 'required|image|mimes:jpg,jpeg,png'
+            'gambar' => 'required|image|mimes:jpg,jpeg,png',
+            'durasi_menit' => 'required|integer',
         ]);
 
         $slug = Str::slug($request->judul);
@@ -46,7 +47,8 @@ class KuisRegulerController extends Controller
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
             'gambar' => $filePath,
-            'slug' => $slug
+            'slug' => $slug,
+            'durasi_menit' => $request->durasi_menit
         ]);
 
         return redirect()->route('admin_kuis-reguler.index')->with('success', 'Kuis Reguler berhasil ditambahkan');
@@ -76,7 +78,8 @@ class KuisRegulerController extends Controller
         $request->validate([
             'judul' => 'required',
             'deskripsi' => 'required|string|max:255',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png'
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png',
+            'durasi_menit' => 'required|integer',
         ]);
 
         $slug = Str::slug($request->judul);
@@ -90,7 +93,8 @@ class KuisRegulerController extends Controller
         $kuis_reguler->update([
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
-            'slug' => $slug
+            'slug' => $slug,
+            'durasi_menit' => $request->durasi_menit
         ]);
 
         return redirect()->route('admin_kuis-reguler.index')->with('success', 'Kuis Reguler berhasil diperbarui');

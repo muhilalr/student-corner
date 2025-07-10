@@ -155,7 +155,8 @@
               </div>
               @if ($item->gambar)
                 <div class="max-w-md mx-auto mb-4">
-                  <img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar Soal" class="w-full object-cover">
+                  <img src="{{ asset('storage/gambar_soal_kuis_reguler/' . $item->gambar) }}" alt="Gambar Soal"
+                    class="w-full object-cover">
                 </div>
               @endif
               <h2 class="text-base lg:text-xl font-bold leading-tight">

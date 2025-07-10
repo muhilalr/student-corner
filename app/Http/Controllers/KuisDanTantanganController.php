@@ -16,7 +16,7 @@ class KuisDanTantanganController extends Controller
 {
     public function index()
     {
-        $kuis = KuisReguler::with('soal_reguler')->get();
+        $kuis = KuisReguler::withCount('soal_reguler')->get();
 
         // Ambil periode leaderboard yang aktif
         $periode = Periode::where('status_leaderboard', 'aktif')->first();

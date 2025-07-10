@@ -26,6 +26,7 @@
                       <th>Judul</th>
                       <th>Deskripsi</th>
                       <th>Gambar</th>
+                      <th>Durasi (Menit)</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -36,6 +37,7 @@
                         <td>{{ $item->deskripsi }}</td>
                         <td><img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar Subjek"
                             style="max-width: 100px; max-height: 100px;"></td>
+                        <td>{{ $item->durasi_menit }}</td>
                         <td>
                           <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
                             <a href="{{ route('admin_kuis-reguler.edit', $item->id) }}" class="btn btn-warning"><span><i

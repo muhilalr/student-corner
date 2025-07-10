@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('tipe_soal', ['Pilihan Ganda', 'Isian Singkat']);
             $table->text('jawaban');
             $table->string('file_soal');
+            $table->string('upload_batch_id')->nullable();
             $table->timestamps();
             $table->foreign('id_kuis_reguler')->references('id')->on('kuis_regulers')->onDelete('cascade');
         });

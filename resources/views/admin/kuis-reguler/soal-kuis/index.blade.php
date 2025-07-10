@@ -48,10 +48,11 @@
                         </td>
                         <td>
                           <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-                            <a href="{{ route('admin_soal-kuis-reguler.edit', $item->id) }}"
+                            <a href="{{ route('admin_soal-kuis-reguler.edit-batch', ['batchId' => $item->upload_batch_id]) }}"
                               class="btn btn-warning"><span><i class="fas fa-edit"></i></span></a>
-                            <form action="{{ route('admin_soal-kuis-reguler.destroy', $item->id) }}" method="POST"
-                              class="m-0">
+                            <form
+                              action="{{ route('admin_soal-kuis-reguler.destroy-batch', ['batchId' => $item->upload_batch_id]) }}"
+                              method="POST" class="m-0">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger"

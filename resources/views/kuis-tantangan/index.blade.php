@@ -28,6 +28,14 @@
                   <h3 class="text-xl font-bold text-gray-800 my-2">{{ $item->judul }}</h3>
                   <p class="text-gray-600 font-semibold mb-4">
                     {{ Str::limit($item->deskripsi, 150, '...') }}</p>
+                  <div class="flex justify-between mb-2">
+                    <p class="text-gray-600 font-semibold mb-1">
+                      {{ $item->soal_reguler_count }} Soal
+                    </p>
+                    <p class="text-gray-600 font-semibold mb-1">
+                      {{ $item->durasi_menit }} Menit
+                    </p>
+                  </div>
                   <a href="{{ route('kuis-tantangan.soal', $item->slug) }}">
                     <button class="bg-primary w-full text-white px-4 py-2 rounded-lg hover:bg-[#00295A]">
                       Mulai
