@@ -73,33 +73,33 @@ class KuisDanTantanganController extends Controller
             abort(404);
         }
 
-        // Cek apakah user sudah submit kuis ini
-        $hasil = DB::table('hasil_kuis_regulers')
-            ->where('id_user', $user->id)
-            ->where('id_kuis_reguler', $kuis->id)
-            ->first();
+        // Simpan waktu mulai di session (opsional)
+        session(['start_time_kuis_' . $kuis->id => now()]);
 
-        if ($hasil) {
-            return view('kuis-tantangan.soal', [
-                'kuis' => $kuis,
-                'skor' => session('skor', $hasil->skor),
-                'jawaban_benar' => $hasil->jawaban_benar,
-                'jawaban_salah' => $hasil->jawaban_salah,
-                'sudahSubmit' => true,
-            ]);
-        }
-
-        // Ambil soal dan opsi
+        // Ambil soal dan acak urutannya
         $soal = DB::table('soal_kuis_regulers')
             ->where('id_kuis_reguler', $kuis->id)
             ->select('id', 'gambar', 'soal', 'jawaban', 'tipe_soal')
             ->get()
+            ->shuffle() // Acak soal
             ->map(function ($item) {
                 if ($item->tipe_soal === 'Pilihan Ganda') {
-                    $item->opsi = DB::table('opsi_soal_kuis_regulers')
+                    $opsiAsli = DB::table('opsi_soal_kuis_regulers')
                         ->where('id_soal_kuis_reguler', $item->id)
-                        ->select('label', 'teks_opsi')
-                        ->get();
+                        ->select('teks_opsi')
+                        ->get()
+                        ->shuffle(); // Acak hanya isi teks
+
+                    // Tetapkan ulang label secara urut A, B, C, D...
+                    $labels = ['A', 'B', 'C', 'D', 'E'];
+                    $item->opsi = collect();
+
+                    foreach ($opsiAsli as $index => $opsi) {
+                        $item->opsi->push((object)[
+                            'label' => $labels[$index],
+                            'teks_opsi' => $opsi->teks_opsi,
+                        ]);
+                    }
                 } else {
                     $item->opsi = collect();
                 }
@@ -109,9 +109,10 @@ class KuisDanTantanganController extends Controller
         return view('kuis-tantangan.soal', [
             'kuis' => $kuis,
             'soal' => $soal,
-            'sudahSubmit' => false,
+            'durasi' => $kuis->durasi_menit,
         ]);
     }
+
 
 
     public function submit(Request $request, $slug)

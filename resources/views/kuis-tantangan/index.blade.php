@@ -22,17 +22,19 @@
           <ul class="splide__list">
             @foreach ($kuis as $item)
               <li class="splide__slide px-14 lg:px-2">
-                <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-md flex flex-col justify-between h-full">
-                  <img src="{{ asset('storage/' . $item->gambar) }}" alt="" width="500"
-                    class="aspect-[3/2] rounded-lg object-cover" />
-                  <h3 class="text-xl font-bold text-gray-800 my-2">{{ $item->judul }}</h3>
-                  <p class="text-gray-600 font-semibold mb-4">
-                    {{ Str::limit($item->deskripsi, 150, '...') }}</p>
-                  <div class="flex justify-between mb-2">
-                    <p class="text-gray-600 font-semibold mb-1">
+                <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-md flex flex-col justify-between gap-3 h-full">
+                  <div class="flex flex-col gap-3 h-full">
+                    <img src="{{ asset('storage/' . $item->gambar) }}" alt="" width="500"
+                      class="aspect-[3/2] rounded-lg object-cover" />
+                    <h3 class="text-xl font-bold text-gray-800">{{ $item->judul }}</h3>
+                    <p class="text-gray-600 font-semibold">
+                      {{ Str::limit($item->deskripsi, 150, '...') }}</p>
+                  </div>
+                  <div class="flex justify-between">
+                    <p class="text-gray-600 font-semibold">
                       {{ $item->soal_reguler_count }} Soal
                     </p>
-                    <p class="text-gray-600 font-semibold mb-1">
+                    <p class="text-gray-600 font-semibold">
                       {{ $item->durasi_menit }} Menit
                     </p>
                   </div>

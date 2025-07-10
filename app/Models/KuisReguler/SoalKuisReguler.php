@@ -28,4 +28,9 @@ class SoalKuisReguler extends Model
     {
         return $this->hasMany(OpsiSoalKuisReguler::class, 'id_soal_kuis_reguler');
     }
+
+    public function jawaban()
+    {
+        return $this->hasMany(JawabanKuisReguler::class, 'id_soal_kuis_reguler');
+    }
 }

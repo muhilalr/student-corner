@@ -27,4 +27,9 @@ class HasilKuisReguler extends Model
     {
         return $this->belongsTo(KuisReguler::class, 'id_kuis_reguler');
     }
+
+    public function jawaban_kuis_reguler()
+    {
+        return $this->hasMany(JawabanKuisReguler::class, 'id_hasil_kuis_reguler');
+    }
 }

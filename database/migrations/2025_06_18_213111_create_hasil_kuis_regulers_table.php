@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('skor')->default(0);
             $table->integer('jawaban_benar');
             $table->integer('jawaban_salah');
+            $table->integer('durasi_pengerjaan');
             $table->timestamps();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_kuis_reguler')->references('id')->on('kuis_regulers')->onDelete('cascade');
