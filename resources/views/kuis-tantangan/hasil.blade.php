@@ -143,14 +143,19 @@
           kesuksesan!</p>
       @endif
     </div>
-    <a href="{{ route('kuis-tantangan.index') }}">
-      <button class="w-full bg-primary text-white font-semibold py-4 rounded-lg hover:bg-[#00295A]">
-        Halaman Kuis dan Tantangan
-      </button>
-    </a>
     <a href="{{ route('kuis.lihat-jawaban', ['hasil_id' => $hasil->id, 'slug' => $hasil->kuis_reguler->slug]) }}">
       <button class="w-full bg-green-600 text-white font-semibold py-4 rounded-lg hover:bg-green-700">
         Lihat Jawaban
+      </button>
+    </a>
+    <a href="{{ route('kuis.riwayat', ['slug' => $hasil->kuis_reguler->slug]) }}">
+      <button class="w-full bg-amber-500 text-white font-semibold py-4 rounded-lg hover:bg-amber-600">
+        Riwayat Pengerjaan
+      </button>
+    </a>
+    <a href="{{ route('kuis-tantangan.index') }}">
+      <button class="w-full bg-primary text-white font-semibold py-4 rounded-lg hover:bg-[#00295A]">
+        Halaman Kuis dan Tantangan
       </button>
     </a>
   </div>

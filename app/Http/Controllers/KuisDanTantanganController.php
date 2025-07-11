@@ -274,15 +274,32 @@ class KuisDanTantanganController extends Controller
         return view('kuis-tantangan.lihat-jawaban', compact('hasil', 'soalWithJawaban'));
     }
 
-    public function riwayat($slug)
+    public function riwayatKuis($slug)
     {
+        // Find the quiz by slug
         $kuis = KuisReguler::where('slug', $slug)->firstOrFail();
-        $riwayat = HasilKuisReguler::where('id_kuis_reguler', $kuis->id)
-            ->where('id_user', Auth::id())
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
 
-        return view('kuis.riwayat', compact('kuis', 'riwayat'));
+        // Get user's quiz history for this specific quiz, ordered by latest first
+        $riwayatPengerjaan = HasilKuisReguler::where('id_user', Auth::id())
+            ->where('id_kuis_reguler', $kuis->id)
+            ->with('kuis_reguler')
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+
+        // Calculate statistics
+        $totalAttempts = $riwayatPengerjaan->total();
+        $bestScore = $riwayatPengerjaan->max('skor') ?? 0;
+        $averageScore = $riwayatPengerjaan->avg('skor') ?? 0;
+        $latestScore = $riwayatPengerjaan->first()->skor ?? 0;
+
+        return view('kuis-tantangan.riwayat-pengerjaan', compact(
+            'kuis',
+            'riwayatPengerjaan',
+            'totalAttempts',
+            'bestScore',
+            'averageScore',
+            'latestScore'
+        ));
     }
 
 
