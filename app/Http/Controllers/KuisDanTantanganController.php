@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Models\KuisReguler\KuisReguler;
 use App\Models\TantanganBulanan\Periode;
 use App\Models\KuisReguler\SoalKuisReguler;
+use App\Models\KuisReguler\HasilKuisReguler;
+use App\Models\KuisReguler\JawabanKuisReguler;
+use App\Models\KuisReguler\OpsiSoalKuisReguler;
 use App\Models\TantanganBulanan\KuisTantanganBulanan;
 use App\Models\TantanganBulanan\HasilKuisTantanganBulanan;
 
@@ -73,8 +77,12 @@ class KuisDanTantanganController extends Controller
             abort(404);
         }
 
-        // Simpan waktu mulai di session (opsional)
-        session(['start_time_kuis_' . $kuis->id => now()]);
+        $startTimeKey = 'quiz_start_time_' . $kuis->id;
+
+        if (!session()->has($startTimeKey)) {
+            session([$startTimeKey => now()->timestamp]);
+        }
+
 
         // Ambil soal dan acak urutannya
         $soal = DB::table('soal_kuis_regulers')
@@ -86,7 +94,7 @@ class KuisDanTantanganController extends Controller
                 if ($item->tipe_soal === 'Pilihan Ganda') {
                     $opsiAsli = DB::table('opsi_soal_kuis_regulers')
                         ->where('id_soal_kuis_reguler', $item->id)
-                        ->select('teks_opsi')
+                        ->select('id', 'teks_opsi')
                         ->get()
                         ->shuffle(); // Acak hanya isi teks
 
@@ -96,6 +104,7 @@ class KuisDanTantanganController extends Controller
 
                     foreach ($opsiAsli as $index => $opsi) {
                         $item->opsi->push((object)[
+                            'id' => $opsi->id,
                             'label' => $labels[$index],
                             'teks_opsi' => $opsi->teks_opsi,
                         ]);
@@ -113,71 +122,153 @@ class KuisDanTantanganController extends Controller
         ]);
     }
 
-
-
     public function submit(Request $request, $slug)
     {
-        $kuis = DB::table('kuis_regulers')->where('slug', $slug)->first();
-        $user = Auth::user();
+        try {
+            DB::beginTransaction();
 
-        if (!$kuis) {
-            abort(404);
-        }
+            // Validasi input
+            $request->validate([
+                'kuis_id' => 'required|exists:kuis_regulers,id',
+                'durasi_pengerjaan' => 'required|integer|min:0',
+                'start_time_js' => 'required|integer'
+            ]);
 
-        // Cek apakah sudah pernah submit
-        $cek = DB::table('hasil_kuis_regulers')
-            ->where('id_user', $user->id)
-            ->where('id_kuis_reguler', $kuis->id)
-            ->first();
+            $kuis = KuisReguler::findOrFail($request->kuis_id);
+            $soalList = SoalKuisReguler::where('id_kuis_reguler', $kuis->id)->get();
 
-        if ($cek) {
-            return redirect()->route('kuis-tantangan.soal', $slug)
-                ->with('info', 'Anda sudah mengerjakan kuis ini.');
-        }
+            // Hitung skor
+            $jawabanBenar = 0;
+            $jawabanSalah = 0;
+            $jawabanDetails = [];
 
-        // Ambil soal
-        $soal = DB::table('soal_kuis_regulers')
-            ->where('id_kuis_reguler', $kuis->id)
-            ->select('id', 'jawaban', 'tipe_soal')
-            ->get();
+            foreach ($soalList as $soal) {
+                $jawabanUser = $request->input("jawaban_{$soal->id}");
+                $isBenar = false;
 
-        $jawabanBenar = 0;
-        $jawabanSalah = 0;
+                if ($soal->tipe_soal === 'Pilihan Ganda') {
+                    // Untuk pilihan ganda, bandingkan dengan ID opsi yang benar
+                    if ($jawabanUser) {
+                        $opsiBenar = OpsiSoalKuisReguler::where('id_soal_kuis_reguler', $soal->id)
+                            ->where('label', $soal->jawaban)
+                            ->first();
 
-        foreach ($soal as $item) {
-            $key = 'jawaban_' . $item->id;
-            $jawabanUser = strtolower(trim($request->input($key)));
-            $jawabanKunci = strtolower(trim($item->jawaban));
+                        if ($opsiBenar && $jawabanUser == $opsiBenar->id) {
+                            $isBenar = true;
+                            $jawabanBenar++;
+                        } else {
+                            $jawabanSalah++;
+                        }
+                    } else {
+                        $jawabanSalah++;
+                    }
+                } else if ($soal->tipe_soal === 'Isian Singkat') {
+                    // Untuk isian singkat, bandingkan teks (case-insensitive)
+                    if ($jawabanUser && strtolower(trim($jawabanUser)) === strtolower(trim($soal->jawaban))) {
+                        $isBenar = true;
+                        $jawabanBenar++;
+                    } else {
+                        $jawabanSalah++;
+                    }
+                }
 
-            if ($jawabanUser === $jawabanKunci) {
-                $jawabanBenar++;
-            } else {
-                $jawabanSalah++;
+                $jawabanDetails[] = [
+                    'id_soal' => $soal->id,
+                    'jawaban_user' => $jawabanUser ?? '',
+                    'benar' => $isBenar
+                ];
             }
-        }
 
-        $jumlahSoal = $soal->count();
-        $skorFinal = round(($jawabanBenar / $jumlahSoal) * 100);
+            // Hitung skor (misalnya dari 0-100)
+            $totalSoal = count($soalList);
+            $skor = $totalSoal > 0 ? round(($jawabanBenar / $totalSoal) * 100) : 0;
 
-        // Simpan hasil ke database
-        DB::table('hasil_kuis_regulers')->insert([
-            'id_user' => $user->id,
-            'id_kuis_reguler' => $kuis->id,
-            'skor' => $skorFinal,
-            'jawaban_benar' => $jawabanBenar,
-            'jawaban_salah' => $jawabanSalah,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        return redirect()->route('kuis-tantangan.soal', $slug)
-            ->with([
-                'success' => 'Jawaban berhasil disimpan.',
+            // Simpan hasil kuis dengan durasi
+            $hasilKuis = HasilKuisReguler::create([
+                'id_user' => Auth::id(),
+                'id_kuis_reguler' => $kuis->id,
+                'skor' => $skor,
                 'jawaban_benar' => $jawabanBenar,
                 'jawaban_salah' => $jawabanSalah,
-                'skor' => $skorFinal,
+                'durasi_pengerjaan' => $request->durasi_pengerjaan // Simpan durasi dalam detik
             ]);
+
+            // Simpan detail jawaban
+            foreach ($jawabanDetails as $detail) {
+                JawabanKuisReguler::create([
+                    'id_hasil_kuis_reguler' => $hasilKuis->id,
+                    'id_soal_kuis_reguler' => $detail['id_soal'],
+                    'jawaban_user' => $detail['jawaban_user'],
+                    'benar' => $detail['benar']
+                ]);
+            }
+
+            DB::commit();
+
+            // Redirect ke halaman hasil
+            return redirect()->route('kuis.hasil', ['slug' => $slug, 'hasil_id' => $hasilKuis->id]);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['error' => 'Terjadi kesalahan saat menyimpan jawaban: ' . $e->getMessage()]);
+        }
     }
+
+    // public function hasil($id)
+    // {
+    //     $hasil = HasilKuisReguler::with(['kuisReguler', 'user'])
+    //         ->where('id', $id)
+    //         ->where('id_user', Auth::id())
+    //         ->firstOrFail();
+
+    //     // Konversi durasi dari detik ke menit dan detik untuk tampilan
+    //     $durasiMenit = floor($hasil->durasi_pengerjaan / 60);
+    //     $durasiDetik = $hasil->durasi_pengerjaan % 60;
+
+    //     return view('kuis.hasil', compact('hasil', 'durasiMenit', 'durasiDetik'));
+    // }
+
+
+    public function hasil($slug, $hasil_id)
+    {
+        $kuis = KuisReguler::where('slug', $slug)->firstOrFail();
+        $hasil = HasilKuisReguler::where('id', $hasil_id)
+            ->where('id_user', Auth::id())
+            ->firstOrFail();
+
+        return view('kuis-tantangan.hasil', compact('kuis', 'hasil'));
+    }
+
+    public function reviewJawaban($slug, $hasil_id)
+    {
+        $kuis = KuisReguler::where('slug', $slug)->firstOrFail();
+        $hasil = HasilKuisReguler::where('id', $hasil_id)
+            ->where('id_user', Auth::id())
+            ->firstOrFail();
+
+        $soal = SoalKuisReguler::where('id_kuis_reguler', $kuis->id)
+            ->with(['opsi', 'jawaban' => function ($query) use ($hasil_id) {
+                $query->where('id_hasil_kuis_reguler', $hasil_id);
+            }])
+            ->orderBy('created_at')
+            ->get();
+
+        return view('kuis.review', compact('kuis', 'hasil', 'soal'));
+    }
+
+    public function riwayat($slug)
+    {
+        $kuis = KuisReguler::where('slug', $slug)->firstOrFail();
+        $riwayat = HasilKuisReguler::where('id_kuis_reguler', $kuis->id)
+            ->where('id_user', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('kuis.riwayat', compact('kuis', 'riwayat'));
+    }
+
 
     public function showSoalTantanganBulanan($slug)
     {

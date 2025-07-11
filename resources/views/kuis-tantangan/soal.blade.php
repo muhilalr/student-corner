@@ -1,8 +1,16 @@
 <x-layout-web>
   <!-- Main Content -->
   <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    @if ($errors->any())
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+        <strong class="font-bold">Oops!</strong>
+        <span class="block sm:inline">{{ $errors->first() }}</span>
+      </div>
+    @endif
     <form id="quizForm" class="space-y-8" action="{{ route('kuis.submit', $kuis->slug) }}" method="POST">
       @csrf
+      <input type="hidden" name="start_time_js" id="start_time_js">
+
       <input type="hidden" name="kuis_id" value="{{ $kuis->id }}">
       @foreach ($soal as $index => $item)
         <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden animate-fade-in">
@@ -33,7 +41,7 @@
                 @foreach ($item->opsi as $opsi)
                   <label
                     class="flex items-center space-x-4 p-4 rounded-xl border-2 border-gray-200 hover:border-primary cursor-pointer transition-all duration-200 question-option">
-                    <input type="radio" name="jawaban_{{ $item->id }}" value="{{ $opsi->label }}"
+                    <input type="radio" name="jawaban_{{ $item->id }}" value="{{ $opsi->id }}"
                       data-question-id="{{ $item->id }}" data-question-type="multiple_choice"
                       data-correct-answer="{{ $item->jawaban }}"
                       class="text-primary border-gray-300 focus:ring-primary question-input">
@@ -104,6 +112,7 @@
               </div>
             </div>
           </div>
+          <input type="hidden" name="durasi_pengerjaan" id="durasiPengerjaanInput">
 
           <button type="submit" id="submitButton" disabled
             class="w-full bg-gray-400 text-white font-bold py-4 px-8 rounded-xl transition-all duration-200 shadow-lg text-lg cursor-not-allowed">
@@ -120,8 +129,6 @@
       </div>
     </form>
 
-
-
     <!-- Modal Konfirmasi -->
     <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
       <div class="bg-white rounded-2xl shadow-2xl max-w-md mx-4 p-8">
@@ -133,8 +140,7 @@
             </svg>
           </div>
           <h3 class="text-lg font-medium text-gray-900 mb-2">Konfirmasi Pengiriman</h3>
-          <p class="text-sm text-gray-500 mb-6">Apakah Anda yakin ingin mengirim jawaban?<span id="finalScore"
-              class="font-bold text-primary hidden"></span></p>
+          <p class="text-sm text-gray-500 mb-6">Apakah Anda yakin ingin mengirim jawaban?</p>
           <div class="flex space-x-3">
             <button id="cancelSubmit"
               class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors">
@@ -148,9 +154,38 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal Waktu Habis -->
+    <div id="timeUpModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-md mx-4 p-8">
+        <div class="text-center">
+          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+            <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-medium text-gray-900 mb-2">⏰ Waktu Habis!</h3>
+          <p class="text-sm text-gray-500 mb-6">Jawaban Anda akan dikirim otomatis dalam <span id="countdown">5</span>
+            detik.</p>
+          <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+            <div id="countdownBar" class="bg-red-600 h-2 rounded-full transition-all duration-1000"
+              style="width: 100%"></div>
+          </div>
+          <button id="submitNow"
+            class="w-full bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
+            Kirim Sekarang
+          </button>
+        </div>
+      </div>
+    </div>
   </main>
+
   <x-footer class="fill-[#EEF0F2]"></x-footer>
+
   <script>
+    // Ganti bagian script timer di file Blade Anda dengan ini:
+
     document.addEventListener('DOMContentLoaded', function() {
       const form = document.getElementById('quizForm');
       const inputs = document.querySelectorAll('.question-input');
@@ -158,13 +193,18 @@
       const progressBar = document.getElementById('progressBar');
       const progressText = document.getElementById('progressText');
       const confirmationModal = document.getElementById('confirmationModal');
+      const timeUpModal = document.getElementById('timeUpModal');
       const cancelSubmit = document.getElementById('cancelSubmit');
       const confirmSubmit = document.getElementById('confirmSubmit');
+      const submitNow = document.getElementById('submitNow');
 
       const totalQuestions = {{ count($soal) }};
       let answeredQuestions = new Set();
+      let timeUpTriggered = false;
 
-      // Hitung progress pengisian
+      // =========================
+      // 1. Progress Bar & Cek Jawaban
+      // =========================
       inputs.forEach(input => {
         input.addEventListener('input', () => {
           const id = input.dataset.questionId;
@@ -179,7 +219,7 @@
           const answeredCount = answeredQuestions.size;
           progressText.textContent = `${answeredCount}/${totalQuestions}`;
           progressBar.style.width = `${(answeredCount / totalQuestions) * 100}%`;
-          // Aktifkan / Nonaktifkan tombol submit
+
           if (answeredQuestions.size === totalQuestions) {
             submitButton.disabled = false;
             submitButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
@@ -192,218 +232,130 @@
         });
       });
 
-      // Submit handler
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        confirmationModal.classList.remove('hidden');
-        confirmationModal.classList.add('flex');
-      });
-
-      // Batalkan submit
-      cancelSubmit.addEventListener('click', function() {
-        confirmationModal.classList.add('hidden');
-        confirmationModal.classList.remove('flex');
-      });
-
-      // Submit konfirmasi
-      confirmSubmit.addEventListener('click', function() {
-        form.submit();
-      });
-
-      // Ganti bagian timer di script yang sudah ada dengan kode ini
-
-      // Timer countdown - Anti Reset
+      // =========================
+      // 2. Timer Countdown - DIPERBAIKI
+      // =========================
       const kuisId = {{ $kuis->id }};
       const startTimeKey = `quiz_start_time_${kuisId}`;
-      const durasiAwal = {{ $durasi }} * 60; // durasi dalam detik
+      const durasiAwal = {{ $durasi }} * 60; // dalam detik
 
-      // Cek apakah ini adalah refresh atau akses pertama kali
       const isRefresh = performance.navigation.type === 1;
-
-      // Ambil atau set waktu mulai
-      let startTime = sessionStorage.getItem(startTimeKey);
+      let startTime = localStorage.getItem(startTimeKey);
       if (!startTime || !isRefresh) {
-        // Set waktu mulai baru jika belum ada atau bukan refresh
         startTime = Math.floor(Date.now() / 1000);
-        sessionStorage.setItem(startTimeKey, startTime);
+        localStorage.setItem(startTimeKey, startTime);
       } else {
         startTime = parseInt(startTime);
       }
 
-      // Hitung sisa waktu
+      // Set start time ke hidden input
+      document.getElementById('start_time_js').value = startTime;
+
       function getSisaWaktu() {
         const currentTime = Math.floor(Date.now() / 1000);
         const elapsedTime = currentTime - startTime;
         return Math.max(0, durasiAwal - elapsedTime);
       }
 
-      // Mulai timer dengan sisa waktu yang benar
-      let durasi = getSisaWaktu();
+      function getDurasiPengerjaan() {
+        const currentTime = Math.floor(Date.now() / 1000);
+        const elapsedTime = currentTime - startTime;
+        return Math.min(elapsedTime, durasiAwal); // Batasi max durasi
+      }
 
-      let timerInterval = setInterval(function() {
-        let menit = Math.floor(durasi / 60);
-        let detik = durasi % 60;
+      const timerInterval = setInterval(() => {
+        const sisaWaktu = getSisaWaktu();
+        let menit = Math.floor(sisaWaktu / 60);
+        let detik = sisaWaktu % 60;
         let timerBox = document.getElementById('timerBox');
+
         if (timerBox) {
           timerBox.textContent =
             `Sisa Waktu: ${menit.toString().padStart(2, '0')}:${detik.toString().padStart(2, '0')}`;
+
+          if (sisaWaktu <= 300) timerBox.classList.add('text-red-600', 'animate-pulse');
+          else if (sisaWaktu <= 600) timerBox.classList.add('text-yellow-600');
         }
 
-        if (durasi <= 0) {
+        if (sisaWaktu <= 0) {
           clearInterval(timerInterval);
-          sessionStorage.removeItem(startTimeKey);
-          alert('⏰ Waktu habis! Jawaban dikirim otomatis.');
-          confirmSubmit.click();
+          localStorage.removeItem(startTimeKey);
+          showTimeUpModal();
         }
-
-        durasi--;
       }, 1000);
 
-      // Hapus waktu mulai setelah submit
-      document.getElementById('confirmSubmit').addEventListener('click', function() {
-        sessionStorage.removeItem(startTimeKey);
-      });
-    });
-  </script>
-</x-layout-web>
-{{-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const form = document.getElementById('quizForm');
-      const inputs = document.querySelectorAll('.question-input');
-      const submitButton = document.getElementById('submitButton');
-      const progressBar = document.getElementById('progressBar');
-      const progressText = document.getElementById('progressText');
-      const confirmationModal = document.getElementById('confirmationModal');
-      const finalScoreElement = document.getElementById('finalScore');
-      const cancelSubmit = document.getElementById('cancelSubmit');
-      const confirmSubmit = document.getElementById('confirmSubmit');
-
-      const totalQuestions = {{ isset($soal) ? count($soal) : 0 }};
-      let answeredQuestions = new Set();
-
-      // Deteksi perubahan jawaban
-      inputs.forEach(input => {
-        input.addEventListener('input', () => {
-          const id = input.dataset.questionId;
-          if (input.type === 'radio') {
-            if (input.checked) answeredQuestions.add(id);
-          } else if (input.type === 'text') {
-            if (input.value.trim() !== '') answeredQuestions.add(id);
-            else answeredQuestions.delete(id);
-          }
-
-          const answeredCount = answeredQuestions.size;
-          progressText.textContent = `${answeredCount}/${totalQuestions}`;
-          progressBar.style.width = `${(answeredCount / totalQuestions) * 100}%`;
-
-          submitButton.disabled = false;
-          submitButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
-          submitButton.classList.add('bg-primary', 'cursor-pointer');
-
-          // Tambahan opsional: ubah teks tombol jika belum lengkap
-          if (answeredCount < totalQuestions) {
-            submitButton.textContent = "Kirim (Belum Lengkap)";
-          } else {
-            submitButton.textContent = "Kirim Jawaban";
-          }
-
-        });
-      });
-
-      // Saat klik submit form
+      // =========================
+      // 3. Submit dan Modal Konfirmasi
+      // =========================
       form.addEventListener('submit', function(e) {
-        e.preventDefault(); // jangan kirim langsung
-
-        // let score = 0;
-
-        // inputs.forEach(input => {
-        //   const correct = input.dataset.correctAnswer?.trim()?.toLowerCase();
-        //   const type = input.dataset.questionType;
-        //   const id = input.dataset.questionId;
-
-        //   if (type === 'multiple_choice') {
-        //     if (input.checked && input.value.trim().toLowerCase() === correct) {
-        //       score++;
-        //     }
-        //   } else if (type === 'short_answer') {
-        //     if (
-        //       input.value.trim().toLowerCase() === correct
-        //     ) {
-        //       score++;
-        //     }
-        //   }
-        // });
-
-
-
-
-        // const finalScore = Math.round((score / totalQuestions) * 100);
-        // finalScoreElement.textContent = `${finalScore} poin`;
-        confirmationModal.classList.remove('hidden');
-        confirmationModal.classList.add('flex');
+        if (!timeUpTriggered) {
+          e.preventDefault();
+          confirmationModal.classList.remove('hidden');
+          confirmationModal.classList.add('flex');
+        }
       });
 
-      // Batal kirim
+      confirmSubmit.addEventListener('click', function() {
+        cleanUpBeforeSubmit();
+        form.submit();
+      });
+
+
+
       cancelSubmit.addEventListener('click', function() {
         confirmationModal.classList.add('hidden');
         confirmationModal.classList.remove('flex');
       });
 
-      // Konfirmasi kirim
-      confirmSubmit.addEventListener('click', function() {
-        // Tambahkan input tersembunyi skor ke dalam form
-        const inputSkor = document.createElement('input');
-        inputSkor.type = 'hidden';
-        inputSkor.name = 'skor';
-        inputSkor.value = finalScore; // ambil angka saja
-        form.appendChild(inputSkor);
+      function showTimeUpModal() {
+        timeUpTriggered = true;
+        timeUpModal.classList.remove('hidden');
+        timeUpModal.classList.add('flex');
 
-        form.submit(); // submit ke controller
-      });
-    });
+        let countdownSeconds = 5;
+        const countdownElement = document.getElementById('countdown');
+        const countdownBar = document.getElementById('countdownBar');
 
-    // Timer Countdown
-    let durasi = {{ $durasi }} * 60; // durasi dalam detik
-    let timerInterval = setInterval(function() {
-      let menit = Math.floor(durasi / 60);
-      let detik = durasi % 60;
-      let timerText = `Sisa Waktu: ${menit.toString().padStart(2, '0')}:${detik.toString().padStart(2, '0')}`;
+        const countdownInterval = setInterval(() => {
+          countdownSeconds--;
+          countdownElement.textContent = countdownSeconds;
+          countdownBar.style.width = `${(countdownSeconds / 5) * 100}%`;
 
-      // tampilkan ke pengguna, misal tambahkan elemen dengan id="timerBox"
-      let timerBox = document.getElementById('timerBox');
-      if (timerBox) timerBox.textContent = timerText;
-
-      if (durasi <= 0) {
-        clearInterval(timerInterval);
-        alert('⏰ Waktu habis! Jawaban dikirim otomatis.');
-        document.getElementById('confirmSubmit').click(); // langsung submit
+          if (countdownSeconds <= 0) {
+            clearInterval(countdownInterval);
+            cleanUpBeforeSubmit();
+            form.requestSubmit();
+          }
+        }, 1000);
       }
 
-      durasi--;
-    }, 1000);
+      // =========================
+      // 4. Prevent Leave Page (beforeunload)
+      // =========================
+      function handleBeforeUnload(e) {
+        if (!timeUpTriggered) {
+          e.preventDefault();
+          e.returnValue = '';
+        }
+      }
 
+      window.addEventListener('beforeunload', handleBeforeUnload);
 
+      function cleanUpBeforeSubmit() {
+        sessionStorage.removeItem(startTimeKey);
+        window.removeEventListener('beforeunload', handleBeforeUnload);
 
+        // PERBAIKAN: Simpan durasi pengerjaan
+        const durasiInput = document.getElementById('durasiPengerjaanInput');
+        const durasi = getDurasiPengerjaan();
 
+        if (durasiInput) {
+          durasiInput.value = durasi;
+          console.log('Durasi pengerjaan disimpan:', durasi);
+        }
+      }
 
+    });
+  </script>
 
-
-    // document.addEventListener('DOMContentLoaded', function() {
-
-
-    //   // Animate score counting (optional)
-    //   const scoreElement = document.getElementById('score-display');
-    //   const finalScore = {{ isset($skor) ? $skor : 0 }};
-    //   let currentScore = 0;
-    //   const increment = Math.ceil(finalScore / 20);
-
-    //   const countUp = setInterval(() => {
-    //     currentScore += increment;
-    //     if (currentScore >= finalScore) {
-    //       currentScore = finalScore;
-    //       clearInterval(countUp);
-    //     }
-    //     scoreElement.textContent = currentScore;
-    //   }, 80);
-    // });
-  </script> --}}
+</x-layout-web>

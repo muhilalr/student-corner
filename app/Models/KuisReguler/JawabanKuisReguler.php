@@ -15,6 +15,10 @@ class JawabanKuisReguler extends Model
         'benar',
     ];
 
+    protected $casts = [
+        'benar' => 'boolean',
+    ];
+
     public function soal()
     {
         return $this->belongsTo(SoalKuisReguler::class, 'id_soal_kuis_reguler');
