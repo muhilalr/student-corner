@@ -148,7 +148,7 @@
         Halaman Kuis dan Tantangan
       </button>
     </a>
-    <a href="{{ route('kuis.lihat-jawaban', ['hasil_id' => $hasil->id]) }}">
+    <a href="{{ route('kuis.lihat-jawaban', ['hasil_id' => $hasil->id, 'slug' => $hasil->kuis_reguler->slug]) }}">
       <button class="w-full bg-green-600 text-white font-semibold py-4 rounded-lg hover:bg-green-700">
         Lihat Jawaban
       </button>

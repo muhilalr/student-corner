@@ -227,10 +227,13 @@ class KuisDanTantanganController extends Controller
         return view('kuis-tantangan.hasil', compact('kuis', 'hasil'));
     }
 
-    public function lihatJawaban($hasil_id)
+    public function lihatJawaban($slug, $hasil_id)
     {
         // Ambil data hasil kuis berdasarkan ID
         $hasil = HasilKuisReguler::with(['kuis_reguler', 'user'])
+            ->whereHas('kuis_reguler', function ($query) use ($slug) {
+                $query->where('slug', $slug);
+            })
             ->where('id', $hasil_id)
             ->where('id_user', Auth::id()) // Pastikan user hanya bisa melihat hasil sendiri
             ->firstOrFail();
