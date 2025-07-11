@@ -7,6 +7,15 @@
         <span class="block sm:inline">{{ $errors->first() }}</span>
       </div>
     @endif
+
+    <div
+      class="bg-white max-w-xs mx-auto sticky top-24 md:top-28 z-50 rounded-2xl shadow-lg border border-gray-200 py-3 mb-8">
+      <h3 class="text-sm md:text-lg text-center font-bold">Sisa Waktu Pengerjaan:</h3>
+      <div id="timerBox" class="text-center text-sm md:text-lg font-bold text-red-600">
+        Sisa Waktu: --
+      </div>
+    </div>
+
     <form id="quizForm" class="space-y-8" action="{{ route('kuis.submit', $kuis->slug) }}" method="POST">
       @csrf
       <input type="hidden" name="start_time_js" id="start_time_js">
@@ -97,9 +106,6 @@
         <div class="max-w-md mx-auto">
           <h3 class="text-2xl font-bold text-gray-900 mb-4">Selesai Mengerjakan?</h3>
           <p class="text-gray-600 mb-6">Pastikan semua jawaban sudah terisi sebelum mengirim kuis.</p>
-          <div id="timerBox" class="text-center text-lg font-bold text-red-600 mb-6">
-            Sisa Waktu: --
-          </div>
 
           <!-- Progress Bar -->
           <div class="mb-6">
@@ -172,10 +178,6 @@
             <div id="countdownBar" class="bg-red-600 h-2 rounded-full transition-all duration-1000"
               style="width: 100%"></div>
           </div>
-          <button id="submitNow"
-            class="w-full bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
-            Kirim Sekarang
-          </button>
         </div>
       </div>
     </div>

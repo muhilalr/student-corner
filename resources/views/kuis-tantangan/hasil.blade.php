@@ -129,7 +129,7 @@
         </p>
       @elseif($hasil->skor >= 80)
         <p class="text-gray-600 text-sm">🏆 <strong>Excellent!</strong> Kerja yang sangat memuaskan!</p>
-      @elseif($skor >= 70)
+      @elseif($hasil->skor >= 70)
         <p class="text-gray-600 text-sm">🌟 <strong>Bagus sekali!</strong> Terus pertahankan semangat belajar!</p>
       @elseif($hasil->skor >= 60)
         <p class="text-gray-600 text-sm">📈 <strong>Cukup baik!</strong> Masih ada ruang untuk berkembang lebih

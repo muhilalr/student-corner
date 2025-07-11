@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use App\Models\KuisReguler\SoalKuisReguler;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -32,7 +33,7 @@ class SoalKuisRegulerImport implements ToCollection, WithHeadingRow
             $soal->upload_batch_id = $this->uploadBatchId;
             $soal->soal = $row['soal'] ?? '';
             $soal->tipe_soal = $row['tipe_soal'] ?? 'Isian Singkat';
-            $soal->jawaban = $row['jawaban'] ?? '';
+            $soal->jawaban = $soal->tipe_soal === 'Isian Singkat' ? Str::lower($row['jawaban']) : $row['jawaban'];
             $soal->gambar = !empty($row['gambar']) && isset($this->imageMap[$row['gambar']])
                 ? $this->imageMap[$row['gambar']]
                 : null;
