@@ -216,20 +216,6 @@ class KuisDanTantanganController extends Controller
         }
     }
 
-    // public function hasil($id)
-    // {
-    //     $hasil = HasilKuisReguler::with(['kuisReguler', 'user'])
-    //         ->where('id', $id)
-    //         ->where('id_user', Auth::id())
-    //         ->firstOrFail();
-
-    //     // Konversi durasi dari detik ke menit dan detik untuk tampilan
-    //     $durasiMenit = floor($hasil->durasi_pengerjaan / 60);
-    //     $durasiDetik = $hasil->durasi_pengerjaan % 60;
-
-    //     return view('kuis.hasil', compact('hasil', 'durasiMenit', 'durasiDetik'));
-    // }
-
 
     public function hasil($slug, $hasil_id)
     {
@@ -241,21 +227,48 @@ class KuisDanTantanganController extends Controller
         return view('kuis-tantangan.hasil', compact('kuis', 'hasil'));
     }
 
-    public function reviewJawaban($slug, $hasil_id)
+    public function lihatJawaban($hasil_id)
     {
-        $kuis = KuisReguler::where('slug', $slug)->firstOrFail();
-        $hasil = HasilKuisReguler::where('id', $hasil_id)
-            ->where('id_user', Auth::id())
+        // Ambil data hasil kuis berdasarkan ID
+        $hasil = HasilKuisReguler::with(['kuis_reguler', 'user'])
+            ->where('id', $hasil_id)
+            ->where('id_user', Auth::id()) // Pastikan user hanya bisa melihat hasil sendiri
             ->firstOrFail();
 
-        $soal = SoalKuisReguler::where('id_kuis_reguler', $kuis->id)
-            ->with(['opsi', 'jawaban' => function ($query) use ($hasil_id) {
-                $query->where('id_hasil_kuis_reguler', $hasil_id);
-            }])
-            ->orderBy('created_at')
-            ->get();
+        // Ambil semua soal kuis dengan opsi dan jawaban user
+        $soalWithJawaban = SoalKuisReguler::with(['opsi'])
+            ->where('id_kuis_reguler', $hasil->id_kuis_reguler)
+            ->get()
+            ->map(function ($soal) use ($hasil) {
+                // Ambil jawaban user untuk soal ini
+                $jawabanUser = JawabanKuisReguler::where('id_hasil_kuis_reguler', $hasil->id)
+                    ->where('id_soal_kuis_reguler', $soal->id)
+                    ->first();
 
-        return view('kuis.review', compact('kuis', 'hasil', 'soal'));
+                // Untuk pilihan ganda, cari opsi yang dipilih user
+                $opsiTerpilih = null;
+                $opsiBenar = null;
+
+                if ($soal->tipe_soal === 'Pilihan Ganda') {
+                    // Cari opsi yang dipilih user
+                    if ($jawabanUser && is_numeric($jawabanUser->jawaban_user)) {
+                        $opsiTerpilih = OpsiSoalKuisReguler::find($jawabanUser->jawaban_user);
+                    }
+
+                    // Cari opsi yang benar berdasarkan jawaban soal
+                    $opsiBenar = $soal->opsi->firstWhere('label', $soal->jawaban);
+                }
+
+                return [
+                    'soal' => $soal,
+                    'jawaban_user' => $jawabanUser,
+                    'opsi_terpilih' => $opsiTerpilih,
+                    'opsi_benar' => $opsiBenar,
+                    'is_correct' => $jawabanUser ? $jawabanUser->benar : false
+                ];
+            });
+
+        return view('kuis-tantangan.lihat-jawaban', compact('hasil', 'soalWithJawaban'));
     }
 
     public function riwayat($slug)
