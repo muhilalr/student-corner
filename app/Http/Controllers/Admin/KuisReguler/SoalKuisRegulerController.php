@@ -123,34 +123,7 @@ class SoalKuisRegulerController extends Controller
         $batchId = Str::uuid();
 
         // Baca isi Excel dan lewati baris pertama (header)
-        $collection = Excel::import(new SoalKuisRegulerImport($request->id_kuis_reguler, $filename, $imageMap, $batchId), $request->file('file'));
-
-        foreach ($collection as $row) {
-            $soal = new SoalKuisReguler();
-            $soal->id_kuis_reguler = $request->id_kuis_reguler;
-            $soal->file_soal = $filename;
-            $soal->upload_batch_id = $batchId;
-            $soal->soal = $row['soal'] ?? '';
-            $soal->tipe_soal = $row['tipe_soal'] ?? 'Isian Singkat';
-            $soal->jawaban = $row['jawaban'] ?? '';
-            $soal->gambar = !empty($row['gambar']) && isset($imageMap[$row['gambar']])
-                ? $imageMap[$row['gambar']]
-                : null;
-            $soal->save();
-
-            if (strtolower($soal->tipe_soal) === 'pilihan ganda') {
-                foreach (['A', 'B', 'C', 'D'] as $label) {
-                    $key = 'opsi_' . strtolower($label);
-                    if (!empty($row[$key])) {
-                        OpsiSoalKuisReguler::create([
-                            'id_soal_kuis_reguler' => $soal->id,
-                            'label' => $label,
-                            'teks_opsi' => $row[$key],
-                        ]);
-                    }
-                }
-            }
-        }
+        Excel::import(new SoalKuisRegulerImport($request->id_kuis_reguler, $filename, $imageMap, $batchId), $uploadedFile);
 
         return redirect()->route('admin_soal-kuis-reguler.index')
             ->with('success', 'Soal kuis berhasil diimport.');

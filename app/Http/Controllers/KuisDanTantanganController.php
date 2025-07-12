@@ -224,12 +224,11 @@ class KuisDanTantanganController extends Controller
 
     public function hasil($slug, $hasil_id)
     {
-        $kuis = KuisReguler::where('slug', $slug)->firstOrFail();
         $hasil = HasilKuisReguler::where('id', $hasil_id)
             ->where('id_user', Auth::id())
             ->firstOrFail();
 
-        return view('kuis-tantangan.hasil', compact('kuis', 'hasil'));
+        return view('kuis-tantangan.hasil', compact('hasil'));
     }
 
     public function lihatJawaban($slug, $hasil_id)
@@ -465,11 +464,10 @@ class KuisDanTantanganController extends Controller
 
     public function hasilTantanganBulanan($slug, $hasil_id)
     {
-        $kuis = KuisTantanganBulanan::where('slug', $slug)->firstOrFail();
         $hasil = HasilKuisTantanganBulanan::where('id', $hasil_id)
             ->where('id_user', Auth::id())
             ->firstOrFail();
 
-        return view('kuis-tantangan.tantangan-bulanan.hasil', compact('kuis', 'hasil'));
+        return view('kuis-tantangan.tantangan-bulanan.hasil', compact('hasil'));
     }
 }

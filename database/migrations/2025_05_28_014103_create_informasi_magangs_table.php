@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('informasi_magangs', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_bidang');
+            $table->string('posisi');
             $table->text('deskripsi');
             $table->text('persyaratan');
             $table->text('benefit');

@@ -80,7 +80,7 @@ class SoalTantanganBulananController extends Controller
         $batchId = Str::uuid();
 
         // Baca isi Excel dan lewati baris pertama (header)
-        Excel::import(new SoalTantanganBulananImport($request->id_kuis_tantangan_bulanan, $filename, $imageMap, $batchId), $request->file('file'));
+        Excel::import(new SoalTantanganBulananImport($request->id_kuis_tantangan_bulanan, $filename, $imageMap, $batchId), $uploadedFile);
 
         return redirect()->route('admin_soal-kuis-tantangan-bulanan.index')->with('success', 'Soal berhasil ditambahkan.');
     }
