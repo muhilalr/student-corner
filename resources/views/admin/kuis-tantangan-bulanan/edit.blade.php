@@ -60,6 +60,11 @@
                       value="{{ $kuis_tantangan_bulanan->tanggal_selesai }}" required>
                   </div>
                   <div class="form-group">
+                    <label for="durasi_menit">Durasi Pengerjaan (menit)</label>
+                    <input type="number" name="durasi_menit" id="durasi_menit" class="form-control"
+                      value="{{ $kuis_reguler->durasi_menit }}" required placeholder="Masukkan Durasi Pengerjaan">
+                  </div>
+                  <div class="form-group">
                     <label for="status">Status</label>
                     <select name="status" id="status" class="form-control" required>
                       <option value="" disabled selected>-- Update Status --</option>

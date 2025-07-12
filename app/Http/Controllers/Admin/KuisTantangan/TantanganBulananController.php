@@ -46,6 +46,7 @@ class TantanganBulananController extends Controller
             'deskripsi' => 'required|string|max:255',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'durasi_menit' => 'required|integer',
         ]);
 
         $slug = Str::slug($request->judul);
@@ -56,8 +57,9 @@ class TantanganBulananController extends Controller
             'deskripsi' => $request->deskripsi,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
+            'durasi_menit' => $request->durasi_menit,
             'status' => 'nonaktif',
-            'slug' => $slug
+            'slug' => $slug,
         ]);
 
         return redirect()->route('admin_kuis-tantangan-bulanan.index')->with('success', 'Kuis Tantangan Bulanan berhasil ditambahkan');
@@ -91,6 +93,7 @@ class TantanganBulananController extends Controller
             'deskripsi' => 'required|string|max:255',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'durasi_menit' => 'required|integer',
             'status' => 'required|in:aktif,nonaktif',
         ]);
 
@@ -113,6 +116,7 @@ class TantanganBulananController extends Controller
             'deskripsi' => $request->deskripsi,
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
+            'durasi_menit' => $request->durasi_menit,
             'status' => $request->status,
             'slug' => $slug
         ]);

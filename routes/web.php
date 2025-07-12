@@ -74,8 +74,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}', [KuisDanTantanganController::class, 'showSoalKuisReguler'])->name('kuis-tantangan.soal');
     Route::post('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}', [KuisDanTantanganController::class, 'submit'])->name('kuis.submit');
     Route::get('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}/hasil/{hasil_id}', [KuisDanTantanganController::class, 'hasil'])->name('kuis.hasil');
-    Route::get('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}/jawaban/{hasil_id}', [KuisDanTantanganController::class, 'lihatJawaban'])
-        ->name('kuis.lihat-jawaban');
+    Route::get('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}/jawaban/{hasil_id}', [KuisDanTantanganController::class, 'lihatJawaban'])->name('kuis.lihat-jawaban');
     Route::get('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}/riwayat-pengerjaan', [KuisDanTantanganController::class, 'riwayatKuis'])->name('kuis.riwayat');
     Route::get('/kuis-dan-tantangan-bulanan/kuis-tantangan-bulanan/{slug}', [KuisDanTantanganController::class, 'showSoalTantanganBulanan'])->name('tantangan-bulanan.soal');
     Route::post('/kuis-dan-tantangan-bulanan/kuis-tantangan-bulanan/{slug}', [KuisDanTantanganController::class, 'submitTantanganBulanan'])->name('tantangan-bulanan.submit');

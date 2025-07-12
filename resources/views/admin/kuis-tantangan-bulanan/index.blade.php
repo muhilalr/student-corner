@@ -46,6 +46,7 @@
                       <th>Deskripsi</th>
                       <th>Tanggal Mulai</th>
                       <th>Tanggal Selesai</th>
+                      <th>Durasi (Menit)</th>
                       <th>Status</th>
                       <th>Aksi</th>
                     </tr>
@@ -58,6 +59,7 @@
                         <td>{{ $item->deskripsi }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->tanggal_mulai)->format('d-m-Y') }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->tanggal_selesai)->format('d-m-Y') }}</td>
+                        <td>{{ $item->durasi_menit }}</td>
                         <td>
                           @if ($item->status == 'aktif')
                             <span class="badge badge-success">Aktif</span>

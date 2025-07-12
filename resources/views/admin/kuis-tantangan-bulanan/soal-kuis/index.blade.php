@@ -33,10 +33,7 @@
                     <tr>
                       <th>Judul Tantangan</th>
                       <th>Deskripsi</th>
-                      <th>Gambar</th>
-                      <th>Soal</th>
-                      <th>Tipe Soal</th>
-                      <th>Jawaban</th>
+                      <th>File Soal</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -46,20 +43,17 @@
                         <td>{{ $item->kuis_tantangan_bulanan->judul }}</td>
                         <td>{{ $item->kuis_tantangan_bulanan->deskripsi }}</td>
                         <td>
-                          @if ($item->gambar)
-                            <img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar Subjek"
-                              style="max-width: 100px; max-height: 100px;">
-                          @else
-                            -
-                          @endif
-                        <td>{{ $item->soal }}</td>
-                        <td>{{ $item->tipe_soal }}</td>
-                        <td>{{ $item->jawaban }}</td>
+                          <a href="{{ asset('storage/file_soal_kuis_tantangan_bulanan/' . $item->file_soal) }}"
+                            class="btn btn-sm btn-success" download>
+                            {{ $item->file_soal }}
+                          </a>
+                        </td>
                         <td>
                           <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-                            <a href="{{ route('admin_soal-kuis-tantangan-bulanan.edit', $item->id) }}"
+                            <a href="{{ route('admin_soal-kuis-tantangan-bulanan.edit-batch', ['batchId' => $item->upload_batch_id]) }}"
                               class="btn btn-warning"><span><i class="fas fa-edit"></i></span></a>
-                            <form action="{{ route('admin_soal-kuis-tantangan-bulanan.destroy', $item->id) }}"
+                            <form
+                              action="{{ route('admin_soal-kuis-tantangan-bulanan.destroy-batch', ['batchId' => $item->upload_batch_id]) }}"
                               method="POST" class="m-0">
                               @csrf
                               @method('DELETE')

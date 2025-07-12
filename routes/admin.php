@@ -44,13 +44,18 @@ Route::prefix('admin')->name('admin_')->group(function () {
       ->name('daftar-magang.update');
     Route::delete('/pendaftaran-magang/{pendaftaran_magang}', [PendaftaranMagangController::class, 'destroy'])
       ->name('daftar-magang.destroy');
+
+
+    // Kuis Reguler
     Route::resource('kuis-reguler', KuisRegulerController::class);
     Route::get('/opsi-soal-pilihan-ganda', [SoalKuisRegulerController::class, 'indexOpsi'])->name('opsi-soal-pilihan-ganda.index');
     Route::get('/soal-kuis-reguler/edit-batch/{batchId}', [SoalKuisRegulerController::class, 'editBatch'])->name('soal-kuis-reguler.edit-batch');
     Route::put('/soal-kuis-reguler/update-batch/{batchId}', [SoalKuisRegulerController::class, 'updateBatch'])->name('soal-kuis-reguler.update-batch');
     Route::delete('/admin/soal-kuis-reguler/destroy-batch/{batchId}', [SoalKuisRegulerController::class, 'destroyBatch'])->name('soal-kuis-reguler.destroy-batch');
-
     Route::resource('soal-kuis-reguler', SoalKuisRegulerController::class);
+
+
+    //Kuis Tantangan Bulanan
     Route::resource('periode', PeriodeController::class);
     Route::post('/periode/set-leaderboard/{id}', [PeriodeController::class, 'setLeaderboard'])
       ->name('periode.setLeaderboard');
@@ -58,6 +63,10 @@ Route::prefix('admin')->name('admin_')->group(function () {
       ->name('periode.nonaktifkanLeaderboard');
     Route::resource('kuis-tantangan-bulanan', TantanganBulananController::class);
     Route::get('/opsi-pilgan-tantangan-bulanan', [SoalTantanganBulananController::class, 'indexOpsi'])->name('opsi-pilgan-tantangan-bulanan.index');
+
+    Route::get('/soal-kuis-tantangan-bulanan/edit-batch/{batchId}', [SoalTantanganBulananController::class, 'editBatch'])->name('soal-kuis-tantangan-bulanan.edit-batch');
+    Route::put('/soal-kuis-tantangan-bulanan/update-batch/{batchId}', [SoalTantanganBulananController::class, 'updateBatch'])->name('soal-kuis-tantangan-bulanan.update-batch');
+    Route::delete('/soal-kuis-tantangan-bulanan/destroy-batch/{batchId}', [SoalTantanganBulananController::class, 'destroyBatch'])->name('soal-kuis-tantangan-bulanan.destroy-batch');
     Route::resource(('soal-kuis-tantangan-bulanan'), SoalTantanganBulananController::class);
     Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
   });

@@ -89,7 +89,7 @@
                     </div>
                     <div class="ml-3">
                       <p class="text-sm text-blue-700">
-                        <strong>Tips:</strong> Pastikan ejaan dan huruf besar/kecil sesuai. Jawaban akan diperiksa
+                        <strong>Tips:</strong> Pastikan ejaan sesuai. Jawaban akan diperiksa
                         secara otomatis.
                       </p>
                     </div>

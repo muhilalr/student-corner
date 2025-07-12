@@ -7,74 +7,32 @@
             <h3 class="card-title">Edit Soal Kuis Tantangan Bulanan</h3>
           </div>
 
-          <form method="POST" action="{{ route('admin_soal-kuis-tantangan-bulanan.update', $soal->id) }}"
+          <form method="POST"
+            action="{{ route('admin_soal-kuis-tantangan-bulanan.update-batch', $batch->upload_batch_id) }}"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="card-body">
               <div class="form-group">
                 <label for="kuis_tantangan_bulanan">Judul Tantangan</label>
-                <select name="kuis_tantangan_bulanan" class="form-control" required>
+                <select name="id_kuis_tantangan_bulanan" class="form-control" required>
                   @foreach ($kuis_tantangan_bulanan as $item)
                     <option value="{{ $item->id }}"
-                      {{ $item->id == $soal->id_kuis_tantangan_bulanan ? 'selected' : '' }}>
-                      {{ $item->judul }}
+                      {{ $item->id == $batch->id_kuis_tantangan_bulanan ? 'selected' : '' }}>
+                      {{ $item->judul }} - Periode {{ $item->periode->periode }}
                     </option>
                   @endforeach
                 </select>
               </div>
               <div class="form-group">
-                <label for="gambar">Gambar</label>
-                <input type="file" name="gambar" class="form-control" id="gambar" placeholder="Masukkan Gambar">
-              </div>
-              <div class="form-group">
-                <label for="soal">Soal</label>
-                <input type="text" name="soal" class="form-control" value="{{ $soal->soal }}" required>
+                <label for="file">Upload File Excel Baru</label>
+                <input type="file" name="file" accept=".xlsx" class="form-control" required>
               </div>
 
               <div class="form-group">
-                <label for="tipe_soal">Tipe Soal</label>
-                <select name="tipe_soal" id="tipe_soal" class="form-control" required>
-                  <option value="Pilihan Ganda" {{ $soal->tipe_soal == 'Pilihan Ganda' ? 'selected' : '' }}>Pilihan
-                    Ganda</option>
-                  <option value="Isian Singkat" {{ $soal->tipe_soal == 'Isian Singkat' ? 'selected' : '' }}>Isian
-                    Singkat</option>
-                </select>
-              </div>
-
-              {{-- Pilihan Ganda --}}
-              <div id="pilihan_ganda_fields" style="display: none;">
-                <label>Opsi Jawaban</label>
-                @php
-                  $opsi = $soal->opsi->keyBy('label');
-                @endphp
-                @foreach (['A', 'B', 'C', 'D'] as $label)
-                  <div class="form-group">
-                    <label>Opsi {{ $label }}</label>
-                    <input type="text" name="options[{{ $label }}]" class="form-control"
-                      value="{{ $opsi[$label]->teks_opsi ?? '' }}">
-                  </div>
-                @endforeach
-
-                <div class="form-group">
-                  <label>Jawaban Benar</label>
-                  <select class="form-control" name="jawaban">
-                    <option value="" disabled>-- Pilih Jawaban Benar --</option>
-                    @foreach (['A', 'B', 'C', 'D'] as $label)
-                      <option value="{{ $label }}" {{ $soal->jawaban === $label ? 'selected' : '' }}>
-                        {{ $label }}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-
-              {{-- Isian Singkat --}}
-              <div id="isian_singkat_field" style="display: none;">
-                <div class="form-group">
-                  <label>Jawaban Benar</label>
-                  <input type="text" class="form-control"
-                    value="{{ $soal->tipe_soal == 'Isian Singkat' ? $soal->jawaban : '' }}">
-                </div>
+                <label for="images">Upload Gambar Baru (jika ada)</label>
+                <input type="file" name="images[]" class="form-control" multiple accept="image/*">
+                <small>Upload semua gambar baru yang diperlukan</small>
               </div>
             </div>
 

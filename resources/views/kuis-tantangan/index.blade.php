@@ -39,10 +39,19 @@
                     </p>
                   </div>
                   <a href="{{ route('kuis-tantangan.soal', $item->slug) }}">
-                    <button class="bg-primary w-full text-white px-4 py-2 rounded-lg hover:bg-[#00295A]">
+                    <button class="bg-primary w-full text-white py-2 rounded-lg hover:bg-[#00295A]">
                       Mulai
                     </button>
                   </a>
+                  @if ($item->hasil_kuis_reguler->isNotEmpty())
+                    <a href="{{ route('kuis.riwayat', ['slug' => $item->slug]) }}">
+                      <button class="w-full bg-amber-600 text-white py-2 rounded-lg hover:bg-amber-700">
+                        Riwayat Pengerjaan
+                      </button>
+                    </a>
+                  @else
+                    <p class="text-sm text-center text-gray-500">Belum ada pengerjaan</p>
+                  @endif
                 </div>
               </li>
             @endforeach

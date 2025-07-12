@@ -15,6 +15,8 @@ class SoalKuisTantanganBulanan extends Model
         'soal',
         'tipe_soal',
         'jawaban',
+        'file_soal',
+        'upload_batch_id',
     ];
 
     public function kuis_tantangan_bulanan()
@@ -25,5 +27,10 @@ class SoalKuisTantanganBulanan extends Model
     public function opsi()
     {
         return $this->hasMany(OpsiSoalKuisTantanganBulanan::class, 'id_soal_tantangan');
+    }
+
+    public function jawaban_user()
+    {
+        return $this->hasMany(JawabanTantanganBulanan::class, 'id_soal_tantangan_bulanan');
     }
 }

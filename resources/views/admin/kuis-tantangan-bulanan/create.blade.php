@@ -48,6 +48,11 @@
                 <label for="tgl_selesai">Tanggal Selesai</label>
                 <input type="date" name="tanggal_selesai" class="form-control" id="tgl_selesai" required>
               </div>
+              <div class="form-group">
+                <label for="durasi_menit">Durasi Pengerjaan (menit)</label>
+                <input type="number" name="durasi_menit" id="durasi_menit" class="form-control" required
+                  placeholder="Masukkan Durasi Pengerjaan">
+              </div>
             </div>
             <!-- /.card-body -->
 
