@@ -212,7 +212,7 @@ class SoalTantanganBulananController extends Controller
         // Import data baru dengan batch ID lama
         Excel::import(
             new SoalTantanganBulananImport(
-                $request->id_kuis_reguler,
+                $request->id_kuis_tantangan_bulanan,
                 $filename,
                 $imageMap,
                 $batchId

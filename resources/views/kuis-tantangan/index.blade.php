@@ -71,7 +71,7 @@
       </div>
 
       <!-- Current Challenge -->
-      <div class="bg-primary rounded-3xl p-8 mb-8 text-white relative overflow-hidden">
+      <div class="bg-primary max-w-5xl mx-auto rounded-3xl p-8 mb-8 text-white relative overflow-hidden">
         <div class="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -mr-16 -mt-16"></div>
         <div class="absolute bottom-0 left-0 w-24 h-24 bg-white bg-opacity-10 rounded-full -ml-12 -mb-12"></div>
         <div class="relative z-10">
@@ -80,7 +80,7 @@
               <h3 class="text-3xl font-bold mb-2">{{ $tantangan->judul }}</h3>
               <p class="text-lg opacity-90">{{ $tantangan->deskripsi }}</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               <div class="bg-white bg-opacity-20 rounded-lg p-4">
                 <div class="flex items-center">
                   <i class="fas fa-calendar-alt text-2xl mr-3"></i>
@@ -107,6 +107,15 @@
                   <div>
                     <p class="text-sm opacity-80">Soal</p>
                     <p class="text-xl font-bold">{{ $tantangan->soal_tantangan_bulanan->count() }} Soal</p>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-white bg-opacity-20 rounded-lg p-4">
+                <div class="flex items-center">
+                  <i class="fas fa-users text-2xl mr-3"></i>
+                  <div>
+                    <p class="text-sm opacity-80">Waktu Pengerjaan :</p>
+                    <p class="text-xl font-bold">{{ $tantangan->durasi_menit }} Menit</p>
                   </div>
                 </div>
               </div>

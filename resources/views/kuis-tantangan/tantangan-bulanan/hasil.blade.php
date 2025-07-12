@@ -21,7 +21,8 @@
       <h2 class="text-3xl font-bold mb-2">
         <span>🎉</span> Selamat!
       </h2>
-      <p class="text-gray-600 font-medium text-lg">Kuis {{ $hasil->kuis_reguler->judul }} berhasil diselesaikan</p>
+      <p class="text-gray-600 font-medium text-lg">Kuis {{ $hasil->kuis_tantangan_bulanan->judul }} berhasil
+        diselesaikan</p>
     </div>
 
     <!-- Score Display -->
@@ -79,17 +80,17 @@
 
     <!-- Stats Section -->
     <div class="grid grid-cols-3 gap-3 mb-6 relative z-10">
-      <div class="text-center p-3 bg-primary rounded-xl border border-blue-200">
+      <div class="text-center flex flex-col justify-between p-3 bg-primary rounded-xl border border-blue-200">
         <div class="text-xl font-bold text-white">{{ $hasil->durasi_format }}</div>
         <div class="text-xs text-white font-medium">Durasi Pengerjaan</div>
       </div>
-      <div class="text-center p-3 bg-green-600 rounded-xl border border-green-200">
+      <div class="text-center flex flex-col justify-center p-3 bg-green-600 rounded-xl border border-green-200">
         <div class="text-xl font-bold text-white">
           {{ $hasil->jawaban_benar }}
         </div>
         <div class="text-xs text-white font-medium">Jawaban Benar</div>
       </div>
-      <div class="text-center p-3 bg-red-600 rounded-xl border border-red-200">
+      <div class="text-center flex flex-col justify-center p-3 bg-red-600 rounded-xl border border-red-200">
         <div class="text-xl font-bold text-white">
           {{ $hasil->jawaban_salah }}
         </div>
@@ -144,16 +145,6 @@
           kesuksesan!</p>
       @endif
     </div>
-    <a href="{{ route('kuis.lihat-jawaban', ['hasil_id' => $hasil->id, 'slug' => $hasil->kuis_reguler->slug]) }}">
-      <button class="w-full bg-green-600 text-white font-semibold py-4 rounded-lg hover:bg-green-700">
-        Lihat Jawaban
-      </button>
-    </a>
-    <a href="{{ route('kuis.riwayat', ['slug' => $hasil->kuis_reguler->slug]) }}">
-      <button class="w-full bg-amber-600 text-white font-semibold py-4 rounded-lg hover:bg-amber-700">
-        Riwayat Pengerjaan
-      </button>
-    </a>
     <a href="{{ route('kuis-tantangan.index') }}">
       <button class="w-full bg-primary text-white font-semibold py-4 rounded-lg hover:bg-[#00295A]">
         Halaman Kuis dan Tantangan

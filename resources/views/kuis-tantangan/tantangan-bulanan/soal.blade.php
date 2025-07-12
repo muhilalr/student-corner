@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <form id="quizForm" class="space-y-8" action="{{ route('kuis-bulanan.submit', $kuis->slug) }}" method="POST">
+    <form id="quizForm" class="space-y-8" action="{{ route('tantangan-bulanan.submit', $kuis->slug) }}" method="POST">
       @csrf
       <input type="hidden" name="start_time_js" id="start_time_js">
 
