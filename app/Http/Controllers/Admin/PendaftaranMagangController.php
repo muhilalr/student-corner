@@ -42,9 +42,13 @@ class PendaftaranMagangController extends Controller
     public function index_admin(Request $request)
     {
         $search = $request->input('search');
-        $pendaftaran = PendaftaranMagang::query()
+        $pendaftaran = PendaftaranMagang::with('informasi_magang')
             ->when($search, function ($query, $search) {
-                $query->where('nama', 'like', '%' . $search . '%');
+                $query->where('nama', 'like', '%' . $search . '%')
+                    ->orWhereHas('informasi_magang', function ($q) use ($search) {
+                        $q->where('nama_bidang', 'like', '%' . $search . '%')
+                            ->orWhere('posisi', 'like', '%' . $search . '%');
+                    });
             })
             ->latest()
             ->paginate(10);
