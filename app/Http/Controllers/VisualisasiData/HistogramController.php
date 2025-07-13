@@ -27,13 +27,31 @@ class HistogramController extends Controller
         // Parse CSV/Excel data
         $data = $this->parseDataFile(storage_path('app/public/' . $filePath));
 
+        // Validasi: pastikan ada data dan baris pertama sebagai header
+        if (empty($data) || empty($data[0]) || !is_array($data[0])) {
+            return response()->json([
+                'success' => false,
+                'error' => 'File tidak sesuai format. Pastikan baris pertama berisi nama kolom.'
+            ]);
+        }
+
+        $headers = array_keys($data[0]);
+
+        // Validasi tambahan: minimal ada 2 kolom header
+        if (count(array_filter($headers)) < 2) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Header kolom terlalu sedikit atau tidak terbaca dengan benar.'
+            ]);
+        }
+
         // Analyze columns to determine which are numeric
         $columnAnalysis = $this->analyzeColumns($data);
 
         return response()->json([
             'success' => true,
             'data' => $data,
-            'columns' => array_keys($data[0] ?? []),
+            'columns' => $headers,
             'numericColumns' => $columnAnalysis['numeric'],
             'categoricalColumns' => $columnAnalysis['categorical'],
             'columnTypes' => $columnAnalysis['types']

@@ -15,7 +15,13 @@
         <div class="lg:col-span-1">
           <div class="bg-white rounded-lg shadow-md p-6">
             <h2 class="text-xl font-semibold text-gray-900 mb-4">Upload Data</h2>
-
+            <p class="text-sm font-medium text-gray-700 mb-2">
+              📥 Download template terlebih dahulu:
+              <a href="{{ asset('template_file_web/Template_Visualisasi_Data.xlsx') }}" download
+                class="text-primary hover:underline">
+                Template_Visualisasi_Data
+              </a>
+            </p>
             <!-- File Upload -->
             <div class="mb-6">
               <label class="block text-sm font-medium text-gray-700 mb-2">Pilih File Data</label>
@@ -172,7 +178,7 @@
             document.getElementById('generateBtn').classList.remove('hidden');
             document.getElementById('dataPreview').classList.remove('hidden');
           } else {
-            showToast('Upload gagal');
+            showToast(data.error || 'File tidak sesuai format', 'error');
           }
         })
         .catch(() => showToast('Upload error'));
