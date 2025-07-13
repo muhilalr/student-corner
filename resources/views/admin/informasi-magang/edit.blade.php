@@ -26,15 +26,20 @@
                 <div class="card-body">
                   @csrf
                   @method('PUT')
-                  <div class="form-grup">
+                  <div class="form-group">
                     <label for="nama_bidang">Nama Bidang</label>
                     <input type="text" name="nama_bidang" class="form-control" id="nama_bidang"
                       value="{{ $informasi_magang->nama_bidang }}" placeholder="Masukkan Nama Bidang" required>
                   </div>
-                  <div class="form-grup">
+                  <div class="form-group">
                     <label for="posisi">Posisi Magang</label>
                     <input type="text" name="posisi" class="form-control" id="posisi"
                       value="{{ $informasi_magang->posisi }}" placeholder="Masukkan Posisi Magang" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="kebutuhan_orang">Jumlah Orang yang Diperlukan</label>
+                    <input type="number" name="kebutuhan_orang" class="form-control" id="kebutuhan_orang"
+                      value="{{ $informasi_magang->kebutuhan_orang }}" required>
                   </div>
                   <div class="form-group">
                     <label for="deskripsi">Deskripsi</label>

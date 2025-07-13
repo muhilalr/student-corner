@@ -17,6 +17,7 @@ use App\Http\Controllers\VisualisasiData\PieChartController;
 use App\Http\Controllers\VisualisasiData\HistogramController;
 use App\Http\Controllers\SimulasiStatistik\SimulasiSlovinController;
 use App\Http\Controllers\SimulasiStatistik\SamplingSimulationController;
+use Illuminate\Mail\PendingMail;
 
 // Route Konten Edukasi
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -52,7 +53,7 @@ Route::get('/kuis-dan-tantangan-bulanan', [KuisDanTantanganController::class, 'i
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/program-magang/informasi-magang', [InformasiMagangController::class, 'indexUser'])->name('program-magang.index');
-
+Route::get('/program-magang/informasi-magang/{slug_bidang}/{slug_posisi}', [InformasiMagangController::class, 'detail'])->name('program-magang.detail');
 
 Route::middleware('auth')->group(function () {
     // Route Profil
@@ -65,8 +66,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('profil', ProfilController::class);
 
     // Route Pendaftaran Magang
-    Route::get('/program-magang/daftar-magang', [PendaftaranMagangController::class, 'index'])
-        ->name('daftar-magang.index');
+    Route::get('/program-magang/daftar-magang/{slug_bidang}/{slug_posisi}', [PendaftaranMagangController::class, 'index'])->name('daftar-magang.index');
     Route::post('/program-magang/daftar-magang', [PendaftaranMagangController::class, 'store'])
         ->name('daftar-magang.store');
 

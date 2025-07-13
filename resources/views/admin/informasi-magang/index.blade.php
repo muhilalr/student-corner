@@ -33,10 +33,12 @@
                       <tr>
                         <th>Nama Bidang</th>
                         <th>Posisi Magang</th>
+                        <th>Jumlah yang Dibutuhkan</th>
                         <th>Deskripsi</th>
                         <th>Persyaratan</th>
                         <th>Benefit</th>
                         <th>Info Kontak</th>
+                        <th>Ditambahkan Tanggal</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -45,10 +47,12 @@
                         <tr>
                           <td>{{ $item->nama_bidang }}</td>
                           <td>{{ $item->posisi }}</td>
+                          <td>{{ $item->kebutuhan_orang }} orang</td>
                           <td>{{ Str::limit($item->deskripsi, 50, '...') }}</td>
                           <td>{{ Str::limit($item->persyaratan, 50, '...') }}</td>
                           <td>{{ Str::limit($item->benefit, 50, '...') }}</td>
                           <td>{{ Str::limit($item->info_kontak, 50, '...') }}</td>
+                          <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
                           <td>
                             <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
                               <a href="{{ route('admin_informasi-magang.edit', $item->id) }}"

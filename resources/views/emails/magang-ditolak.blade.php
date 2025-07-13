@@ -82,6 +82,8 @@
       <p><strong>Detail Pendaftaran:</strong></p>
       <ul>
         <li>Nama: {{ $pendaftaran->nama }}</li>
+        <li>Nama Bidang : {{ $pendaftaran->informasi_magang->nama_bidang }}</li>
+        <li>Posisi : {{ $pendaftaran->informasi_magang->posisi }}</li>
         <li>Email: {{ $pendaftaran->email }}</li>
         <li>No. HP: {{ $pendaftaran->no_hp }}</li>
         <li>Status: <span style="color: #ef4444; font-weight: bold;">TIDAK DITERIMA</span></li>
@@ -106,7 +108,7 @@
 
     <div class="footer">
       <p>Email ini dikirim secara otomatis, mohon tidak membalas email ini.</p>
-      <p>&copy; {{ date('Y') }} Sistem Pendaftaran Magang</p>
+      <p>&copy; {{ date('Y') }} Sistem Pendaftaran Magang - Pojok Literasi Statistik</p>
     </div>
   </div>
 </body>

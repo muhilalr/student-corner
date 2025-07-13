@@ -4,30 +4,39 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Mail\MailMagangDitolak;
+use App\Models\InformasiMagang;
 use App\Mail\MailMagangDiterima;
 use App\Models\PendaftaranMagang;
 use App\Http\Controllers\Controller;
+use App\Mail\NotifikasiMagangAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use App\Mail\PendaftaranMagang as MailPendaftaranMagang;
 use Intervention\Image\Colors\Rgb\Channels\Red;
+use App\Mail\PendaftaranMagang as MailPendaftaranMagang;
 
 class PendaftaranMagangController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($slug_bidang, $slug_posisi)
     {
         $user = Auth::user();
 
+        $info = InformasiMagang::where('slug_bidang', $slug_bidang)->where('slug_posisi', $slug_posisi)->first();
+
         // Cek apakah user sudah pernah mendaftar dan statusnya belum selesai
-        $pendaftaran = PendaftaranMagang::where('user_id', $user->id)
+        $pendaftaran = PendaftaranMagang::with('informasi_magang')
+            ->where('user_id', $user->id)
             ->where('status', '!=', 'selesai')
+            ->whereHas('informasi_magang', function ($query) use ($slug_bidang, $slug_posisi) {
+                $query->where('slug_bidang', $slug_bidang)
+                    ->where('slug_posisi', $slug_posisi);
+            })
             ->first();
 
-        return view('program-magang.daftar-magang', compact('pendaftaran'));
+        return view('program-magang.daftar-magang', compact('pendaftaran', 'info'));
     }
 
     public function index_admin(Request $request)
@@ -67,29 +76,41 @@ class PendaftaranMagangController extends Controller
         }
 
         $request->validate([
+            'id_informasi_magang' => 'required|exists:informasi_magangs,id',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+            'surat_permohonan' => 'required|file|mimes:pdf,doc,docx|max:2048',
             'cv_file' => 'required|file|mimes:pdf,doc,docx|max:5120', // 5MB
             'surat_motivasi' => 'nullable|string',
             'is_agreed' => 'required|accepted',
         ]);
 
-        $filePath = $request->file('cv_file')->store('cv_magang_user', 'public');
+        $fileCV = $request->file('cv_file')->store('cv_magang_user', 'public');
+        $filePermohonan = $request->file('surat_permohonan')->store('surat_permohonan_magang_user', 'public');
 
         // Simpan data pendaftaran
         $pendaftaran = PendaftaranMagang::create([
             'user_id' => $user->id,
+            'id_informasi_magang' => $request->id_informasi_magang,
             'nama' => $user->name,
             'email' => $user->email,
             'no_hp' => $user->no_hp,
-            'cv_file' => $filePath,
+            'cv_file' => $fileCV,
+            'surat_permohonan' => $filePermohonan,
             'surat_motivasi' => $request->surat_motivasi,
+            'tanggal_mulai' => $request->tanggal_mulai,
+            'tanggal_selesai' => $request->tanggal_selesai,
             'status' => 'diproses', // status default
             'is_agreed' => true,
             'agreed_at' => now(),
         ]);
 
-        Mail::to($pendaftaran->email)->queue(new MailPendaftaranMagang($pendaftaran));
+        $pendaftaran->load('informasi_magang');
 
-        return redirect()->route('daftar-magang.index')
+        Mail::to($pendaftaran->email)->queue(new MailPendaftaranMagang($pendaftaran));
+        Mail::to(env('ADMIN_EMAIL'))->queue(new NotifikasiMagangAdmin($pendaftaran));
+
+        return redirect()->route('daftar-magang.index', ['slug_bidang' => $pendaftaran->informasi_magang->slug_bidang, 'slug_posisi' => $pendaftaran->informasi_magang->slug_posisi])
             ->with('success', 'Pendaftaran berhasil dikirim!');
     }
 
@@ -127,6 +148,8 @@ class PendaftaranMagangController extends Controller
             'status' => $statusBaru,
         ]);
 
+        $pendaftaran_magang->load('informasi_magang');
+
         // Kirim email hanya jika status berubah dari 'diproses' ke 'diterima' atau 'ditolak'
         if ($statusLama === 'diproses' && in_array($statusBaru, ['diterima', 'ditolak'])) {
             if ($statusBaru === 'diterima') {
@@ -148,6 +171,7 @@ class PendaftaranMagangController extends Controller
     public function destroy(PendaftaranMagang $pendaftaran_magang)
     {
         Storage::disk('public')->delete($pendaftaran_magang->cv_file);
+        Storage::disk('public')->delete($pendaftaran_magang->surat_permohonan);
         $pendaftaran_magang->delete();
         return redirect()->route('admin_daftar-magang.index-admin')->with('success', 'Data Pendaftar Magang berhasil dihapus');
     }

@@ -210,6 +210,7 @@
         <form action="{{ route('daftar-magang.store') }}" method="POST" enctype="multipart/form-data"
           class="space-y-8">
           @csrf
+          <x-text-input id="id_informasi_magang" type="hidden" name="id_informasi_magang" :value="$info->id" />
           <!-- Personal Information Section -->
           <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-100">
             <div class="flex items-center mb-6">
@@ -264,6 +265,36 @@
             </div>
           </div>
 
+
+          <div class="grid md:grid-cols-2 gap-6 px-6">
+            <!-- Tanggal Mulai -->
+            <div>
+              <div class="flex items-center mb-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <x-input-label for="tanggal_mulai" :value="__('Tanggal Mulai')" />
+              </div>
+              <x-text-input id="tanggal_mulai" class="w-full px-4 py-3 rounded-xl bg-white/80" type="date"
+                name="tanggal_mulai" required />
+            </div>
+
+            <!-- Tanggal Selesai -->
+            <div>
+              <div class="flex items-center mb-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <x-input-label for="tanggal_selesai" :value="__('Tanggal Selesai')" />
+              </div>
+              <x-text-input id="tanggal_selesai" class="w-full px-4 py-3 rounded-xl bg-white/80" type="date"
+                name="tanggal_selesai" required />
+            </div>
+          </div>
+
+
           <!-- Documents Section -->
           <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">
             <div class="flex items-center mb-6">
@@ -292,6 +323,24 @@
               <p class="mt-4 text-xs text-gray-500">Maksimal ukuran file 5MB. Format: PDF, DOC, atau DOCX</p>
               <x-input-error :messages="$errors->get('cv_file')" class="mt-2" />
             </div>
+
+            <!-- Surat Permohonan -->
+            <div class="mb-4">
+              <div class="flex items-center mb-2">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <x-input-label for="surat_permohonan" :value="__('Upload Surat Permohonan Sekolah/Kampus (PDF, DOC, DOCX) *')" />
+              </div>
+              <x-text-input id="surat_permohonan"
+                class="w-full px-4 py-3 border rounded-xl bg-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                accept=".pdf,.doc,.docx" type="file" name="surat_permohonan" required />
+
+              <p class="mt-4 text-xs text-gray-500">Maksimal ukuran file 2MB. Format: PDF, DOC, atau DOCX</p>
+              <x-input-error :messages="$errors->get('surat_permohonan')" class="mt-2" />
+            </div>
+
             <!-- Surat Motivasi -->
             <div class="group">
               <div class="flex items-center mb-2">

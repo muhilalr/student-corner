@@ -48,17 +48,6 @@
       padding: 40px 30px;
     }
 
-    .success-icon {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #48bb78, #38a169);
-      border-radius: 50%;
-      margin: 0 auto 30px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
     .greeting {
       font-size: 18px;
       margin-bottom: 20px;
@@ -203,14 +192,6 @@
 
     <!-- Content -->
     <div class="content">
-      <!-- Success Icon -->
-      <div class="success-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" width="50" height="50">
-          <path d="M20 6L9 17l-5-5" />
-        </svg>
-      </div>
-
       <!-- Greeting -->
       <div class="greeting">
         <strong>Halo, {{ $pendaftaran->nama }}</strong>
@@ -218,7 +199,7 @@
 
       <!-- Main Message -->
       <div class="message">
-        <p><strong>Selamat!</strong> Pendaftaran Anda untuk program magang telah berhasil kami terima dan sedang dalam
+        <p>Pendaftaran Anda untuk program magang telah berhasil kami terima dan sedang dalam
           proses review oleh tim kami.</p>
         <p>Kami akan menghubungi Anda dalam <strong>3-5 hari kerja</strong> untuk informasi lebih lanjut mengenai
           tahapan berikutnya.</p>
@@ -230,6 +211,14 @@
         <div class="detail-item">
           <span class="detail-label">Nama Lengkap :&nbsp;</span> <span class="detail-value">
             {{ $pendaftaran->nama }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Nama Bidang :&nbsp;</span> <span class="detail-value">
+            {{ $pendaftaran->informasi_magang->nama_bidang }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Posisi :&nbsp;</span> <span class="detail-value">
+            {{ $pendaftaran->informasi_magang->posisi }}</span>
         </div>
         <div class="detail-item">
           <span class="detail-label">Email :&nbsp;</span> <span class="detail-value"> {{ $pendaftaran->email }}</span>
@@ -274,7 +263,7 @@
     <div class="footer">
       <p>Email ini dikirim secara otomatis dari sistem kami.</p>
       <p>
-        © {{ date('Y') }} {{ config('app.name') }}. All rights reserved.<br>
+        © {{ date('Y') }} Pojok Literasi Statistik. All rights reserved.<br>
         <a href="{{ route('home') }}">Kunjungi Website Kami</a>
       </p>
       <p style="font-size: 12px; margin-top: 15px;">

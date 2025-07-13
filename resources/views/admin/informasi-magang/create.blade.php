@@ -30,10 +30,15 @@
                     <input type="text" name="nama_bidang" class="form-control" id="nama_bidang"
                       placeholder="Masukkan Nama Bidang" required>
                   </div>
-                  <div class="form-grup">
+                  <div class="form-group">
                     <label for="posisi">Posisi Magang</label>
                     <input type="text" name="posisi" class="form-control" id="posisi"
                       placeholder="Masukkan Posisi Magang" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="kebutuhan_orang">Jumlah Orang yang Diperlukan</label>
+                    <input type="number" name="kebutuhan_orang" class="form-control" id="kebutuhan_orang"
+                      placeholder="Masukkan Kebutuhan Orang" required>
                   </div>
                   <div class="form-group">
                     <label for="deskripsi">Deskripsi</label>

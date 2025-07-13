@@ -12,10 +12,13 @@ class InformasiMagang extends Model
     protected $fillable = [
         'nama_bidang',
         'posisi',
+        'kebutuhan_orang',
         'deskripsi',
         'persyaratan',
         'benefit',
         'info_kontak',
+        'slug_bidang',
+        'slug_posisi'
     ];
 
     public function pendaftaran_magangs()

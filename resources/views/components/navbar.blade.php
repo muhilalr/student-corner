@@ -62,7 +62,8 @@
         class="bg-white hover:bg-gray-100 flex px-4 py-2 text-base text-slate-700 font-medium rounded-md">Kuis &
         Tantangan</a>
       <a href="{{ route('program-magang.index') }}"
-        class="bg-white hover:bg-gray-100 flex px-4 py-2 text-base text-slate-700 font-medium rounded-md">Internship</a>
+        class="bg-white hover:bg-gray-100 flex px-4 py-2 text-base text-slate-700 font-medium rounded-md">Magang dan
+        Riset</a>
     </div>
 
     <!-- Sign Up Button (Desktop) -->
@@ -204,7 +205,7 @@
       <!-- Internship -->
       <a href="{{ route('program-magang.index') }}"
         class="block w-full text-left px-4 py-3 text-slate-700 font-medium hover:bg-gray-100 rounded-md transition-colors">
-        Internship
+        Magang dan Riset
       </a>
     </div>
 

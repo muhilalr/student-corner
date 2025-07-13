@@ -29,20 +29,12 @@
     }
 
     .header h1 {
-      color: #10b981;
+      color: white;
       margin: 0;
     }
 
     .content {
       margin-bottom: 30px;
-    }
-
-    .highlight {
-      background-color: #dcfce7;
-      padding: 15px;
-      border-radius: 5px;
-      border-left: 4px solid #10b981;
-      margin: 20px 0;
     }
 
     .footer {
@@ -58,19 +50,10 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>🎉 Selamat!</h1>
+      <h1>Pendaftar Magang Baru!</h1>
     </div>
 
     <div class="content">
-      <p>Halo <strong>{{ $pendaftaran->nama }}</strong>,</p>
-
-      <div class="highlight">
-        <p><strong>Pendaftaran magang Anda telah DITERIMA!</strong></p>
-      </div>
-
-      <p>Kami dengan senang hati mengumumkan bahwa aplikasi magang Anda telah disetujui. Selamat atas pencapaian ini!
-      </p>
-
       <p><strong>Detail Pendaftaran:</strong></p>
       <ul>
         <li>Nama : {{ $pendaftaran->nama }}</li>
@@ -78,21 +61,9 @@
         <li>Posisi : {{ $pendaftaran->informasi_magang->posisi }}</li>
         <li>Email : {{ $pendaftaran->email }}</li>
         <li>No. HP : {{ $pendaftaran->no_hp }}</li>
-        <li>Status : <span style="color: #10b981; font-weight: bold;">DITERIMA</span></li>
       </ul>
 
-      <p>Tim kami akan segera menghubungi Anda melalui email atau telepon untuk memberikan informasi lebih lanjut
-        mengenai:</p>
-      <ul>
-        <li>Jadwal orientasi</li>
-        <li>Dokumen yang perlu disiapkan</li>
-        <li>Lokasi dan waktu mulai magang</li>
-        <li>Informasi penting lainnya</li>
-      </ul>
-
-      <p>Jika Anda memiliki pertanyaan, jangan ragu untuk menghubungi kami.</p>
-
-      <p>Sekali lagi, selamat dan kami menantikan kehadiran Anda!</p>
+      <p>Silahkan cek admin untuk detail pendaftaran magang</p>
     </div>
 
     <div class="footer">
