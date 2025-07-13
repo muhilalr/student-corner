@@ -21,7 +21,7 @@ class InformasiMagangController extends Controller
 
     public function indexUser()
     {
-        $info = InformasiMagang::sole();
+        $info = InformasiMagang::all();
         return view('program-magang.index', compact('info'));
     }
 
@@ -30,7 +30,7 @@ class InformasiMagangController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.informasi-magang.create');
     }
 
     /**
@@ -38,7 +38,24 @@ class InformasiMagangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_bidang' => 'required',
+            'posisi' => 'required',
+            'deskripsi' => 'required',
+            'persyaratan' => 'required',
+            'benefit' => 'required',
+            'info_kontak' => 'required',
+        ]);
+
+        InformasiMagang::create([
+            'nama_bidang' => $request->nama_bidang,
+            'posisi' => $request->posisi,
+            'deskripsi' => $request->deskripsi,
+            'persyaratan' => $request->persyaratan,
+            'benefit' => $request->benefit,
+            'info_kontak' => $request->info_kontak,
+        ]);
+        return redirect()->route('admin_informasi-magang.index')->with('success', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -60,6 +77,8 @@ class InformasiMagangController extends Controller
     public function update(Request $request, InformasiMagang $informasi_magang)
     {
         $request->validate([
+            'nama_bidang' => 'required',
+            'posisi' => 'required',
             'deskripsi' => 'required',
             'persyaratan' => 'required',
             'benefit' => 'required',
@@ -67,6 +86,8 @@ class InformasiMagangController extends Controller
         ]);
 
         $informasi_magang->update([
+            'nama_bidang' => $request->nama_bidang,
+            'posisi' => $request->posisi,
             'deskripsi' => $request->deskripsi,
             'persyaratan' => $request->persyaratan,
             'benefit' => $request->benefit,
@@ -78,5 +99,9 @@ class InformasiMagangController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(InformasiMagang $informasi_magang) {}
+    public function destroy(InformasiMagang $informasi_magang)
+    {
+        $informasi_magang->delete();
+        return redirect()->route('admin_informasi-magang.index')->with('success', 'Data berhasil dihapus');
+    }
 }

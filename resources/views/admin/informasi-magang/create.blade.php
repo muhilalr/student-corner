@@ -8,7 +8,7 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Edit Informasi Magang</h3>
+                <h3 class="card-title">Tambah Informasi Magang</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -21,43 +21,42 @@
                   </ul>
                 </div>
               @endif
-              <form method="POST" action="{{ route('admin_informasi-magang.update', $informasi_magang->id) }}">
+              <form method="POST" action="{{ route('admin_informasi-magang.store') }}">
 
                 <div class="card-body">
                   @csrf
-                  @method('PUT')
-                  <div class="form-grup">
+                  <div class="form-group">
                     <label for="nama_bidang">Nama Bidang</label>
                     <input type="text" name="nama_bidang" class="form-control" id="nama_bidang"
-                      value="{{ $informasi_magang->nama_bidang }}" placeholder="Masukkan Nama Bidang" required>
+                      placeholder="Masukkan Nama Bidang" required>
                   </div>
                   <div class="form-grup">
                     <label for="posisi">Posisi Magang</label>
                     <input type="text" name="posisi" class="form-control" id="posisi"
-                      value="{{ $informasi_magang->posisi }}" placeholder="Masukkan Posisi Magang" required>
+                      placeholder="Masukkan Posisi Magang" required>
                   </div>
                   <div class="form-group">
                     <label for="deskripsi">Deskripsi</label>
-                    <textarea name="deskripsi" class="form-control" id="editor-deskripsi" placeholder="Masukkan Deskripsi Magang">{{ $informasi_magang->deskripsi }}</textarea>
+                    <textarea name="deskripsi" class="form-control" id="editor-deskripsi" placeholder="Masukkan Deskripsi Magang"></textarea>
                   </div>
                   <div class="form-group">
                     <label for="persyaratan">Persyaratan</label>
-                    <textarea name="persyaratan" class="form-control" id="editor-persyaratan" placeholder="Masukkan Persyaratan Magang">{{ $informasi_magang->persyaratan }}</textarea>
+                    <textarea name="persyaratan" class="form-control" id="editor-persyaratan" placeholder="Masukkan Persyaratan Magang"></textarea>
                   </div>
                   <div class="form-group">
                     <label for="benefit">Benefit</label>
-                    <textarea name="benefit" class="form-control" id="editor-benefit" placeholder="Masukkan Benefit Magang">{{ $informasi_magang->benefit }}</textarea>
+                    <textarea name="benefit" class="form-control" id="editor-benefit" placeholder="Masukkan Benefit Magang"></textarea>
                   </div>
                   <div class="form-group">
                     <label for="info_kontak">Info Kontak</label>
-                    <textarea name="info_kontak" class="form-control" id="editor-info-kontak" placeholder="Masukkan Info Kontak Magang">{{ $informasi_magang->info_kontak }}</textarea>
+                    <textarea name="info_kontak" class="form-control" id="editor-info-kontak" placeholder="Masukkan Info Kontak Magang"></textarea>
                   </div>
 
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Ubah</button>
+                  <button type="submit" class="btn btn-primary">Tambah</button>
                 </div>
               </form>
             </div>

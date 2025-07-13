@@ -17,42 +17,58 @@
               <!-- /.card-header -->
 
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead class="text-center">
-                    <tr>
-                      <th>Deskripsi</th>
-                      <th>Persyaratan</th>
-                      <th>Benefit</th>
-                      <th>Info Kontak</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($info as $item)
+                <div class="mb-3 d-flex justify-content-between">
+                  <form action="{{ route('admin_informasi-magang.index') }}" method="GET" class="form-inline">
+                    <input type="text" name="search" value="{{ request('search') }}" class="form-control mr-2"
+                      placeholder="Cari ...">
+                    <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
+                  </form>
+                  <a href="{{ route('admin_informasi-magang.create') }}" class="btn btn-primary">
+                    <span><i class="fas fa-plus mr-2"></i></span>Tambah Data
+                  </a>
+                </div>
+                <div class="table-responsive">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead class="text-center">
                       <tr>
-                        <td>{{ $item->deskripsi }}</td>
-                        <td>{{ $item->persyaratan }}</td>
-                        <td>{{ $item->benefit }}</td>
-                        <td>{{ $item->info_kontak }}</td>
-                        <td>
-                          <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-                            <a href="{{ route('admin_informasi-magang.edit', $item->id) }}"
-                              class="btn btn-warning"><span><i class="fas fa-edit"></i></span></a>
-                            {{-- <form action="{{ route('admin_informasi-magang.destroy', $item->id) }}" method="POST"
-                              class="m-0">
-                              @csrf
-                              @method('DELETE')
-                              <button type="submit" class="btn btn-danger"
-                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                <span><i class="fas fa-trash"></i></span>
-                              </button>
-                            </form> --}}
-                          </div>
-                        </td>
+                        <th>Nama Bidang</th>
+                        <th>Posisi Magang</th>
+                        <th>Deskripsi</th>
+                        <th>Persyaratan</th>
+                        <th>Benefit</th>
+                        <th>Info Kontak</th>
+                        <th>Aksi</th>
                       </tr>
-                    @endforeach
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      @foreach ($info as $item)
+                        <tr>
+                          <td>{{ $item->nama_bidang }}</td>
+                          <td>{{ $item->posisi }}</td>
+                          <td>{{ Str::limit($item->deskripsi, 50, '...') }}</td>
+                          <td>{{ Str::limit($item->persyaratan, 50, '...') }}</td>
+                          <td>{{ Str::limit($item->benefit, 50, '...') }}</td>
+                          <td>{{ Str::limit($item->info_kontak, 50, '...') }}</td>
+                          <td>
+                            <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
+                              <a href="{{ route('admin_informasi-magang.edit', $item->id) }}"
+                                class="btn btn-warning"><span><i class="fas fa-edit"></i></span></a>
+                              <form action="{{ route('admin_informasi-magang.destroy', $item->id) }}" method="POST"
+                                class="m-0">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger"
+                                  onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                  <span><i class="fas fa-trash"></i></span>
+                                </button>
+                              </form>
+                            </div>
+                          </td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <!-- /.card-body -->
             </div>
