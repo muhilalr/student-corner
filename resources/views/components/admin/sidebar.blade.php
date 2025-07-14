@@ -93,6 +93,24 @@
                   <p>Data Pendaftar Magang</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-magang.magangDiterima') }}"
+                  class="nav-link {{ Route::is('admin_daftar-magang.magangDiterima') ? 'active' : '' }}">
+                  <p>Pendaftar Magang Diterima</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-magang.magangDitolak') }}"
+                  class="nav-link {{ Route::is('admin_daftar-magang.magangDitolak') ? 'active' : '' }}">
+                  <p>Pendaftar Magang Ditolak</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-magang.riwayatMagang') }}"
+                  class="nav-link {{ Route::is('admin_daftar-magang.riwayatMagang') ? 'active' : '' }}">
+                  <p>Riwayat Pendaftar Magang</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">

@@ -76,6 +76,7 @@
                       @endforeach
                     </tbody>
                   </table>
+                  {{ $detail_subjuduls->links() }}
                 </div>
               </div>
               <!-- /.card-body -->

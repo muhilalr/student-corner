@@ -50,9 +50,61 @@ class PendaftaranMagangController extends Controller
                             ->orWhere('posisi', 'like', '%' . $search . '%');
                     });
             })
+            ->where('status', 'diproses')
             ->latest()
             ->paginate(10);
         return view('admin.pendaftaran-magang.index', compact('pendaftaran'));
+    }
+
+    public function magangDiterima(Request $request)
+    {
+        $search = $request->input('search');
+        $pendaftaran = PendaftaranMagang::with('informasi_magang')
+            ->when($search, function ($query, $search) {
+                $query->where('nama', 'like', '%' . $search . '%')
+                    ->orWhereHas('informasi_magang', function ($q) use ($search) {
+                        $q->where('nama_bidang', 'like', '%' . $search . '%')
+                            ->orWhere('posisi', 'like', '%' . $search . '%');
+                    });
+            })
+            ->where('status', 'diterima')
+            ->latest()
+            ->paginate(10);
+        return view('admin.pendaftaran-magang.pendaftar-diterima', compact('pendaftaran'));
+    }
+
+    public function magangDitolak(Request $request)
+    {
+        $search = $request->input('search');
+        $pendaftaran = PendaftaranMagang::with('informasi_magang')
+            ->when($search, function ($query, $search) {
+                $query->where('nama', 'like', '%' . $search . '%')
+                    ->orWhereHas('informasi_magang', function ($q) use ($search) {
+                        $q->where('nama_bidang', 'like', '%' . $search . '%')
+                            ->orWhere('posisi', 'like', '%' . $search . '%');
+                    });
+            })
+            ->where('status', 'ditolak')
+            ->latest()
+            ->paginate(10);
+        return view('admin.pendaftaran-magang.pendaftar-ditolak', compact('pendaftaran'));
+    }
+
+    public function riwayatMagang(Request $request)
+    {
+        $search = $request->input('search');
+        $pendaftaran = PendaftaranMagang::with('informasi_magang')
+            ->when($search, function ($query, $search) {
+                $query->where('nama', 'like', '%' . $search . '%')
+                    ->orWhereHas('informasi_magang', function ($q) use ($search) {
+                        $q->where('nama_bidang', 'like', '%' . $search . '%')
+                            ->orWhere('posisi', 'like', '%' . $search . '%');
+                    });
+            })
+            ->where('status', 'selesai')
+            ->latest()
+            ->paginate(10);
+        return view('admin.pendaftaran-magang.riwayat-pendaftar', compact('pendaftaran'));
     }
 
     /**

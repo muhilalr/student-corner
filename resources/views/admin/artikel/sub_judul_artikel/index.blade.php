@@ -62,7 +62,7 @@
                     @endforeach
                   </tbody>
                 </table>
-
+                {{ $subjuduls->links() }}
               </div>
               <!-- /.card-body -->
             </div>

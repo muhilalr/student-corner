@@ -12,13 +12,13 @@
           <div class="col-12">
             <div class="card" style="margin-top: 1rem;">
               <div class="card-header">
-                <h3 class="card-title">Data Pendaftar Magang</h3>
+                <h3 class="card-title">Data Pendaftar Magang Diterima</h3>
               </div>
               <!-- /.card-header -->
 
               <div class="card-body">
                 <div class="mb-3 d-flex justify-content-between">
-                  <form action="{{ route('admin_daftar-magang.index-admin') }}" method="GET" class="form-inline">
+                  <form action="{{ route('admin_informasi-magang.index') }}" method="GET" class="form-inline">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control mr-2"
                       placeholder="Cari Nama...">
                     <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
@@ -38,6 +38,8 @@
                         <th>Surat Motivasi</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Selesai</th>
+                        <th>Laporan Magang</th>
+                        <th>Sertifikat Magang</th>
                         <th>Status</th>
                         <th>Daftar pada Tanggal</th>
                         <th>Aksi</th>
@@ -70,6 +72,24 @@
                           </td>
                           <td>{{ \Carbon\Carbon::parse($item->tanggal_mulai)->format('d-m-Y') }}</td>
                           <td>{{ \Carbon\Carbon::parse($item->tanggal_selesai)->format('d-m-Y') }}</td>
+                          <td class="text-center">
+                            @if ($item->laporan_magang)
+                              <a href="{{ Storage::url($item->laporan_magang) }}" target="_blank">
+                                <button class="btn btn-info">Lihat Laporan Magang</button>
+                              </a>
+                            @else
+                              <span class="badge badge-danger">Belum Tersedia</span>
+                            @endif
+                          </td>
+                          <td class="text-center">
+                            @if ($item->sertifikat_magang)
+                              <a href="{{ Storage::url($item->sertifikat_magang) }}" target="_blank">
+                                <button class="btn btn-info">Lihat Sertifikat Magang</button>
+                              </a>
+                            @else
+                              <span class="badge badge-danger">Belum Tersedia</span>
+                            @endif
+                          </td>
                           <td>
                             @if ($item->status == 'diproses')
                               <span class="badge badge-warning">Diproses</span>

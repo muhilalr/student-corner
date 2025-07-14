@@ -38,6 +38,14 @@ Route::prefix('admin')->name('admin_')->group(function () {
     Route::resource('informasi-magang', InformasiMagangController::class);
     Route::get('/pendaftaran-magang', [PendaftaranMagangController::class, 'index_admin'])
       ->name('daftar-magang.index-admin');
+    Route::get('/pendaftaran-magang-diterima', [PendaftaranMagangController::class, 'magangDiterima'])
+      ->name('daftar-magang.magangDiterima');
+    Route::get('/pendaftaran-magang-ditolak', [PendaftaranMagangController::class, 'magangDitolak'])
+      ->name('daftar-magang.magangDitolak');
+    Route::get('/riwayat-pendaftaran-magang', [PendaftaranMagangController::class, 'riwayatMagang'])
+      ->name('daftar-magang.riwayatMagang');
+
+
     Route::get('/pendaftaran-magang/{pendaftaran_magang}/edit', [PendaftaranMagangController::class, 'edit'])
       ->name('daftar-magang.edit');
     Route::put('/pendaftaran-magang/{pendaftaran_magang}', [PendaftaranMagangController::class, 'update'])

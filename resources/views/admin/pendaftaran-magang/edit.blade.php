@@ -55,7 +55,6 @@
                   <option value="" disabled selected>-- Update Status --</option>
                   <option value="diterima">Diterima</option>
                   <option value="ditolak">Ditolak</option>
-                  <option value="selesai">Selesai</option>
                 </select>
               </div>
             </div>
