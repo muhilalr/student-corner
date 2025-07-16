@@ -11,9 +11,10 @@ class LogHarianMagangUser extends Model
 
     protected $fillable = [
         'id_pendaftaran_magang',
-        'nama_kegiatan',
+        'tanggal',
         'uraian_kegiatan',
-        'gambar',
+        'status_kehadiran',
+        'catatan',
     ];
 
     public function pendaftaran_magang()

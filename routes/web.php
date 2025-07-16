@@ -1,13 +1,15 @@
 <?php
 
+use Illuminate\Mail\PendingMail;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Contracts\Role;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfilController;
-use App\Http\Controllers\ProfileController;
 
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KontenEdukasiController;
+use App\Http\Controllers\LogHarianMagangController;
 use App\Http\Controllers\VisualisasiDataController;
 use App\Http\Controllers\KuisDanTantanganController;
 use App\Http\Controllers\Admin\InformasiMagangController;
@@ -17,7 +19,6 @@ use App\Http\Controllers\VisualisasiData\PieChartController;
 use App\Http\Controllers\VisualisasiData\HistogramController;
 use App\Http\Controllers\SimulasiStatistik\SimulasiSlovinController;
 use App\Http\Controllers\SimulasiStatistik\SamplingSimulationController;
-use Illuminate\Mail\PendingMail;
 
 // Route Konten Edukasi
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -69,6 +70,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/program-magang/daftar-magang/{slug_bidang}/{slug_posisi}', [PendaftaranMagangController::class, 'index'])->name('daftar-magang.index');
     Route::post('/program-magang/daftar-magang', [PendaftaranMagangController::class, 'store'])
         ->name('daftar-magang.store');
+    Route::post('/program-magang/upload-laporan/{pendaftaran_magang}', [PendaftaranMagangController::class, 'uploadLaporan'])->name('daftar-magang.upload-laporan');
+
+    // Route Log Harian Magang
+    Route::get('/program-magang/{slug_bidang}/{slug_posisi}/log-harian-magang', [LogHarianMagangController::class, 'index'])->name('daftar-magang.log-harian');
+    Route::get('/program-magang/{slug_bidang}/{slug_posisi}/log-harian-magang/tambah-log-harian-magang', [LogHarianMagangController::class, 'create'])->name('log-harian.create-log');
+    Route::post('/program-magang/{slug_bidang}/{slug_posisi}/log-harian-magang/tambah-log-harian-magang', [LogHarianMagangController::class, 'store'])->name('log-harian.store');
+    Route::get('/program-magang/{slug_bidang}/{slug_posisi}/log-harian-magang/edit-log-harian-magang/{id}', [LogHarianMagangController::class, 'edit'])->name('log-harian.edit');
+    Route::put('/program-magang/{slug_bidang}/{slug_posisi}/log-harian-magang/edit-log-harian-magang/{id}', [LogHarianMagangController::class, 'update'])->name('log-harian.update');
+    Route::delete('/program-magang/{slug_bidang}/{slug_posisi}/log-harian-magang/hapus-log-harian-magang/{id}', [LogHarianMagangController::class, 'destroy'])->name('log-harian.destroy');
 
     // Route Kuis dan Tantangan Bulanan
     // Kuis Reguler

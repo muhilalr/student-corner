@@ -166,9 +166,10 @@
           @endif
 
           @if ($pendaftaran->status === 'diterima')
-            <form action="" method="POST" enctype="multipart/form-data">
-              @csrf
-              <div class="bg-primary rounded-2xl p-6 border border-primary">
+            <div class="bg-primary rounded-2xl p-6 border border-primary">
+              <form action="{{ route('daftar-magang.upload-laporan', $pendaftaran->id) }}" method="POST"
+                enctype="multipart/form-data">
+                @csrf
                 <div class="flex items-center mb-6">
                   <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mr-3">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -176,7 +177,7 @@
                         d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </div>
-                  <h3 class="text-xl font-bold text-white">Laporan Magang</h3>
+                  <h3 class="text-xl font-bold text-white">Kegiatan Magang</h3>
                 </div>
                 <!-- Laporan Magang -->
                 <div class="mb-4">
@@ -192,16 +193,37 @@
                     accept=".pdf" type="file" name="laporan_magang" required />
                   <x-input-error :messages="$errors->get('laporan_magang')" class="mt-2" />
                 </div>
-                <div class="flex justify-center">
-                  <a href="">
-                    <button type="submit"
-                      class="bg-white/20 text-white font-semibold py-3 px-8 rounded-xl hover:bg-white/10 flex items-center justify-center">
-                      Submit
+                @if ($pendaftaran->laporan_magang)
+                  @php
+                    $namaFile = Str::after(basename($pendaftaran->laporan_magang), Auth::user()->slug . '.');
+                  @endphp
+                  <a href="{{ Storage::url($pendaftaran->laporan_magang) }}">
+                    <button type="button"
+                      class="bg-white/20 w-full mb-4 text-white text-xs md:text-base font-semibold py-3 px-4 rounded-xl hover:bg-white/10 flex items-center justify-start">
+                      {{ $namaFile }}
                     </button>
                   </a>
+                @endif
+                <div class="flex justify-center mb-4">
+                  <button type="submit"
+                    class="bg-white/20 text-white text-xs md:text-base font-semibold py-3 px-8 rounded-xl hover:bg-white/10 flex items-center justify-center">
+                    @if ($pendaftaran->laporan_magang)
+                      Update
+                    @else
+                      Upload
+                    @endif
+                  </button>
                 </div>
+              </form>
+              <div class="flex justify-center">
+                <a
+                  href="{{ route('daftar-magang.log-harian', ['slug_bidang' => $pendaftaran->informasi_magang->slug_bidang, 'slug_posisi' => $pendaftaran->informasi_magang->slug_posisi]) }}">
+                  <button
+                    class="bg-white/20 text-white text-xs md:text-base font-semibold py-3 px-8 rounded-xl hover:bg-white/10 flex items-center justify-center">Log
+                    Harian Magang</button>
+                </a>
               </div>
-            </form>
+            </div>
           @endif
 
           <!-- Action Buttons -->
@@ -317,6 +339,7 @@
               </div>
               <x-text-input id="tanggal_mulai" class="w-full px-4 py-3 rounded-xl bg-white/80" type="date"
                 name="tanggal_mulai" required />
+              <x-input-error :messages="$errors->get('tanggal_mulai')" class="mt-2" />
             </div>
 
             <!-- Tanggal Selesai -->
@@ -330,6 +353,7 @@
               </div>
               <x-text-input id="tanggal_selesai" class="w-full px-4 py-3 rounded-xl bg-white/80" type="date"
                 name="tanggal_selesai" required />
+              <x-input-error :messages="$errors->get('tanggal_selesai')" class="mt-2" />
             </div>
           </div>
 

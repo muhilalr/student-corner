@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\MailMagangDitolak;
 use App\Models\InformasiMagang;
 use App\Mail\MailMagangDiterima;
 use App\Models\PendaftaranMagang;
-use App\Http\Controllers\Controller;
 use App\Mail\NotifikasiMagangAdmin;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -168,6 +169,30 @@ class PendaftaranMagangController extends Controller
 
         return redirect()->route('daftar-magang.index', ['slug_bidang' => $pendaftaran->informasi_magang->slug_bidang, 'slug_posisi' => $pendaftaran->informasi_magang->slug_posisi])
             ->with('success', 'Pendaftaran berhasil dikirim!');
+    }
+
+    public function uploadLaporan(Request $request, PendaftaranMagang $pendaftaran_magang)
+    {
+        $request->validate([
+            'laporan_magang' => 'required|file|mimes:pdf',
+        ]);
+
+        if ($pendaftaran_magang->laporan_magang) {
+            Storage::disk('public')->delete($pendaftaran_magang->laporan_magang);
+        }
+
+        $file = $request->file('laporan_magang');
+        $namaFile = Auth::user()->slug . '.' . $file->getClientOriginalName();
+
+        $filePath = $file->storeAs('laporan_magang', $namaFile, 'public');
+
+        $pendaftaran_magang->update([
+            'laporan_magang' => $filePath,
+        ]);
+
+        $pendaftaran_magang->load('informasi_magang');
+
+        return redirect()->route('daftar-magang.index', ['slug_bidang' => $pendaftaran_magang->informasi_magang->slug_bidang, 'slug_posisi' => $pendaftaran_magang->informasi_magang->slug_posisi])->with('success', 'Laporan Magang berhasil diunggah');
     }
 
     /**

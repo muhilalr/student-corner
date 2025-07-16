@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('log_harian_magang_users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_pendaftaran_magang');
-            $table->text('nama_kegiatan');
+            $table->date('tanggal');
             $table->text('uraian_kegiatan');
-            $table->string('gambar');
+            $table->enum('status_kehadiran', ['hadir', 'sakit', 'izin']);
+            $table->text('catatan')->nullable();
             $table->timestamps();
             $table->foreign('id_pendaftaran_magang')->references('id')->on('pendaftaran_magangs')->onDelete('cascade');
         });
