@@ -8,7 +8,9 @@ use App\Mail\MailMagangDitolak;
 use App\Models\InformasiMagang;
 use App\Mail\MailMagangDiterima;
 use App\Models\PendaftaranMagang;
+use App\Mail\SertifikatMagangMail;
 use App\Mail\NotifikasiMagangAdmin;
+use App\Models\LogHarianMagangUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -106,6 +108,14 @@ class PendaftaranMagangController extends Controller
             ->latest()
             ->paginate(10);
         return view('admin.pendaftaran-magang.riwayat-pendaftar', compact('pendaftaran'));
+    }
+
+    public function logHarian($pendaftaran_id)
+    {
+        $pendaftaran = PendaftaranMagang::findOrFail($pendaftaran_id);
+        $logs = LogHarianMagangUser::with('pendaftaran_magang')
+            ->where('id_pendaftaran_magang', $pendaftaran_id)->paginate(10);
+        return view('admin.pendaftaran-magang.log-harian', compact('logs', 'pendaftaran'));
     }
 
     /**
@@ -211,6 +221,11 @@ class PendaftaranMagangController extends Controller
         return view('admin.pendaftaran-magang.edit', compact('pendaftaran_magang'));
     }
 
+    public function editDiterima(PendaftaranMagang $pendaftaran_magang)
+    {
+        return view('admin.pendaftaran-magang.edit-diterima', compact('pendaftaran_magang'));
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -244,6 +259,33 @@ class PendaftaranMagangController extends Controller
 
         return redirect()->route('admin_daftar-magang.index-admin')
             ->with('success', 'Status pendaftaran berhasil diperbarui dan email notifikasi telah dikirim');
+    }
+
+    public function editSertifikat(PendaftaranMagang $pendaftaran_magang)
+    {
+        return view('admin.pendaftaran-magang.upload-sertifikat', compact('pendaftaran_magang'));
+    }
+
+
+    public function uploadSertifikat(Request $request, PendaftaranMagang $pendaftaran_magang)
+    {
+        $request->validate([
+            'sertifikat_magang' => 'required|file|mimes:pdf,jpg,jpeg,png',
+        ]);
+
+        if ($pendaftaran_magang->sertifikat_magang) {
+            Storage::disk('public')->delete($pendaftaran_magang->sertifikat_magang);
+        }
+
+        $file = $request->file('sertifikat_magang')->store('sertifikat_magang_user', 'public');
+
+        $pendaftaran_magang->update([
+            'sertifikat_magang' => $file,
+        ]);
+
+        Mail::to($pendaftaran_magang->email)->queue(new SertifikatMagangMail($pendaftaran_magang));
+
+        return redirect()->route('admin_daftar-magang.riwayatMagang')->with('success', 'Sertifikat Magang berhasil diunggah');
     }
 
     /**

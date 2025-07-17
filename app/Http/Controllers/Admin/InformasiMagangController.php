@@ -22,7 +22,9 @@ class InformasiMagangController extends Controller
 
     public function indexUser()
     {
-        $info = InformasiMagang::all();
+        $info = InformasiMagang::withCount(['pendaftaran_magangs as pelamar' => function ($query) {
+            $query->where('status', 'diproses');
+        }])->get();
         return view('program-magang.index', compact('info'));
     }
 

@@ -44,10 +44,18 @@ Route::prefix('admin')->name('admin_')->group(function () {
       ->name('daftar-magang.magangDitolak');
     Route::get('/riwayat-pendaftaran-magang', [PendaftaranMagangController::class, 'riwayatMagang'])
       ->name('daftar-magang.riwayatMagang');
+    Route::get('/log-harian/{pendaftaran_id}', [PendaftaranMagangController::class, 'logHarian'])
+      ->name('daftar-magang.logHarian');
 
 
     Route::get('/pendaftaran-magang/{pendaftaran_magang}/edit', [PendaftaranMagangController::class, 'edit'])
       ->name('daftar-magang.edit');
+    Route::get('/pendaftaran-magang/{pendaftaran_magang}/edit-diterima', [PendaftaranMagangController::class, 'editDiterima'])
+      ->name('daftar-magang.edit-diterima');
+    Route::get('/pendaftaran-magang/{pendaftaran_magang}/upload-sertifikat', [PendaftaranMagangController::class, 'editSertifikat'])
+      ->name('daftar-magang.editSertifikat');
+    Route::put('/pendaftaran-magang/{pendaftaran_magang}/upload-sertifikat', [PendaftaranMagangController::class, 'uploadSertifikat'])
+      ->name('daftar-magang.upload-sertifikat');
     Route::put('/pendaftaran-magang/{pendaftaran_magang}', [PendaftaranMagangController::class, 'update'])
       ->name('daftar-magang.update');
     Route::delete('/pendaftaran-magang/{pendaftaran_magang}', [PendaftaranMagangController::class, 'destroy'])

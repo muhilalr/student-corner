@@ -95,12 +95,13 @@
                           <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y H:i') }}</td>
                           <td>
                             <div class="d-flex align-items-center justify-content-center">
-                              <a href="" class="btn btn-info"><span><i class="fas fa-eye"></i></span></a>
+                              <a href="{{ route('admin_daftar-magang.logHarian', $item->id) }}"
+                                class="btn btn-info"><span><i class="fas fa-eye"></i></span></a>
                             </div>
                           </td>
                           <td>
                             <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-                              <a href="{{ route('admin_daftar-magang.edit', $item->id) }}"
+                              <a href="{{ route('admin_daftar-magang.edit-diterima', $item->id) }}"
                                 class="btn btn-warning"><span><i class="fas fa-edit"></i></span></a>
                               <form action="{{ route('admin_daftar-magang.destroy', $item->id) }}" method="POST"
                                 class="m-0">

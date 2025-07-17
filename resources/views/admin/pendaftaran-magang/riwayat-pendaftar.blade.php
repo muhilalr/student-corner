@@ -12,7 +12,7 @@
           <div class="col-12">
             <div class="card" style="margin-top: 1rem;">
               <div class="card-header">
-                <h3 class="card-title">Data Pendaftar Magang Diterima</h3>
+                <h3 class="card-title">Riwayat Pendaftar Magang</h3>
               </div>
               <!-- /.card-header -->
 
@@ -104,7 +104,7 @@
                           <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y H:i') }}</td>
                           <td>
                             <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-                              <a href="{{ route('admin_daftar-magang.edit', $item->id) }}"
+                              <a href="{{ route('admin_daftar-magang.editSertifikat', $item->id) }}"
                                 class="btn btn-warning"><span><i class="fas fa-edit"></i></span></a>
                               <form action="{{ route('admin_daftar-magang.destroy', $item->id) }}" method="POST"
                                 class="m-0">

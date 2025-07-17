@@ -27,7 +27,7 @@
     <section class="max-w-3xl py-10 mx-5 md:mx-auto">
       <h1 class="text-2xl md:text-4xl font-bold text-gray-900 mb-5">Posisi yang Dibutuhkan</h1>
       <!-- Grid Cards -->
-      <div class="grid grid-cols-1">
+      <div class="grid grid-cols-1 gap-10">
         @foreach ($info as $item)
           <!-- Card 1 -->
           <div class="bg-white rounded-xl shadow-lg border overflow-hidden border-gray-100">
@@ -56,7 +56,8 @@
                     orang</span></p>
               </div>
               <div class="flex items-center text-gray-600">
-                <p class="text-sm font-semibold">Pelamar : <span class="font-semibold text-gray-800">12 orang</span></p>
+                <p class="text-sm font-semibold">Pelamar : <span
+                    class="font-semibold text-gray-800">{{ $item->pelamar }} orang</span></p>
               </div>
             </div>
             <div class="py-3 mx-4 flex border-t-2 border-gray-200 items-center justify-center">
