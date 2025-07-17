@@ -22,19 +22,40 @@
 
       <!-- Input Section -->
       <div class="bg-white rounded-lg shadow-lg p-6">
-        <h2 class="text-lg font-semibold text-gray-800 mb-4">Set Data</h2>
-
-        <div class="mb-4">
-          <textarea id="dataInput" placeholder="10, 2, 38, 23, 38, 23, 21, 234"
-            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-            rows="3"></textarea>
-          <p class="text-xs text-gray-500 mt-1">Angka dipisahkan dengan koma</p>
+        <div class="flex space-x-2 mb-4">
+          <button id="tabSingle" class="tab-btn bg-blue-900 text-white px-4 py-2 rounded-lg">Data Tunggal</button>
+          <button id="tabGrouped" class="tab-btn bg-gray-200 text-gray-800 px-4 py-2 rounded-lg">Data Kelompok</button>
         </div>
+        <h2 class="text-lg font-semibold text-gray-800 mb-4">Set Data</h2>
+        <div id="singleInputSection" class="mb-4">
+          <div class="mb-4">
+            <textarea id="dataInput" placeholder="10, 2, 38, 23, 38, 23, 21, 234"
+              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              rows="3"></textarea>
+            <p class="text-xs text-gray-500 mt-1">Angka dipisahkan dengan koma</p>
+          </div>
 
-        <button id="calculateBtn"
-          class="gradient-bg text-white px-8 py-2 rounded-lg font-medium hover:opacity-90 transition-opacity">
-          Hitung
-        </button>
+          <button id="calculateBtnSingle"
+            class="bg-primary text-white px-8 py-2 rounded-lg font-semibold hover:bg-[#00295A] transition-opacity">
+            Hitung
+          </button>
+        </div>
+        <div id="groupedInputSection" class="hidden mb-4">
+          <div class="mb-4">
+            <label class="block font-medium text-gray-700 mb-2">Upload Data Berkelompok (Unduh Template : 📥 <a
+                href="{{ asset('template_file_web/Template_Kalkulator.xlsx') }}" download
+                class="text-primary hover:underline">
+                Template_Mean_Median_Modus
+              </a>)</label>
+            <input type="file" id="groupedExcelInput" accept=".xlsx,.xls"
+              class="block w-full text-base text-gray-700 border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500">
+            <p class="text-xs text-gray-500 mt-1">Isi interval dan frekuensi berdasarkan data anda</p>
+          </div>
+          <button id="calculateBtnGrouped"
+            class="bg-primary text-white px-8 py-2 rounded-lg font-semibold hover:bg-[#00295A] transition-opacity">
+            Hitung
+          </button>
+        </div>
 
         {{-- Result Section --}}
         <div class="bg-primary rounded-t-lg p-4 mb-4">
@@ -81,32 +102,53 @@
   </div>
   <x-footer class="fill-[#EEF0F2]" />
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabSingle = document.getElementById('tabSingle');
+      const tabGrouped = document.getElementById('tabGrouped');
+      const singleInputSection = document.getElementById('singleInputSection');
+      const groupedInputSection = document.getElementById('groupedInputSection');
+
+      tabSingle.addEventListener('click', () => {
+        tabSingle.classList.add('bg-blue-900', 'text-white');
+        tabGrouped.classList.remove('bg-blue-900', 'text-white');
+        tabGrouped.classList.add('bg-gray-200', 'text-gray-800');
+        tabSingle.classList.remove('bg-gray-200', 'text-gray-800');
+        singleInputSection.classList.remove('hidden');
+        groupedInputSection.classList.add('hidden');
+      });
+
+      tabGrouped.addEventListener('click', () => {
+        tabGrouped.classList.add('bg-blue-900', 'text-white');
+        tabSingle.classList.remove('bg-blue-900', 'text-white');
+        tabSingle.classList.add('bg-gray-200', 'text-gray-800');
+        tabGrouped.classList.remove('bg-gray-200', 'text-gray-800');
+        singleInputSection.classList.add('hidden');
+        groupedInputSection.classList.remove('hidden');
+      });
+
+      new MeanCalculator();
+    });
+
     class MeanCalculator {
       constructor() {
         this.dataInput = document.getElementById('dataInput');
-        this.calculateBtn = document.getElementById('calculateBtn');
-        this.initializeEventListeners();
+        this.calculateBtnSingle = document.getElementById('calculateBtnSingle');
+        this.calculateBtnGrouped = document.getElementById('calculateBtnGrouped');
+        this.groupedExcelInput = document.getElementById('groupedExcelInput');
+        this.lastGroupedData = null;
 
-        // Set example data
+        this.calculateBtnSingle.addEventListener('click', () => this.calculateSingle());
+        this.groupedExcelInput.addEventListener('change', (e) => this.handleGroupedExcelUpload(e));
+        this.calculateBtnGrouped.addEventListener('click', () => this.calculateGrouped());
+
         this.dataInput.value = '10, 2, 38, 23, 38, 23, 21, 234';
-        this.calculate();
-      }
-
-      initializeEventListeners() {
-        this.calculateBtn.addEventListener('click', () => this.calculate());
-        this.dataInput.addEventListener('input', () => this.calculate());
-        this.dataInput.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            this.calculate();
-          }
-        });
+        this.calculateSingle();
       }
 
       parseData(input) {
-        if (!input.trim()) return [];
-
         return input.split(',')
           .map(item => item.trim())
           .filter(item => item !== '')
@@ -114,130 +156,186 @@
           .filter(num => !isNaN(num));
       }
 
-      calculateMean(data) {
-        if (data.length === 0) return 0;
-        const sum = data.reduce((acc, num) => acc + num, 0);
-        return sum / data.length;
-      }
+      calculateSingle() {
+        const data = this.parseData(this.dataInput.value);
+        if (!data.length) return this.clearDisplay();
 
-      calculateMedian(data) {
-        if (data.length === 0) return 0;
+        const sum = data.reduce((a, b) => a + b, 0);
+        const mean = sum / data.length;
+        const median = this.calculateMedian(data);
+        const mode = this.calculateMode(data);
 
-        const sorted = [...data].sort((a, b) => a - b);
-        const middle = Math.floor(sorted.length / 2);
-
-        if (sorted.length % 2 === 0) {
-          return (sorted[middle - 1] + sorted[middle]) / 2;
-        } else {
-          return sorted[middle];
-        }
-      }
-
-      calculateMode(data) {
-        if (data.length === 0) return '-';
-
-        // Count frequency of each number
-        const frequency = {};
-        data.forEach(num => {
-          frequency[num] = (frequency[num] || 0) + 1;
+        this.updateDisplay({
+          sum,
+          count: data.length,
+          mean,
+          median,
+          mode,
+          max: Math.max(...data),
+          min: Math.min(...data)
         });
-
-        // Find maximum frequency
-        const maxFrequency = Math.max(...Object.values(frequency));
-
-        // If all numbers appear only once, there's no mode
-        if (maxFrequency === 1) {
-          return 'Tidak ada';
-        }
-
-        // Find all numbers with maximum frequency
-        const modes = Object.keys(frequency)
-          .filter(num => frequency[num] === maxFrequency)
-          .map(num => parseFloat(num))
-          .sort((a, b) => a - b);
-
-        // Format the result
-        if (modes.length === 1) {
-          return this.formatNumber(modes[0]);
-        } else {
-          return modes.map(num => this.formatNumber(num)).join(', ');
-        }
       }
 
-      calculateGeometricMean(data) {
-        if (data.length === 0) return 0;
+      handleGroupedExcelUpload(e) {
+        const file = e.target.files[0];
+        if (!file) return;
 
-        // Check for negative numbers or zeros
-        const hasNegativeOrZero = data.some(num => num <= 0);
-        if (hasNegativeOrZero) return 0;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const data = new Uint8Array(event.target.result);
+          const workbook = XLSX.read(data, {
+            type: 'array'
+          });
+          const sheet = workbook.Sheets[workbook.SheetNames[0]];
+          const jsonData = XLSX.utils.sheet_to_json(sheet, {
+            defval: ""
+          });
 
-        const product = data.reduce((acc, num) => acc * num, 1);
-        return Math.pow(product, 1 / data.length);
+          const groupedData = this.parseGroupedData(jsonData);
+          if (groupedData.length === 0) {
+            alert('Data tidak valid!');
+            return;
+          }
+
+          this.lastGroupedData = groupedData; // ✅ Simpan data setelah upload
+          alert('File berhasil diupload. Silakan klik tombol Hitung!');
+        };
+        reader.readAsArrayBuffer(file);
       }
 
-      formatNumber(num) {
-        if (num === 0) return '0';
-        if (Number.isInteger(num)) return num.toString();
-
-        // For very small numbers, use more decimal places
-        if (Math.abs(num) < 0.001) {
-          return num.toFixed(8);
-        }
-
-        // For normal numbers, use appropriate decimal places
-        const decimalPlaces = num.toString().split('.')[1];
-        if (decimalPlaces && decimalPlaces.length > 3) {
-          return num.toFixed(8);
-        }
-
-        return num.toString();
-      }
-
-      updateDisplay(data) {
-        if (data.length === 0) {
-          this.clearDisplay();
+      calculateGrouped() {
+        if (!this.lastGroupedData) {
+          alert('Silakan upload file terlebih dahulu!');
           return;
         }
 
-        const sum = data.reduce((acc, num) => acc + num, 0);
-        const count = data.length;
-        const mean = this.calculateMean(data);
-        const median = this.calculateMedian(data);
-        const mode = this.calculateMode(data);
-        const max = Math.max(...data);
-        const min = Math.min(...data);
+        const groupedData = this.lastGroupedData;
+        const totalFx = groupedData.reduce((acc, item) => acc + (item.midpoint * item.freq), 0);
+        const totalF = groupedData.reduce((acc, item) => acc + item.freq, 0);
+        const meanGrouped = totalF === 0 ? 0 : totalFx / totalF;
 
-        // Update statistics
-        document.getElementById('sum').textContent = this.formatNumber(sum);
-        document.getElementById('count').textContent = count.toString();
-        document.getElementById('mean').textContent = this.formatNumber(mean);
-        document.getElementById('median').textContent = this.formatNumber(median);
-        document.getElementById('mode').textContent = mode;
-        document.getElementById('max').textContent = this.formatNumber(max);
-        document.getElementById('min').textContent = this.formatNumber(min);
-      }
+        const max = Math.max(...groupedData.map(item => item.upper));
+        const min = Math.min(...groupedData.map(item => item.lower));
+        const median = this.calculateGroupedMedian(groupedData, totalF);
+        const mode = this.calculateGroupedMode(groupedData);
 
-      clearDisplay() {
-        const elements = [
-          'sum', 'count', 'mean', 'median', 'mode',
-          'max', 'min'
-        ];
-
-        elements.forEach(id => {
-          document.getElementById(id).textContent = '-';
+        this.updateDisplay({
+          sum: totalFx,
+          count: totalF,
+          mean: meanGrouped,
+          median,
+          mode,
+          max,
+          min
         });
       }
 
-      calculate() {
-        const inputValue = this.dataInput.value;
-        const data = this.parseData(inputValue);
-        this.updateDisplay(data);
+      parseGroupedData(jsonData) {
+        return jsonData.map(item => {
+          const interval = item['Interval'] || item['interval'];
+          const freq = parseInt(item['Frekuensi'] || item['frekuensi']);
+          if (!interval || isNaN(freq)) return null;
+
+          const [lower, upper] = interval.split('-').map(Number);
+          if (isNaN(lower) || isNaN(upper)) return null;
+
+          const midpoint = (lower + upper) / 2;
+          return {
+            lower,
+            upper,
+            midpoint,
+            freq
+          };
+        }).filter(Boolean);
+      }
+
+      calculateGroupedMedian(groupedData, totalF) {
+        let cumulative = 0;
+        const half = totalF / 2;
+        for (let i = 0; i < groupedData.length; i++) {
+          cumulative += groupedData[i].freq;
+          if (cumulative >= half) {
+            const medianClass = groupedData[i];
+            const L = medianClass.lower - 0.5;
+            const f = medianClass.freq;
+            const F = cumulative - medianClass.freq;
+            const c = medianClass.upper - medianClass.lower + 1;
+            return L + ((half - F) / f) * c;
+          }
+        }
+        return 0;
+      }
+
+      calculateGroupedMode(groupedData) {
+        let maxFreq = 0;
+        let index = -1;
+        groupedData.forEach((item, i) => {
+          if (item.freq > maxFreq) {
+            maxFreq = item.freq;
+            index = i;
+          }
+        });
+        if (index === -1) return 0;
+        const L = groupedData[index].lower - 0.5;
+        const f1 = groupedData[index].freq;
+        const f0 = index > 0 ? groupedData[index - 1].freq : 0;
+        const f2 = index < groupedData.length - 1 ? groupedData[index + 1].freq : 0;
+        const c = groupedData[index].upper - groupedData[index].lower + 1;
+        return L + ((f1 - f0) / ((f1 - f0) + (f1 - f2))) * c;
+      }
+
+      calculateMedian(data) {
+        const sorted = [...data].sort((a, b) => a - b);
+        const mid = Math.floor(sorted.length / 2);
+        return sorted.length % 2 === 0 ?
+          (sorted[mid - 1] + sorted[mid]) / 2 :
+          sorted[mid];
+      }
+
+      calculateMode(data) {
+        const freq = {};
+        data.forEach(num => freq[num] = (freq[num] || 0) + 1);
+        const maxFreq = Math.max(...Object.values(freq));
+        if (maxFreq === 1) return 'Tidak ada';
+        return Object.keys(freq).filter(k => freq[k] === maxFreq).join(', ');
+      }
+
+      updateDisplay({
+        sum,
+        count,
+        mean,
+        median,
+        mode,
+        max,
+        min
+      }) {
+        document.getElementById('sum').textContent = this.formatNumber(sum);
+        document.getElementById('count').textContent = count;
+        document.getElementById('mean').textContent = this.formatNumber(mean);
+        document.getElementById('median').textContent = this.formatNumber(median);
+        document.getElementById('mode').textContent = this.formatNumber(mode);
+        document.getElementById('max').textContent = max;
+        document.getElementById('min').textContent = min;
+      }
+
+      clearDisplay() {
+        this.updateDisplay({
+          sum: '-',
+          count: '-',
+          mean: '-',
+          median: '-',
+          mode: '-',
+          max: '-',
+          min: '-'
+        });
+      }
+
+      formatNumber(num) {
+        if (num === '-' || num === undefined) return '-';
+        if (typeof num === 'number') return Number.isInteger(num) ? num : num.toFixed(2);
+        return num;
       }
     }
-
-    // Initialize calculator when DOM is loaded
-    document.addEventListener('DOMContentLoaded', () => {
-      new MeanCalculator();
-    });
   </script>
+
 </x-layout-web>

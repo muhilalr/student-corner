@@ -135,7 +135,7 @@
           const btn = document.createElement('button');
           btn.innerText = i;
           btn.className = 'px-3 py-1 rounded border bg-white text-black';
-          if (i === page) btn.classList.add('bg-[#043277]', 'text-white');
+          if (i === page) btn.classList.add('bg-blue-800', 'text-white');
           btn.addEventListener('click', () => showPage(i));
           pagination.appendChild(btn);
         }
