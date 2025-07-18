@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('uraian_kegiatan');
             $table->enum('status_kehadiran', ['hadir', 'sakit', 'izin']);
             $table->text('catatan')->nullable();
+            $table->enum('status_verifikasi', ['pending', 'disetujui', 'ditolak'])->default('pending');
             $table->timestamps();
             $table->foreign('id_pendaftaran_magang')->references('id')->on('pendaftaran_magangs')->onDelete('cascade');
         });

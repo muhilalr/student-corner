@@ -15,6 +15,7 @@ class LogHarianMagangUser extends Model
         'uraian_kegiatan',
         'status_kehadiran',
         'catatan',
+        'status_verifikasi',
     ];
 
     public function pendaftaran_magang()

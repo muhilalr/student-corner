@@ -46,6 +46,10 @@ Route::prefix('admin')->name('admin_')->group(function () {
       ->name('daftar-magang.riwayatMagang');
     Route::get('/log-harian/{pendaftaran_id}', [PendaftaranMagangController::class, 'logHarian'])
       ->name('daftar-magang.logHarian');
+    Route::post('/log-harian/verifikasi-setuju/{id}', [PendaftaranMagangController::class, 'verifikasiSetuju'])
+      ->name('daftar-magang.verifikasiSetuju');
+    Route::post('/log-harian/verifikasi-tolak/{id}', [PendaftaranMagangController::class, 'verifikasiTolak'])
+      ->name('daftar-magang.verifikasiTolak');
 
 
     Route::get('/pendaftaran-magang/{pendaftaran_magang}/edit', [PendaftaranMagangController::class, 'edit'])

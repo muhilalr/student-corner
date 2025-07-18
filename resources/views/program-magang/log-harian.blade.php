@@ -76,6 +76,9 @@
               <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status Kehadiran
               </th>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Status Verifikasi
+              </th>
               <th class="py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Aksi
               </th>
@@ -110,6 +113,15 @@
                     <span class="bg-red-500 text-white px-2 py-1 font-semibold rounded">Sakit</span>
                   @elseif($log->status_kehadiran == 'izin')
                     <span class="bg-yellow-500 text-white px-2 py-1 font-semibold rounded">Izin</span>
+                  @endif
+                </td>
+                <td class="text-sm text-center">
+                  @if ($log->status_verifikasi == 'disetujui')
+                    <span class="bg-green-500 text-white px-2 py-1 font-semibold rounded">Disetujui</span>
+                  @elseif($log->status_verifikasi == 'ditolak')
+                    <span class="bg-red-500 text-white px-2 py-1 font-semibold rounded">Ditolak</span>
+                  @elseif($log->status_verifikasi == 'pending')
+                    <span class="bg-yellow-500 text-white px-2 py-1 font-semibold rounded">Menungggu</span>
                   @endif
                 </td>
                 <td class="text-sm px-6 font-medium">

@@ -114,8 +114,27 @@ class PendaftaranMagangController extends Controller
     {
         $pendaftaran = PendaftaranMagang::findOrFail($pendaftaran_id);
         $logs = LogHarianMagangUser::with('pendaftaran_magang')
-            ->where('id_pendaftaran_magang', $pendaftaran_id)->paginate(10);
-        return view('admin.pendaftaran-magang.log-harian', compact('logs', 'pendaftaran'));
+            ->where('id_pendaftaran_magang', $pendaftaran_id)
+            ->where('status_verifikasi', 'disetujui')
+            ->paginate(10);
+        $verifikasi = LogHarianMagangUser::with('pendaftaran_magang')
+            ->where('id_pendaftaran_magang', $pendaftaran_id)
+            ->where('status_verifikasi', 'pending')
+            ->get();
+
+        return view('admin.pendaftaran-magang.log-harian', compact('logs', 'pendaftaran', 'verifikasi'));
+    }
+
+    public function verifikasiSetuju($id)
+    {
+        LogHarianMagangUser::where('id', $id)->update(['status_verifikasi' => 'disetujui']);
+        return redirect()->back();
+    }
+
+    public function verifikasiTolak($id)
+    {
+        LogHarianMagangUser::where('id', $id)->update(['status_verifikasi' => 'ditolak']);
+        return redirect()->back();
     }
 
     /**

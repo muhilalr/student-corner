@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\InformasiMagang;
-use App\Models\LogHarianMagangUser;
 use App\Models\PendaftaranMagang;
-use Illuminate\Container\Attributes\Log;
+use App\Models\LogHarianMagangUser;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Container\Attributes\Log;
+use App\Mail\NotifikasiLogHarianMagangUser;
 
 class LogHarianMagangController extends Controller
 {
@@ -42,7 +44,7 @@ class LogHarianMagangController extends Controller
                 $query->where('status_kehadiran', $request->status);
             })
             ->orderBy('tanggal', 'desc')
-            ->paginate(3)
+            ->paginate(10)
             ->withQueryString(); // agar filter tetap saat pindah halaman
 
         return view('program-magang.log-harian', compact('info', 'logs'));
@@ -81,13 +83,18 @@ class LogHarianMagangController extends Controller
             'catatan' => 'nullable',
         ]);
 
-        LogHarianMagangUser::create([
+        $log = LogHarianMagangUser::create([
             'id_pendaftaran_magang' => $request->id_pendaftaran_magang,
             'tanggal' => $request->tanggal,
             'status_kehadiran' => $request->status_kehadiran,
             'uraian_kegiatan' => $request->uraian_kegiatan,
             'catatan' => $request->catatan,
+            'status_verifikasi' => 'pending',
         ]);
+
+        $log->load('pendaftaran_magang');
+
+        Mail::to(env('ADMIN_EMAIL'))->queue(new NotifikasiLogHarianMagangUser($log));
 
         return redirect()->route('daftar-magang.log-harian', ['slug_bidang' => $slug_bidang, 'slug_posisi' => $slug_posisi])
             ->with('success', 'Log harian berhasil ditambahkan.');

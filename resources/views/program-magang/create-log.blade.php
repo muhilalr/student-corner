@@ -23,7 +23,7 @@
             <x-input-label for="tanggal" :value="__('Tanggal')" />
           </div>
           <x-text-input id="tanggal" class="w-full px-4 py-3 rounded-xl bg-white/80" type="date" name="tanggal"
-            required />
+            :value="date('Y-m-d')" readonly required />
           <x-input-error :messages="$errors->get('tanggal')" class="mt-2" />
         </div>
 
