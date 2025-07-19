@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('persyaratan');
             $table->text('benefit');
             $table->text('info_kontak');
+            $table->enum('status', ['aktif', 'nonaktif'])->default('nonaktif');
             $table->string('slug_bidang')->unique();
             $table->string('slug_posisi')->unique();
             $table->timestamps();

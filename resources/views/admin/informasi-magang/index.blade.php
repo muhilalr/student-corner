@@ -39,6 +39,7 @@
                         <th>Benefit</th>
                         <th>Info Kontak</th>
                         <th>Ditambahkan Tanggal</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
@@ -53,6 +54,29 @@
                           <td>{!! Str::limit($item->benefit, 50, '...') !!}</td>
                           <td>{!! Str::limit($item->info_kontak, 50, '...') !!}</td>
                           <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
+                          <td>
+                            <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
+                              @if ($item->status === 'aktif')
+                                <!-- Jika sedang aktif, tampilkan tombol Nonaktifkan -->
+                                <form action="{{ route('admin_informasi-magang.statusNonaktif', $item->id) }}"
+                                  method="POST">
+                                  @csrf
+                                  <button type="submit" class="btn btn-secondary" title="Nonaktifkan Leaderboard">
+                                    <i class="fas fa-times"></i> Nonaktifkan
+                                  </button>
+                                </form>
+                              @else
+                                <!-- Jika tidak aktif, tampilkan tombol Aktifkan -->
+                                <form action="{{ route('admin_informasi-magang.statusAktif', $item->id) }}"
+                                  method="POST">
+                                  @csrf
+                                  <button type="submit" class="btn btn-primary" title="Aktifkan">
+                                    <i class="fas fa-check"></i> Aktifkan
+                                  </button>
+                                </form>
+                              @endif
+                            </div>
+                          </td>
                           <td>
                             <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
                               <a href="{{ route('admin_informasi-magang.edit', $item->id) }}"

@@ -24,7 +24,9 @@ class InformasiMagangController extends Controller
     {
         $info = InformasiMagang::withCount(['pendaftaran_magangs as pelamar' => function ($query) {
             $query->where('status', 'diproses');
-        }])->get();
+        }])
+            ->where('status', 'aktif')
+            ->get();
         return view('program-magang.index', compact('info'));
     }
 
@@ -32,6 +34,18 @@ class InformasiMagangController extends Controller
     {
         $info = InformasiMagang::where('slug_bidang', $slug_bidang)->where('slug_posisi', $slug_posisi)->first();
         return view('program-magang.detail-informasi', compact('info'));
+    }
+
+    public function statusAktif($id)
+    {
+        InformasiMagang::where('id', $id)->update(['status' => 'aktif']);
+        return redirect()->route('admin_informasi-magang.index')->with('success', 'Status berhasil diubah');
+    }
+
+    public function statusNonaktif($id)
+    {
+        InformasiMagang::where('id', $id)->update(['status' => 'nonaktif']);
+        return redirect()->route('admin_informasi-magang.index')->with('success', 'Status berhasil diubah');
     }
 
     /**

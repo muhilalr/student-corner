@@ -35,6 +35,10 @@ Route::prefix('admin')->name('admin_')->group(function () {
     Route::resource('detail-subjudul-artikel', DetailSubJudulArtikelController::class);
     Route::resource('video-pembelajaran', VideoPembelajaranController::class);
     Route::resource('infografis', InfografisController::class);
+    Route::post('/informasi-magang/status-aktif/{id}', [InformasiMagangController::class, 'statusAktif'])
+      ->name('informasi-magang.statusAktif');
+    Route::post('/informasi-magang/status-nonaktif/{id}', [InformasiMagangController::class, 'statusNonaktif'])
+      ->name('informasi-magang.statusNonaktif');
     Route::resource('informasi-magang', InformasiMagangController::class);
     Route::get('/pendaftaran-magang', [PendaftaranMagangController::class, 'index_admin'])
       ->name('daftar-magang.index-admin');
