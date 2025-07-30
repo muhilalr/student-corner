@@ -68,6 +68,38 @@
         </p>
       </div>
     </a>
+    <a href="{{ route('visualisasi.linechart') }}" class="block">
+      <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
+        <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-sky-400">
+          <div class="text-white">
+            <svg class="mx-auto h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 17l6-6 4 4 8-8" />
+            </svg>
+          </div>
+        </div>
+        <h3 class="mb-2 text-lg font-semibold text-gray-800">Line Chart</h3>
+        <p class="text-justify text-sm text-gray-500">
+          Buat pie chart untuk memvisualisasikan komposisi data Anda, menunjukkan proporsi masing-masing kategori dari
+          total.
+        </p>
+      </div>
+    </a>
+    <a href="{{ route('visualisasi.boxplot') }}" class="block">
+      <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
+        <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-sky-400">
+          <div class="text-white">
+            <svg class="mx-auto h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 17l6-6 4 4 8-8" />
+            </svg>
+          </div>
+        </div>
+        <h3 class="mb-2 text-lg font-semibold text-gray-800">Box Plot</h3>
+        <p class="text-justify text-sm text-gray-500">
+          Buat pie chart untuk memvisualisasikan komposisi data Anda, menunjukkan proporsi masing-masing kategori dari
+          total.
+        </p>
+      </div>
+    </a>
   </section>
   <x-footer class="fill-[#EEF0F2]" />
 </x-layout-web>

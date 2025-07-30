@@ -25,7 +25,9 @@ class KuisDanTantanganController extends Controller
     {
         $kuis = KuisReguler::withCount('soal_reguler')
             ->with(['hasil_kuis_reguler' => function ($q) {
-                $q->where('id_user', Auth::user()->id);
+                if (Auth::check()) {
+                    $q->where('id_user', Auth::user()->id);
+                }
             }])->get();
 
         // Ambil periode leaderboard yang aktif

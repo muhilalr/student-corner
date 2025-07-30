@@ -14,9 +14,11 @@ use App\Http\Controllers\VisualisasiDataController;
 use App\Http\Controllers\KuisDanTantanganController;
 use App\Http\Controllers\Admin\InformasiMagangController;
 use App\Http\Controllers\Admin\PendaftaranMagangController;
+use App\Http\Controllers\VisualisasiData\BoxPlotController;
 use App\Http\Controllers\VisualisasiData\ScatterController;
 use App\Http\Controllers\VisualisasiData\PieChartController;
 use App\Http\Controllers\VisualisasiData\HistogramController;
+use App\Http\Controllers\VisualisasiData\LineChartController;
 use App\Http\Controllers\SimulasiStatistik\SimulasiSlovinController;
 use App\Http\Controllers\SimulasiStatistik\SamplingSimulationController;
 
@@ -46,6 +48,12 @@ Route::prefix('visualisasi-data')->name('visualisasi.')->group(function () {
     Route::get('/piechart', [PieChartController::class, 'index'])->name('piechart');
     Route::post('/piechart/upload', [PieChartController::class, 'uploadData'])->name('piechart.upload');
     Route::post('/piechart/generate', [PieChartController::class, 'generatePieChart'])->name('piechart.generate');
+    Route::get('/linechart', [LineChartController::class, 'linechart'])->name('linechart');
+    Route::post('/linechart/upload', [LineChartController::class, 'uploadData'])->name('linechart.upload');
+    Route::post('/linechart/generate', [LineChartController::class, 'generate'])->name('linechart.generate');
+    Route::get('/boxplot', [BoxPlotController::class, 'boxplot'])->name('boxplot');
+    Route::post('/boxplot/upload', [BoxPlotController::class, 'uploadData'])->name('boxplot.upload');
+    Route::post('/boxplot/generate', [BoxPlotController::class, 'generate'])->name('boxplot.generate');
 });
 
 Route::get('/kuis-dan-tantangan-bulanan', [KuisDanTantanganController::class, 'index'])->name('kuis-tantangan.index');
