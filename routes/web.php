@@ -14,6 +14,7 @@ use App\Http\Controllers\VisualisasiDataController;
 use App\Http\Controllers\KuisDanTantanganController;
 use App\Http\Controllers\Admin\InformasiMagangController;
 use App\Http\Controllers\Admin\PendaftaranMagangController;
+use App\Http\Controllers\SimulasiStatistik\DistribusiNormalController;
 use App\Http\Controllers\VisualisasiData\BoxPlotController;
 use App\Http\Controllers\VisualisasiData\ScatterController;
 use App\Http\Controllers\VisualisasiData\PieChartController;
@@ -112,6 +113,9 @@ Route::prefix('simulasi-statistik')->name('simulasi.')->group(function () {
     Route::get('/simulasi-ukuran-sampel-slovin', [SimulasiSlovinController::class, 'index'])->name('slovin');
     Route::post('/simulasi-ukuran-sampel-slovin', [SimulasiSlovinController::class, 'hitung'])->name('slovin.hitung');
 });
+
+Route::get('/normal-distribution', [DistribusiNormalController::class, 'index'])->name('normal.index');
+Route::post('/normal-distribution', [DistribusiNormalController::class, 'calculate'])->name('normal.calculate');
 
 
 require __DIR__ . '/auth.php';

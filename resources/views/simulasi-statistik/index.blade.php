@@ -74,6 +74,41 @@
         </p>
       </div>
     </a>
+    <a href="{{ route('normal.index') }}" class="block">
+      <div class="rounded-lg bg-white p-4 sm:p-6 shadow-md transition-all duration-300 hover:shadow-lg mb-6 sm:mb-0">
+        <div class="mb-4 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg bg-green-400">
+          <svg width="30" height="30" viewBox="0 0 100 100" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <!-- Lingkaran populasi -->
+            <circle cx="50" cy="50" r="45" stroke="white" stroke-width="4" fill="none" />
+
+            <!-- Sampel (representasi titik-titik) -->
+            <circle cx="30" cy="40" r="4" fill="white" />
+            <circle cx="40" cy="55" r="4" fill="white" />
+            <circle cx="50" cy="35" r="4" fill="white" />
+            <circle cx="60" cy="60" r="4" fill="white" />
+            <circle cx="70" cy="45" r="4" fill="white" />
+
+            <!-- Garis panah dari populasi ke sampel -->
+            <line x1="80" y1="80" x2="95" y2="95" stroke="white" stroke-width="3"
+              marker-end="url(#arrowhead)" />
+
+            <!-- Panah marker -->
+            <defs>
+              <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="0" refY="3"
+                orient="auto">
+                <polygon points="0 0, 6 3, 0 6" fill="white" />
+              </marker>
+            </defs>
+          </svg>
+
+        </div>
+        <h3 class="mb-2 text-lg font-semibold text-gray-800">Distribusi Normal</h3>
+        <p class="text-justify text-sm text-gray-500">
+          Jalankan simulasi pengambilan sampel acak untuk memahami bagaimana sampel merepresentasikan populasi dan
+          pengaruhnya terhadap analisis data.
+        </p>
+      </div>
+    </a>
   </section>
   <x-footer class="fill-[#EEF0F2]" />
 </x-layout-web>
