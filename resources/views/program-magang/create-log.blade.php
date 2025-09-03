@@ -7,9 +7,7 @@
         <p class="text-sm md:text-base font-semibold text-gray-600">Tambah aktivitas harian selama masa magang</p>
       </div>
     </div>
-    <form
-      action="{{ route('log-harian.store', ['slug_bidang' => $info->slug_bidang, 'slug_posisi' => $info->slug_posisi]) }}"
-      method="POST">
+    <form action="{{ route('log-harian.store') }}" method="POST">
       @csrf
       <input type="hidden" name="id_pendaftaran_magang" value="{{ $pendaftaran->id }}">
       <div class="grid md:grid-cols-2 gap-6 px-6 mb-6">

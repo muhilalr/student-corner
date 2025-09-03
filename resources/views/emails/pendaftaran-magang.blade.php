@@ -213,14 +213,6 @@
             {{ $pendaftaran->nama }}</span>
         </div>
         <div class="detail-item">
-          <span class="detail-label">Nama Bidang :&nbsp;</span> <span class="detail-value">
-            {{ $pendaftaran->informasi_magang->nama_bidang }}</span>
-        </div>
-        <div class="detail-item">
-          <span class="detail-label">Posisi :&nbsp;</span> <span class="detail-value">
-            {{ $pendaftaran->informasi_magang->posisi }}</span>
-        </div>
-        <div class="detail-item">
           <span class="detail-label">Email :&nbsp;</span> <span class="detail-value"> {{ $pendaftaran->email }}</span>
         </div>
         <div class="detail-item">

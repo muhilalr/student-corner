@@ -161,18 +161,6 @@
                   <p>Topik Kuis Tantangan Bulanan</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{ route('admin_soal-kuis-tantangan-bulanan.index') }}"
-                  class="nav-link {{ Route::is('admin_soal-kuis-tantangan-bulanan.index') ? 'active' : '' }}">
-                  <p>Soal Kuis Tantangan Bulanan</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('admin_opsi-pilgan-tantangan-bulanan.index') }}"
-                  class="nav-link {{ Route::is('admin_opsi-pilgan-tantangan-bulanan.index') ? 'active' : '' }}">
-                  <p>Opsi Soal Pilihan Ganda</p>
-                </a>
-              </li>
             </ul>
           </li>
           <li class="nav-item">
@@ -270,19 +258,7 @@
               <li class="nav-item">
                 <a href="{{ route('admin_kuis-tantangan-bulanan.index') }}"
                   class="nav-link {{ Route::is('admin_kuis-tantangan-bulanan.index') ? 'active' : '' }}">
-                  <p>Topik Kuis Reguler</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('admin_soal-kuis-tantangan-bulanan.index') }}"
-                  class="nav-link {{ Route::is('admin_soal-kuis-tantangan-bulanan.index') ? 'active' : '' }}">
-                  <p>Soal Kuis Tantangan Bulanan</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('admin_opsi-pilgan-tantangan-bulanan.index') }}"
-                  class="nav-link {{ Route::is('admin_opsi-pilgan-tantangan-bulanan.index') ? 'active' : '' }}">
-                  <p>Opsi Soal Pilihan Ganda</p>
+                  <p>Topik Kuis Tantangan Bulanan</p>
                 </a>
               </li>
             </ul>

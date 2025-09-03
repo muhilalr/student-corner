@@ -22,71 +22,19 @@ class InformasiMagangController extends Controller
 
     public function indexUser()
     {
-        $info = InformasiMagang::withCount(['pendaftaran_magangs as pelamar' => function ($query) {
-            $query->where('status', 'diproses');
-        }])
-            ->where('status', 'aktif')
-            ->get();
+        $info = InformasiMagang::sole();
         return view('program-magang.index', compact('info'));
-    }
-
-    public function detail($slug_bidang, $slug_posisi)
-    {
-        $info = InformasiMagang::where('slug_bidang', $slug_bidang)->where('slug_posisi', $slug_posisi)->first();
-        return view('program-magang.detail-informasi', compact('info'));
-    }
-
-    public function statusAktif($id)
-    {
-        InformasiMagang::where('id', $id)->update(['status' => 'aktif']);
-        return redirect()->route('admin_informasi-magang.index')->with('success', 'Status berhasil diubah');
-    }
-
-    public function statusNonaktif($id)
-    {
-        InformasiMagang::where('id', $id)->update(['status' => 'nonaktif']);
-        return redirect()->route('admin_informasi-magang.index')->with('success', 'Status berhasil diubah');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return view('admin.informasi-magang.create');
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nama_bidang' => 'required',
-            'posisi' => 'required',
-            'kebutuhan_orang' => 'required|integer',
-            'deskripsi' => 'required',
-            'persyaratan' => 'required',
-            'benefit' => 'required',
-            'info_kontak' => 'required',
-        ]);
-
-        $slug_bidang = Str::slug($request->nama_bidang);
-        $slug_posisi = Str::slug($request->posisi);
-
-        InformasiMagang::create([
-            'nama_bidang' => $request->nama_bidang,
-            'posisi' => $request->posisi,
-            'kebutuhan_orang' => $request->kebutuhan_orang,
-            'deskripsi' => $request->deskripsi,
-            'persyaratan' => $request->persyaratan,
-            'benefit' => $request->benefit,
-            'info_kontak' => $request->info_kontak,
-            'slug_bidang' => $slug_bidang,
-            'slug_posisi' => $slug_posisi
-        ]);
-        return redirect()->route('admin_informasi-magang.index')->with('success', 'Data berhasil ditambahkan');
-    }
+    public function store(Request $request) {}
 
     /**
      * Display the specified resource.
@@ -107,28 +55,17 @@ class InformasiMagangController extends Controller
     public function update(Request $request, InformasiMagang $informasi_magang)
     {
         $request->validate([
-            'nama_bidang' => 'required',
-            'posisi' => 'required',
-            'kebutuhan_orang' => 'required|integer',
             'deskripsi' => 'required',
             'persyaratan' => 'required',
             'benefit' => 'required',
             'info_kontak' => 'required',
         ]);
 
-        $slug_bidang = Str::slug($request->nama_bidang);
-        $slug_posisi = Str::slug($request->posisi);
-
         $informasi_magang->update([
-            'nama_bidang' => $request->nama_bidang,
-            'posisi' => $request->posisi,
-            'kebutuhan_orang' => $request->kebutuhan_orang,
             'deskripsi' => $request->deskripsi,
             'persyaratan' => $request->persyaratan,
             'benefit' => $request->benefit,
             'info_kontak' => $request->info_kontak,
-            'slug_bidang' => $slug_bidang,
-            'slug_posisi' => $slug_posisi
         ]);
         return redirect()->route('admin_informasi-magang.index')->with('success', 'Data berhasil diubah');
     }
@@ -136,9 +73,5 @@ class InformasiMagangController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(InformasiMagang $informasi_magang)
-    {
-        $informasi_magang->delete();
-        return redirect()->route('admin_informasi-magang.index')->with('success', 'Data berhasil dihapus');
-    }
+    public function destroy(InformasiMagang $informasi_magang) {}
 }

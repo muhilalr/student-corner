@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('pendaftaran_magangs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('id_informasi_magang');
             $table->string('nama');
             $table->string('email');
             $table->string('no_hp');
@@ -30,7 +29,6 @@ return new class extends Migration
             $table->enum('status', ['diproses', 'diterima', 'ditolak', 'selesai'])->default('diproses');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('id_informasi_magang')->references('id')->on('informasi_magangs')->onDelete('cascade');
         });
     }
 

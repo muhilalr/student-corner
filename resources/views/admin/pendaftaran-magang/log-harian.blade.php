@@ -36,7 +36,13 @@
                           <tr>
                             <td>{{ \Carbon\Carbon::parse($log->tanggal)->format('d-m-Y') }}</td>
                             <td>{!! $log->uraian_kegiatan !!}</td>
-                            <td>{!! $log->catatan !!}</td>
+                            <td>
+                              @if ($log->catatan)
+                                {!! $log->catatan !!}
+                              @else
+                                -
+                              @endif
+                            </td>
                             <td class="text-center">
                               @if ($log->status_kehadiran == 'hadir')
                                 <span class="badge badge-success">Hadir</span>

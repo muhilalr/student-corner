@@ -167,19 +167,20 @@
 
           @if ($pendaftaran->status === 'diterima')
             <div class="bg-primary rounded-2xl p-6 border border-primary">
+              <div class="flex items-center mb-6">
+                <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mr-3">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white">Kegiatan Magang</h3>
+              </div>
+
+              <!-- Laporan Magang -->
               <form action="{{ route('daftar-magang.upload-laporan', $pendaftaran->id) }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
-                <div class="flex items-center mb-6">
-                  <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center mr-3">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                  </div>
-                  <h3 class="text-xl font-bold text-white">Kegiatan Magang</h3>
-                </div>
-                <!-- Laporan Magang -->
                 <div class="mb-4">
                   <div class="flex mb-2">
                     <svg class="w-4 h-4 mr-2" fill="white" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,27 +198,31 @@
                   @php
                     $namaFile = Str::after(basename($pendaftaran->laporan_magang), Auth::user()->slug . '.');
                   @endphp
-                  <a href="{{ Storage::url($pendaftaran->laporan_magang) }}">
-                    <button type="button"
-                      class="bg-white/20 w-full mb-4 text-white text-xs md:text-base font-semibold py-3 px-4 rounded-xl hover:bg-white/10 flex items-center justify-start">
-                      {{ $namaFile }}
+                  <div class="flex gap-4">
+                    <a href="{{ Storage::url($pendaftaran->laporan_magang) }}" target="_blank" class="w-full">
+                      <button type="button"
+                        class="bg-white/20 w-full mb-4 text-white text-xs md:text-base font-semibold py-3 px-4 rounded-xl hover:bg-white/10 flex items-center justify-start">
+                        {{ $namaFile }}
+                      </button>
+                    </a>
+
+                    <button type="button" data-url="{{ route('daftar-magang.hapus-laporan', $pendaftaran->id) }}"
+                      onclick="openDeleteModal(this)"
+                      class="bg-white/20 text-white mb-4 text-xs md:text-base font-semibold py-3 px-4 rounded-xl hover:bg-white/10 flex items-center justify-center">
+                      Hapus
                     </button>
-                  </a>
+
+                  </div>
                 @endif
                 <div class="flex justify-center mb-4">
                   <button type="submit"
                     class="bg-white/20 text-white text-xs md:text-base font-semibold py-3 px-8 rounded-xl hover:bg-white/10 flex items-center justify-center">
-                    @if ($pendaftaran->laporan_magang)
-                      Update
-                    @else
-                      Upload
-                    @endif
+                    {{ $pendaftaran->laporan_magang ? 'Update' : 'Upload' }}
                   </button>
                 </div>
               </form>
               <div class="flex justify-center">
-                <a
-                  href="{{ route('daftar-magang.log-harian', ['slug_bidang' => $pendaftaran->informasi_magang->slug_bidang, 'slug_posisi' => $pendaftaran->informasi_magang->slug_posisi]) }}">
+                <a href="{{ route('daftar-magang.log-harian') }}">
                   <button
                     class="bg-white/20 text-white text-xs md:text-base font-semibold py-3 px-8 rounded-xl hover:bg-white/10 flex items-center justify-center">Log
                     Harian Magang</button>
@@ -251,6 +256,59 @@
             </div>
           @endif
         </div>
+        <!-- Modal Konfirmasi Hapus Akun -->
+        <div id="deleteConfirmationModal"
+          class="hidden fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75">
+          <div class="bg-white rounded-xl p-6 shadow-2xl w-full max-w-md mx-4 transform transition-all">
+            <!-- Header Modal -->
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z">
+                  </path>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-xl font-bold text-gray-900">Konfirmasi Hapus Laporan Magang</h2>
+              </div>
+            </div>
+
+            <!-- Konten Modal -->
+            <div class="mb-6">
+              <p class="text-gray-700 leading-relaxed">
+                Apakah Anda yakin ingin menghapus laporan magang ini?
+              </p>
+              <div class="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <p class="text-sm text-red-800 font-medium">
+                  ⚠️ Peringatan: Tindakan ini tidak dapat dibatalkan!
+                </p>
+              </div>
+            </div>
+
+            <!-- Tombol Aksi -->
+            <div class="flex flex-col sm:flex-row gap-3">
+              <button id="cancelButton" type="button"
+                class="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium rounded-lg transition-colors duration-200">
+                Batal
+              </button>
+              <form id="deleteForm" method="POST"
+                action="{{ route('daftar-magang.hapus-laporan', $pendaftaran->id) }}" class="flex-1">
+                @csrf
+                @method('DELETE')
+                <button type="submit"
+                  class="w-full px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                    </path>
+                  </svg>
+                  Ya, Hapus
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       @else
         <!-- Form Header -->
         <div class="bg-primary p-8 text-white">
@@ -271,7 +329,6 @@
         <form action="{{ route('daftar-magang.store') }}" method="POST" enctype="multipart/form-data"
           class="space-y-8">
           @csrf
-          <x-text-input id="id_informasi_magang" type="hidden" name="id_informasi_magang" :value="$info->id" />
           <!-- Personal Information Section -->
           <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-100">
             <div class="flex items-center mb-6">
@@ -484,4 +541,50 @@
       });
     </script>
   @endunless
+
+  <script>
+    function openDeleteModal(button) {
+      const modal = document.getElementById('deleteConfirmationModal');
+      const deleteForm = document.getElementById('deleteForm');
+
+      // Ambil URL dari data-url tombol
+      const deleteUrl = button.getAttribute('data-url');
+      deleteForm.setAttribute('action', deleteUrl);
+
+      // Tampilkan modal dengan animasi
+      modal.classList.remove('hidden');
+
+      // Tambahkan event listener untuk menutup modal dengan ESC
+      document.addEventListener('keydown', handleEscapeKey);
+    }
+
+    function closeDeleteModal() {
+      const modal = document.getElementById('deleteConfirmationModal');
+      modal.classList.add('hidden');
+
+      // Hapus event listener ESC
+      document.removeEventListener('keydown', handleEscapeKey);
+    }
+
+    function handleEscapeKey(event) {
+      if (event.key === 'Escape') {
+        closeDeleteModal();
+      }
+    }
+
+    // Event listener untuk tombol batal
+    document.getElementById('cancelButton').addEventListener('click', closeDeleteModal);
+
+    // Event listener untuk menutup modal ketika klik di luar modal
+    document.getElementById('deleteConfirmationModal').addEventListener('click', function(event) {
+      if (event.target === this) {
+        closeDeleteModal();
+      }
+    });
+
+    // Mencegah modal tertutup ketika klik di dalam konten modal
+    document.querySelector('#deleteConfirmationModal > div').addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+  </script>
 </x-layout-web>

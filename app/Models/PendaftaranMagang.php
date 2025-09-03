@@ -12,7 +12,6 @@ class PendaftaranMagang extends Model
 
     protected $fillable = [
         'user_id',
-        'id_informasi_magang',
         'nama',
         'email',
         'no_hp',
@@ -37,11 +36,6 @@ class PendaftaranMagang extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function informasi_magang()
-    {
-        return $this->belongsTo(InformasiMagang::class, 'id_informasi_magang');
     }
 
     public function log_harian_magang()

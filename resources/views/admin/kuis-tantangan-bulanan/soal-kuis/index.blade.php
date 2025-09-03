@@ -12,62 +12,75 @@
           <div class="col-12">
             <div class="card" style="margin-top: 1rem;">
               <div class="card-header">
-                <h3 class="card-title">Data Soal Kuis Tantangan Bulanan</h3>
+                <h3 class="card-title">Data Soal {{ $kuis_tantangan_bulanan->judul }}
+                  ({{ $kuis_tantangan_bulanan->deskripsi }})</h3>
               </div>
               <!-- /.card-header -->
 
               <div class="card-body">
                 <div class="mb-3 d-flex justify-content-between">
-                  <form action="{{ route('admin_soal-kuis-tantangan-bulanan.index') }}" method="GET"
-                    class="form-inline">
+                  <form action="{{ route('admin_soal-kuis-tantangan-bulanan.index', $kuis_tantangan_bulanan->id) }}"
+                    method="GET" class="form-inline">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control mr-2"
                       placeholder="Cari soal...">
                     <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
                   </form>
-                  <a href="{{ route('admin_soal-kuis-tantangan-bulanan.create') }}" class="btn btn-primary">
+                  <a href="{{ route('admin_soal-kuis-tantangan-bulanan.create', $kuis_tantangan_bulanan->id) }}"
+                    class="btn btn-primary">
                     <span><i class="fas fa-plus mr-2"></i></span>Tambah Data
                   </a>
                 </div>
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead class="text-center">
-                    <tr>
-                      <th>Judul Tantangan</th>
-                      <th>Deskripsi</th>
-                      <th>File Soal</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($soal as $item)
+                <div class="table-responsive">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead class="text-center">
                       <tr>
-                        <td>{{ $item->kuis_tantangan_bulanan->judul }}</td>
-                        <td>{{ $item->kuis_tantangan_bulanan->deskripsi }}</td>
-                        <td>
-                          <a href="{{ asset('storage/file_soal_kuis_tantangan_bulanan/' . $item->file_soal) }}"
-                            class="btn btn-sm btn-success" download>
-                            {{ $item->file_soal }}
-                          </a>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-                            <a href="{{ route('admin_soal-kuis-tantangan-bulanan.edit-batch', ['batchId' => $item->upload_batch_id]) }}"
-                              class="btn btn-warning"><span><i class="fas fa-edit"></i></span></a>
-                            <form
-                              action="{{ route('admin_soal-kuis-tantangan-bulanan.destroy-batch', ['batchId' => $item->upload_batch_id]) }}"
-                              method="POST" class="m-0">
-                              @csrf
-                              @method('DELETE')
-                              <button type="submit" class="btn btn-danger"
-                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                <span><i class="fas fa-trash"></i></span>
-                              </button>
-                            </form>
-                          </div>
-                        </td>
+                        <th>Gambar</th>
+                        <th>Soal</th>
+                        <th>Tipe Soal</th>
+                        <th>Jawaban</th>
+                        <th>Opsi A</th>
+                        <th>Opsi B</th>
+                        <th>Opsi C</th>
+                        <th>Opsi D</th>
+                        <th>Aksi</th>
                       </tr>
-                    @endforeach
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody class="text-center">
+                      @foreach ($soal as $item)
+                        <tr>
+                          <td><img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar Subjek"
+                              style="max-width: 100px; max-height: 100px;"></td>
+                          <td>{!! $item->soal !!}</td>
+                          <td>{{ $item->tipe_soal }}</td>
+                          <td>{{ $item->jawaban }}</td>
+                          {{-- Opsi A --}}
+                          <td>{{ optional($item->opsi->firstWhere('label', 'A'))->teks_opsi ?? '-' }}</td>
+                          {{-- Opsi B --}}
+                          <td>{{ optional($item->opsi->firstWhere('label', 'B'))->teks_opsi ?? '-' }}</td>
+                          {{-- Opsi C --}}
+                          <td>{{ optional($item->opsi->firstWhere('label', 'C'))->teks_opsi ?? '-' }}</td>
+                          {{-- Opsi D --}}
+                          <td>{{ optional($item->opsi->firstWhere('label', 'D'))->teks_opsi ?? '-' }}</td>
+                          <td>
+                            <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
+                              <a href="{{ route('admin_soal-kuis-tantangan-bulanan.edit', $item->id) }}"
+                                class="btn btn-warning"><span><i class="fas fa-edit"></i></span></a>
+                              <form action="{{ route('admin_soal-kuis-tantangan-bulanan.destroy', $item->id) }}"
+                                method="POST" class="m-0">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger"
+                                  onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                  <span><i class="fas fa-trash"></i></span>
+                                </button>
+                              </form>
+                            </div>
+                          </td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
                 {{ $soal->links() }}
               </div>
               <!-- /.card-body -->

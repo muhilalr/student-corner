@@ -16,21 +16,12 @@ class LogHarianMagangController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, $slug_bidang, $slug_posisi)
+    public function index(Request $request)
     {
         $user = Auth::user();
 
-        $info = InformasiMagang::where('slug_bidang', $slug_bidang)
-            ->where('slug_posisi', $slug_posisi)
-            ->firstOrFail();
-
-        $pendaftaran = PendaftaranMagang::with('informasi_magang')
-            ->where('user_id', $user->id)
+        $pendaftaran = PendaftaranMagang::where('user_id', $user->id)
             ->where('status', 'diterima')
-            ->whereHas('informasi_magang', function ($query) use ($slug_bidang, $slug_posisi) {
-                $query->where('slug_bidang', $slug_bidang)
-                    ->where('slug_posisi', $slug_posisi);
-            })
             ->firstOrFail();
 
         $logs = LogHarianMagangUser::where('id_pendaftaran_magang', $pendaftaran->id)
@@ -47,33 +38,28 @@ class LogHarianMagangController extends Controller
             ->paginate(10)
             ->withQueryString(); // agar filter tetap saat pindah halaman
 
-        return view('program-magang.log-harian', compact('info', 'logs'));
+        return view('program-magang.log-harian', compact('logs'));
     }
 
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create($slug_bidang, $slug_posisi)
+    public function create()
     {
         $user = Auth::user();
-        $info = InformasiMagang::where('slug_bidang', $slug_bidang)->where('slug_posisi', $slug_posisi)->first();
-        $pendaftaran = PendaftaranMagang::with('informasi_magang')
-            ->where('user_id', $user->id)
+
+        $pendaftaran = PendaftaranMagang::where('user_id', $user->id)
             ->where('status', 'diterima')
-            ->whereHas('informasi_magang', function ($query) use ($slug_bidang, $slug_posisi) {
-                $query->where('slug_bidang', $slug_bidang)
-                    ->where('slug_posisi', $slug_posisi);
-            })
             ->first();
 
-        return view('program-magang.create-log', compact('pendaftaran', 'info'));
+        return view('program-magang.create-log', compact('pendaftaran'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $slug_bidang, $slug_posisi)
+    public function store(Request $request)
     {
         $request->validate([
             'id_pendaftaran_magang' => 'required|exists:pendaftaran_magangs,id',
@@ -96,7 +82,7 @@ class LogHarianMagangController extends Controller
 
         Mail::to(env('ADMIN_EMAIL'))->queue(new NotifikasiLogHarianMagangUser($log));
 
-        return redirect()->route('daftar-magang.log-harian', ['slug_bidang' => $slug_bidang, 'slug_posisi' => $slug_posisi])
+        return redirect()->route('daftar-magang.log-harian')
             ->with('success', 'Log harian berhasil ditambahkan.');
     }
 
@@ -111,10 +97,9 @@ class LogHarianMagangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($slug_bidang, $slug_posisi, $id)
+    public function edit($id)
     {
         $user = Auth::user();
-        $info = InformasiMagang::where('slug_bidang', $slug_bidang)->where('slug_posisi', $slug_posisi)->first();
         $log = LogHarianMagangUser::with('pendaftaran_magang')
             ->where('id', $id)
             ->whereHas('pendaftaran_magang', function ($query) use ($user) {
@@ -124,13 +109,13 @@ class LogHarianMagangController extends Controller
         if (!$log) {
             abort(404);
         }
-        return view('program-magang.edit-log', compact('log', 'info'));
+        return view('program-magang.edit-log', compact('log'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $slug_bidang, $slug_posisi, $id)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'id_pendaftaran_magang' => 'required|exists:pendaftaran_magangs,id',
@@ -149,17 +134,17 @@ class LogHarianMagangController extends Controller
             'catatan' => $request->catatan,
         ]);
 
-        return redirect()->route('daftar-magang.log-harian', ['slug_bidang' => $slug_bidang, 'slug_posisi' => $slug_posisi])
+        return redirect()->route('daftar-magang.log-harian')
             ->with('success', 'Log harian berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($slug_bidang, $slug_posisi, $id)
+    public function destroy($id)
     {
         LogHarianMagangUser::findOrFail($id)->delete();
-        return redirect()->route('daftar-magang.log-harian', ['slug_bidang' => $slug_bidang, 'slug_posisi' => $slug_posisi])
+        return redirect()->route('daftar-magang.log-harian')
             ->with('success', 'Log harian berhasil dihapus.');
     }
 }

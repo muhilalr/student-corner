@@ -23,36 +23,24 @@ class PendaftaranMagangController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($slug_bidang, $slug_posisi)
+    public function index()
     {
         $user = Auth::user();
 
-        $info = InformasiMagang::where('slug_bidang', $slug_bidang)->where('slug_posisi', $slug_posisi)->first();
-
         // Cek apakah user sudah pernah mendaftar dan statusnya belum selesai
-        $pendaftaran = PendaftaranMagang::with('informasi_magang')
-            ->where('user_id', $user->id)
+        $pendaftaran = PendaftaranMagang::where('user_id', $user->id)
             ->where('status', '!=', 'selesai')
-            ->whereHas('informasi_magang', function ($query) use ($slug_bidang, $slug_posisi) {
-                $query->where('slug_bidang', $slug_bidang)
-                    ->where('slug_posisi', $slug_posisi);
-            })
             ->first();
 
-        return view('program-magang.daftar-magang', compact('pendaftaran', 'info'));
+        return view('program-magang.daftar-magang', compact('pendaftaran'));
     }
 
     public function index_admin(Request $request)
     {
         $search = $request->input('search');
-        $pendaftaran = PendaftaranMagang::with('informasi_magang')
-            ->when($search, function ($query, $search) {
-                $query->where('nama', 'like', '%' . $search . '%')
-                    ->orWhereHas('informasi_magang', function ($q) use ($search) {
-                        $q->where('nama_bidang', 'like', '%' . $search . '%')
-                            ->orWhere('posisi', 'like', '%' . $search . '%');
-                    });
-            })
+        $pendaftaran = PendaftaranMagang::when($search, function ($query, $search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        })
             ->where('status', 'diproses')
             ->latest()
             ->paginate(10);
@@ -62,14 +50,9 @@ class PendaftaranMagangController extends Controller
     public function magangDiterima(Request $request)
     {
         $search = $request->input('search');
-        $pendaftaran = PendaftaranMagang::with('informasi_magang')
-            ->when($search, function ($query, $search) {
-                $query->where('nama', 'like', '%' . $search . '%')
-                    ->orWhereHas('informasi_magang', function ($q) use ($search) {
-                        $q->where('nama_bidang', 'like', '%' . $search . '%')
-                            ->orWhere('posisi', 'like', '%' . $search . '%');
-                    });
-            })
+        $pendaftaran = PendaftaranMagang::when($search, function ($query, $search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        })
             ->where('status', 'diterima')
             ->latest()
             ->paginate(10);
@@ -79,14 +62,9 @@ class PendaftaranMagangController extends Controller
     public function magangDitolak(Request $request)
     {
         $search = $request->input('search');
-        $pendaftaran = PendaftaranMagang::with('informasi_magang')
-            ->when($search, function ($query, $search) {
-                $query->where('nama', 'like', '%' . $search . '%')
-                    ->orWhereHas('informasi_magang', function ($q) use ($search) {
-                        $q->where('nama_bidang', 'like', '%' . $search . '%')
-                            ->orWhere('posisi', 'like', '%' . $search . '%');
-                    });
-            })
+        $pendaftaran = PendaftaranMagang::when($search, function ($query, $search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        })
             ->where('status', 'ditolak')
             ->latest()
             ->paginate(10);
@@ -96,14 +74,9 @@ class PendaftaranMagangController extends Controller
     public function riwayatMagang(Request $request)
     {
         $search = $request->input('search');
-        $pendaftaran = PendaftaranMagang::with('informasi_magang')
-            ->when($search, function ($query, $search) {
-                $query->where('nama', 'like', '%' . $search . '%')
-                    ->orWhereHas('informasi_magang', function ($q) use ($search) {
-                        $q->where('nama_bidang', 'like', '%' . $search . '%')
-                            ->orWhere('posisi', 'like', '%' . $search . '%');
-                    });
-            })
+        $pendaftaran = PendaftaranMagang::when($search, function ($query, $search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        })
             ->where('status', 'selesai')
             ->latest()
             ->paginate(10);
@@ -162,7 +135,6 @@ class PendaftaranMagangController extends Controller
         }
 
         $request->validate([
-            'id_informasi_magang' => 'required|exists:informasi_magangs,id',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
             'surat_permohonan' => 'required|file|mimes:pdf,doc,docx|max:2048',
@@ -177,7 +149,6 @@ class PendaftaranMagangController extends Controller
         // Simpan data pendaftaran
         $pendaftaran = PendaftaranMagang::create([
             'user_id' => $user->id,
-            'id_informasi_magang' => $request->id_informasi_magang,
             'nama' => $user->name,
             'email' => $user->email,
             'no_hp' => $user->no_hp,
@@ -191,12 +162,10 @@ class PendaftaranMagangController extends Controller
             'agreed_at' => now(),
         ]);
 
-        $pendaftaran->load('informasi_magang');
-
         Mail::to($pendaftaran->email)->queue(new MailPendaftaranMagang($pendaftaran));
         Mail::to(env('ADMIN_EMAIL'))->queue(new NotifikasiMagangAdmin($pendaftaran));
 
-        return redirect()->route('daftar-magang.index', ['slug_bidang' => $pendaftaran->informasi_magang->slug_bidang, 'slug_posisi' => $pendaftaran->informasi_magang->slug_posisi])
+        return redirect()->route('daftar-magang.index')
             ->with('success', 'Pendaftaran berhasil dikirim!');
     }
 
@@ -219,9 +188,15 @@ class PendaftaranMagangController extends Controller
             'laporan_magang' => $filePath,
         ]);
 
-        $pendaftaran_magang->load('informasi_magang');
+        return redirect()->route('daftar-magang.index')->with('success', 'Laporan Magang berhasil diunggah');
+    }
 
-        return redirect()->route('daftar-magang.index', ['slug_bidang' => $pendaftaran_magang->informasi_magang->slug_bidang, 'slug_posisi' => $pendaftaran_magang->informasi_magang->slug_posisi])->with('success', 'Laporan Magang berhasil diunggah');
+    public function hapusLaporan(PendaftaranMagang $pendaftaran_magang)
+    {
+        Storage::disk('public')->delete($pendaftaran_magang->laporan_magang);
+        $pendaftaran_magang->laporan_magang = null;
+        $pendaftaran_magang->save();
+        return redirect()->route('daftar-magang.index')->with('success', 'Laporan Magang berhasil dihapus');
     }
 
     /**
@@ -263,7 +238,6 @@ class PendaftaranMagangController extends Controller
             'status' => $statusBaru,
         ]);
 
-        $pendaftaran_magang->load('informasi_magang');
 
         // Kirim email hanya jika status berubah dari 'diproses' ke 'diterima' atau 'ditolak'
         if ($statusLama === 'diproses' && in_array($statusBaru, ['diterima', 'ditolak'])) {
@@ -276,8 +250,13 @@ class PendaftaranMagangController extends Controller
             }
         }
 
-        return redirect()->route('admin_daftar-magang.index-admin')
-            ->with('success', 'Status pendaftaran berhasil diperbarui dan email notifikasi telah dikirim');
+        if ($statusLama === 'diterima' && $statusBaru === 'selesai') {
+            return redirect()->route('admin_daftar-magang.magangDiterima')->with('success', 'Status pendaftaran berhasil diperbarui');
+        } else if ($statusLama === 'ditolak' && $statusBaru === 'selesai') {
+            return redirect()->route('admin_daftar-magang.magangDitolak')->with('success', 'Status pendaftaran berhasil diperbarui');
+        } else {
+            return redirect()->route('admin_daftar-magang.index-admin')->with('success', 'Status pendaftaran berhasil diperbarui');
+        }
     }
 
     public function editSertifikat(PendaftaranMagang $pendaftaran_magang)

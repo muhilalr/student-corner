@@ -74,8 +74,6 @@
       <p><strong>Detail Pendaftaran:</strong></p>
       <ul>
         <li>Nama : {{ $pendaftaran->nama }}</li>
-        <li>Nama Bidang : {{ $pendaftaran->informasi_magang->nama_bidang }}</li>
-        <li>Posisi : {{ $pendaftaran->informasi_magang->posisi }}</li>
         <li>Email : {{ $pendaftaran->email }}</li>
         <li>No. HP : {{ $pendaftaran->no_hp }}</li>
         <li>Status : <span style="color: #10b981; font-weight: bold;">DITERIMA</span></li>

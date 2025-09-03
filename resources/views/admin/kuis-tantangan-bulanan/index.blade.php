@@ -37,56 +37,64 @@
                   <a href="{{ route('admin_kuis-tantangan-bulanan.create') }}" class="btn btn-primary"><span><i
                         class="fas fa-plus mr-2"></i></span>Tambah Data</a>
                 </div>
-
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead class="text-center">
-                    <tr>
-                      <th>Periode</th>
-                      <th>Judul Tantangan</th>
-                      <th>Deskripsi</th>
-                      <th>Tanggal Mulai</th>
-                      <th>Tanggal Selesai</th>
-                      <th>Durasi (Menit)</th>
-                      <th>Status</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($kuis as $item)
+                <div class="table-responsive">
+                  <table id="example1" class="table table-bordered table-striped"
+                    style="table-layout: auto; width: auto; white-space: nowrap;">
+                    <thead class="text-center">
                       <tr>
-                        <td>{{ $item->periode->periode }}</td>
-                        <td>{{ $item->judul }}</td>
-                        <td>{{ $item->deskripsi }}</td>
-                        <td>{{ \Carbon\Carbon::parse($item->tanggal_mulai)->format('d-m-Y') }}</td>
-                        <td>{{ \Carbon\Carbon::parse($item->tanggal_selesai)->format('d-m-Y') }}</td>
-                        <td>{{ $item->durasi_menit }}</td>
-                        <td>
-                          @if ($item->status == 'aktif')
-                            <span class="badge badge-success">Aktif</span>
-                          @else
-                            <span class="badge badge-danger">Non-Aktif</span>
-                          @endif
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
-                            <a href="{{ route('admin_kuis-tantangan-bulanan.edit', $item->id) }}"
-                              class="btn btn-warning"><span><i class="fas fa-edit"></i></span></a>
-                            <form action="{{ route('admin_kuis-tantangan-bulanan.destroy', $item->id) }}"
-                              method="POST" class="m-0">
-                              @csrf
-                              @method('DELETE')
-                              <button type="submit" class="btn btn-danger"
-                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                <span><i class="fas fa-trash"></i></span>
-                              </button>
-                            </form>
-                          </div>
-                        </td>
+                        <th>Periode</th>
+                        <th>Judul Tantangan</th>
+                        <th>Deskripsi</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Selesai</th>
+                        <th>Durasi (Menit)</th>
+                        <th>Status</th>
+                        <th>Soal</th>
+                        <th>Aksi</th>
                       </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-
+                    </thead>
+                    <tbody class="text-center">
+                      @foreach ($kuis as $item)
+                        <tr>
+                          <td>{{ $item->periode->periode }}</td>
+                          <td>{{ $item->judul }}</td>
+                          <td>{{ Str::limit($item->deskripsi, 50, '...') }}</td>
+                          <td>{{ \Carbon\Carbon::parse($item->tanggal_mulai)->format('d-m-Y') }}</td>
+                          <td>{{ \Carbon\Carbon::parse($item->tanggal_selesai)->format('d-m-Y') }}</td>
+                          <td>{{ $item->durasi_menit }}</td>
+                          <td>
+                            @if ($item->status == 'aktif')
+                              <span class="badge badge-success">Aktif</span>
+                            @else
+                              <span class="badge badge-danger">Non-Aktif</span>
+                            @endif
+                          </td>
+                          <td>
+                            <a href="{{ route('admin_soal-kuis-tantangan-bulanan.index', $item->id) }}"
+                              target="_blank">
+                              <button class="btn btn-info">Lihat Soal</button>
+                            </a>
+                          </td>
+                          <td>
+                            <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
+                              <a href="{{ route('admin_kuis-tantangan-bulanan.edit', $item->id) }}"
+                                class="btn btn-warning"><span><i class="fas fa-edit"></i></span></a>
+                              <form action="{{ route('admin_kuis-tantangan-bulanan.destroy', $item->id) }}"
+                                method="POST" class="m-0">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger"
+                                  onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                  <span><i class="fas fa-trash"></i></span>
+                                </button>
+                              </form>
+                            </div>
+                          </td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <!-- /.card-body -->
             </div>

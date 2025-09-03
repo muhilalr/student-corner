@@ -7,8 +7,7 @@
           <h1 class="text-3xl font-bold text-gray-900 mb-2">Log Harian Magang</h1>
           <p class="text-gray-600">Pencatatan aktivitas selama masa magang</p>
         </div>
-        <a
-          href="{{ route('log-harian.create-log', ['slug_bidang' => $info->slug_bidang, 'slug_posisi' => $info->slug_posisi]) }}">
+        <a href="{{ route('log-harian.create-log') }}">
           <button
             class="bg-primary hover:bg-[#00295A] text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -22,8 +21,7 @@
 
     <!-- Filter dan Search -->
     <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <form method="GET"
-        action="{{ route('daftar-magang.log-harian', ['slug_bidang' => $info->slug_bidang, 'slug_posisi' => $info->slug_posisi]) }}">
+      <form method="GET" action="{{ route('daftar-magang.log-harian') }}">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Dari Tanggal</label>
@@ -126,8 +124,7 @@
                 </td>
                 <td class="text-sm px-6 font-medium">
                   <div class="flex justify-center items-center space-x-2">
-                    <a
-                      href="{{ route('log-harian.edit', ['slug_bidang' => $info->slug_bidang, 'slug_posisi' => $info->slug_posisi, 'id' => $log->id]) }}">
+                    <a href="{{ route('log-harian.edit', ['id' => $log->id]) }}">
                       <button
                         class="text-green-600 hover:text-green-900 transition-colors duration-150 flex justify-center items-center">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,8 +133,7 @@
                         </svg>
                       </button>
                     </a>
-                    <button type="button"
-                      data-url="{{ route('log-harian.destroy', ['slug_bidang' => $info->slug_bidang, 'slug_posisi' => $info->slug_posisi, 'id' => $log->id]) }}"
+                    <button type="button" data-url="{{ route('log-harian.destroy', ['id' => $log->id]) }}"
                       onclick="openDeleteModal(this)"
                       class="text-red-600 hover:text-red-900 transition-colors duration-150">
                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -188,8 +184,7 @@
                       Batal
                     </button>
                     <form id="deleteForm" method="POST"
-                      action="{{ route('log-harian.destroy', ['slug_bidang' => $info->slug_bidang, 'slug_posisi' => $info->slug_posisi, 'id' => $log->id]) }}"
-                      class="flex-1">
+                      action="{{ route('log-harian.destroy', ['id' => $log->id]) }}" class="flex-1">
                       @csrf
                       @method('DELETE')
                       <button type="submit"

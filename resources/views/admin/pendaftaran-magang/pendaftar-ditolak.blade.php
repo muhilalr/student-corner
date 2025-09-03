@@ -25,11 +25,10 @@
                   </form>
                 </div>
                 <div class="table-responsive">
-                  <table id="example1" class="table table-bordered table-striped">
+                  <table id="example1" class="table table-bordered table-striped"
+                    style="table-layout: auto; width: auto; white-space: nowrap;">
                     <thead class="text-center">
                       <tr>
-                        <th>Nama Bidang</th>
-                        <th>Posisi</th>
                         <th>Nama</th>
                         <th>Email</th>
                         <th>Nomor WhatsApp</th>
@@ -41,20 +40,18 @@
                         <th>Aksi</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                       @foreach ($pendaftaran as $item)
                         <tr>
-                          <td>{{ $item->informasi_magang->nama_bidang }}</td>
-                          <td>{{ $item->informasi_magang->posisi }}</td>
                           <td>{{ $item->nama }}</td>
                           <td>{{ $item->email }}</td>
                           <td>{{ $item->no_hp }}</td>
-                          <td class="text-center">
+                          <td>
                             <a href="{{ Storage::url($item->cv_file) }}" target="_blank">
                               <button class="btn btn-info">Lihat CV Pendaftar</button>
                             </a>
                           </td>
-                          <td class="text-center">
+                          <td>
                             <a href="{{ Storage::url($item->surat_permohonan) }}" target="_blank">
                               <button class="btn btn-info">Lihat Surat Permohonan</button>
                             </a>

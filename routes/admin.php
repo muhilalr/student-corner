@@ -88,10 +88,9 @@ Route::prefix('admin')->name('admin_')->group(function () {
     Route::resource('kuis-tantangan-bulanan', TantanganBulananController::class);
     Route::get('/opsi-pilgan-tantangan-bulanan', [SoalTantanganBulananController::class, 'indexOpsi'])->name('opsi-pilgan-tantangan-bulanan.index');
 
-    Route::get('/soal-kuis-tantangan-bulanan/edit-batch/{batchId}', [SoalTantanganBulananController::class, 'editBatch'])->name('soal-kuis-tantangan-bulanan.edit-batch');
-    Route::put('/soal-kuis-tantangan-bulanan/update-batch/{batchId}', [SoalTantanganBulananController::class, 'updateBatch'])->name('soal-kuis-tantangan-bulanan.update-batch');
-    Route::delete('/soal-kuis-tantangan-bulanan/destroy-batch/{batchId}', [SoalTantanganBulananController::class, 'destroyBatch'])->name('soal-kuis-tantangan-bulanan.destroy-batch');
-    Route::resource(('soal-kuis-tantangan-bulanan'), SoalTantanganBulananController::class);
+    Route::get('/soal-kuis-tantangan-bulanan/{id_kuis}', [SoalTantanganBulananController::class, 'index'])->name('soal-kuis-tantangan-bulanan.index');
+    Route::get('/soal-kuis-tantangan-bulanan/create/{id_kuis}', [SoalTantanganBulananController::class, 'create'])->name('soal-kuis-tantangan-bulanan.create');
+    Route::resource('soal-kuis-tantangan-bulanan', SoalTantanganBulananController::class)->except('index', 'create');
     Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
   });
 });

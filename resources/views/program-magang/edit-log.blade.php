@@ -7,9 +7,7 @@
         <p class="text-sm md:text-base font-semibold text-gray-600">Edit aktivitas harian selama masa magang</p>
       </div>
     </div>
-    <form
-      action="{{ route('log-harian.update', ['slug_bidang' => $info->slug_bidang, 'slug_posisi' => $info->slug_posisi, 'id' => $log->id]) }}"
-      method="POST">
+    <form action="{{ route('log-harian.update', ['id' => $log->id]) }}" method="POST">
       @csrf
       @method('PUT')
       <input type="hidden" name="id_pendaftaran_magang" value="{{ $log->id_pendaftaran_magang }}">

@@ -13,16 +13,10 @@ return new class extends Migration
     {
         Schema::create('informasi_magangs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_bidang');
-            $table->string('posisi');
-            $table->integer('kebutuhan_orang');
             $table->text('deskripsi');
             $table->text('persyaratan');
             $table->text('benefit');
             $table->text('info_kontak');
-            $table->enum('status', ['aktif', 'nonaktif'])->default('nonaktif');
-            $table->string('slug_bidang')->unique();
-            $table->string('slug_posisi')->unique();
             $table->timestamps();
         });
     }
