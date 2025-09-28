@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Carbon\Carbon;
 use App\Models\User;
+use App\Mail\OtpMail;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -10,6 +12,7 @@ use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 
@@ -62,10 +65,24 @@ class RegisteredUserController extends Controller
             'slug' => $slug
         ]);
 
-        event(new Registered($user));
+        // Generate OTP
+        $otp = rand(100000, 999999);
+        $user->otp_code = $otp;
+        $user->otp_expires_at = Carbon::now()->addMinutes(3);
+        $user->is_verified = false;
+        $user->save();
 
-        Auth::login($user);
+        // Kirim OTP ke email
+        Mail::to($user->email)->queue(new OtpMail($otp));
 
-        return redirect()->route('login')->with('success', 'Registrasi Berhasil');
+        // Jangan login dulu → arahkan ke halaman verifikasi OTP
+        return redirect()->route('verification.otp', ['email' => $user->email])
+            ->with('status', 'Kode OTP sudah dikirim ke email kamu, silakan verifikasi.');
+
+        // event(new Registered($user));
+
+        // Auth::login($user);
+
+        // return redirect()->route('login')->with('success', 'Registrasi Berhasil');
     }
 }

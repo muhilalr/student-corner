@@ -29,17 +29,30 @@ Route::prefix('admin')->name('admin_')->group(function () {
     Route::get('/operator/dashboard', [SubjekMateriController::class, 'index'])->middleware('role:operator')->name('operator.dashboard');
     Route::get('/operator-magang/dashboard', [InformasiMagangController::class, 'index'])->middleware('role:operator magang')->name('magang.dashboard');
     Route::resource('data-admin', AdminController::class);
+
+
+    // Konten Edukasi
     Route::resource('subjek-materi', SubjekMateriController::class);
     Route::resource('artikel', ArtikelController::class);
-    Route::resource('subjudul-artikel', SubJudulArtikelController::class);
-    Route::resource('detail-subjudul-artikel', DetailSubJudulArtikelController::class);
+    Route::get('/subjudul-artikel/{id_artikel}', [SubJudulArtikelController::class, 'index'])->name('subjudul-artikel.index');
+    Route::get('/subjudul-artikel/create/{id_artikel}', [SubJudulArtikelController::class, 'create'])->name('subjudul-artikel.create');
+    Route::resource('subjudul-artikel', SubJudulArtikelController::class)->except('index', 'create');
+    Route::get('/detail-subjudul-artikel/{id_subjudul}', [DetailSubJudulArtikelController::class, 'index'])->name('detail-subjudul-artikel.index');
+    Route::get('/detail-subjudul-artikel/create/{id_subjudul}', [DetailSubJudulArtikelController::class, 'create'])->name('detail-subjudul-artikel.create');
+    Route::resource('detail-subjudul-artikel', DetailSubJudulArtikelController::class)->except('index', 'create');
     Route::resource('video-pembelajaran', VideoPembelajaranController::class);
     Route::resource('infografis', InfografisController::class);
+
+
+    // Informasi Magang
     Route::post('/informasi-magang/status-aktif/{id}', [InformasiMagangController::class, 'statusAktif'])
       ->name('informasi-magang.statusAktif');
     Route::post('/informasi-magang/status-nonaktif/{id}', [InformasiMagangController::class, 'statusNonaktif'])
       ->name('informasi-magang.statusNonaktif');
     Route::resource('informasi-magang', InformasiMagangController::class);
+
+
+    // Pendaftaran Magang
     Route::get('/pendaftaran-magang', [PendaftaranMagangController::class, 'index_admin'])
       ->name('daftar-magang.index-admin');
     Route::get('/pendaftaran-magang-diterima', [PendaftaranMagangController::class, 'magangDiterima'])
@@ -72,11 +85,12 @@ Route::prefix('admin')->name('admin_')->group(function () {
 
     // Kuis Reguler
     Route::resource('kuis-reguler', KuisRegulerController::class);
-    Route::get('/opsi-soal-pilihan-ganda', [SoalKuisRegulerController::class, 'indexOpsi'])->name('opsi-soal-pilihan-ganda.index');
-    Route::get('/soal-kuis-reguler/edit-batch/{batchId}', [SoalKuisRegulerController::class, 'editBatch'])->name('soal-kuis-reguler.edit-batch');
-    Route::put('/soal-kuis-reguler/update-batch/{batchId}', [SoalKuisRegulerController::class, 'updateBatch'])->name('soal-kuis-reguler.update-batch');
-    Route::delete('/admin/soal-kuis-reguler/destroy-batch/{batchId}', [SoalKuisRegulerController::class, 'destroyBatch'])->name('soal-kuis-reguler.destroy-batch');
-    Route::resource('soal-kuis-reguler', SoalKuisRegulerController::class);
+    // Route::get('/soal-kuis-reguler/edit-batch/{batchId}', [SoalKuisRegulerController::class, 'editBatch'])->name('soal-kuis-reguler.edit-batch');
+    // Route::put('/soal-kuis-reguler/update-batch/{batchId}', [SoalKuisRegulerController::class, 'updateBatch'])->name('soal-kuis-reguler.update-batch');
+    // Route::delete('/admin/soal-kuis-reguler/destroy-batch/{batchId}', [SoalKuisRegulerController::class, 'destroyBatch'])->name('soal-kuis-reguler.destroy-batch');
+    Route::get('/soal-kuis-reguler/{id_kuis}', [SoalKuisRegulerController::class, 'index'])->name('soal-kuis-reguler.index');
+    Route::get('/soal-kuis-reguler/create/{id_kuis}', [SoalKuisRegulerController::class, 'create'])->name('soal-kuis-reguler.create');
+    Route::resource('soal-kuis-reguler', SoalKuisRegulerController::class)->except('index', 'create');
 
 
     //Kuis Tantangan Bulanan
@@ -86,7 +100,6 @@ Route::prefix('admin')->name('admin_')->group(function () {
     Route::post('/periode/nonaktifkan-leaderboard', [PeriodeController::class, 'nonaktifkanLeaderboard'])
       ->name('periode.nonaktifkanLeaderboard');
     Route::resource('kuis-tantangan-bulanan', TantanganBulananController::class);
-    Route::get('/opsi-pilgan-tantangan-bulanan', [SoalTantanganBulananController::class, 'indexOpsi'])->name('opsi-pilgan-tantangan-bulanan.index');
 
     Route::get('/soal-kuis-tantangan-bulanan/{id_kuis}', [SoalTantanganBulananController::class, 'index'])->name('soal-kuis-tantangan-bulanan.index');
     Route::get('/soal-kuis-tantangan-bulanan/create/{id_kuis}', [SoalTantanganBulananController::class, 'create'])->name('soal-kuis-tantangan-bulanan.create');

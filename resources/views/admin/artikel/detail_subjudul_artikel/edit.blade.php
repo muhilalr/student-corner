@@ -4,7 +4,8 @@
       <div class="container-fluid">
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">Edit Detail Sub Judul Artikel</h3>
+            <h3 class="card-title">Edit Detail Sub Judul {{ $detail_subjudul_artikel->sub_judul_artikel->sub_judul }}
+            </h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->
@@ -23,30 +24,20 @@
             <div class="card-body">
               @csrf
               @method('PUT')
-              <div class="form-group">
-                <label for="subjudul_artikel">Sub-Judul Artikel</label>
-                <select name="sub_judul_artikel_id" class="form-control" required>
-                  @foreach ($subjuduls as $subjudul)
-                    <option value="{{ $subjudul->id }}"
-                      {{ $subjudul->id == $detail_subjudul_artikel->sub_judul_artikel_id ? 'selected' : '' }}>Artikel
-                      {{ $subjudul->artikel->judul }} -
-                      {{ $subjudul->sub_judul }}
-                    </option>
-                  @endforeach
-                </select>
-              </div>
+              <input type="hidden" name="sub_judul_artikel_id"
+                value="{{ $detail_subjudul_artikel->sub_judul_artikel->id }}">
               <div class="form-group">
                 <label for="konten_text">Konten</label>
                 <textarea name="konten_text" class="form-control" id="editor" placeholder="Masukkan Konten Teks" cols="30"
                   rows="10">{{ $detail_subjudul_artikel->konten_text }}</textarea>
               </div>
               <div class="form-group">
-                <label for="link_embed">Link Power BI</label>
+                <label for="link_embed">Link Power BI (Opsional)</label>
                 <input type="text" name="link_embed" class="form-control" id="link_embed"
                   value="{{ $detail_subjudul_artikel->link_embed }}" placeholder="Masukkan Link">
               </div>
               <div class="form-group">
-                <label for="gambar">Gambar</label>
+                <label for="gambar">Gambar (Opsional)</label>
                 <input type="file" name="gambar" class="form-control" id="gambar" placeholder="Masukkan Gambar">
               </div>
               <div class="form-group">

@@ -30,6 +30,10 @@ class User extends Authenticatable
         'instansi',
         'foto',
         'password',
+        'otp_code',
+        'otp_expires_at',
+        'is_verified',
+        'pending_email',
         'slug',
     ];
 
@@ -41,6 +45,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'otp_code',
     ];
 
     /**
@@ -51,8 +56,10 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
+            // 'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'otp_expires_at' => 'datetime',
+            'is_verified' => 'boolean',
         ];
     }
 

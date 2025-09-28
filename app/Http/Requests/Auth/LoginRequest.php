@@ -59,6 +59,18 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        $user = Auth::user();
+
+        if (! $user->is_verified) {
+            Auth::logout();
+
+            throw ValidationException::withMessages([
+                'email' => 'Akun belum diverifikasi. Silakan masukkan kode OTP yang sudah dikirim ke email.',
+            ])->redirectTo(route('verification.otp', ['email' => $user->email]));
+        }
+
+
+
         RateLimiter::clear($this->throttleKey());
     }
 

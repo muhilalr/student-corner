@@ -1,13 +1,8 @@
 <x-guest-layout>
   <!-- Session Status -->
-  <x-auth-session-status class="mb-4" :status="session('status')" />
+  <x-auth-session-status :status="session('status')" />
   <div class="flex flex-col justify-center items-center gap-3 mb-10">
-    @if (session('success'))
-      <div class="bg-button border border-button text-white px-4 py-3 rounded relative" role="alert">
-        <span class="block sm:inline">{{ session('success') }}</span>
-      </div>
-    @endif
-    <h1 class="text-3xl font-bold mt-8">Selamat Datang!</h1>
+    <h1 class="text-3xl font-bold mt-4">Selamat Datang!</h1>
     <p class="text-gray-600 text-base text-center">Masuk ke akun Anda untuk melanjutkan pembelajaran statistik</p>
   </div>
   <form method="POST" action="{{ route('login') }}">

@@ -15,8 +15,6 @@ class SoalKuisReguler extends Model
         'soal',
         'tipe_soal',
         'jawaban',
-        'file_soal',
-        'upload_batch_id',
     ];
 
     public function kuis_reguler()

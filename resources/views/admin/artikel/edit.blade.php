@@ -51,7 +51,8 @@
                   <div class="form-group">
                     <label for="gambar">Gambar Artikel</label>
                     <input type="file" name="gambar" class="form-control" id="gambar"
-                      value="{{ $artikel->gambar }}" placeholder="Masukkan Gambar Artikel">
+                      value="{{ $artikel->gambar }}" accept="image/jpg, image/jpeg, image/png"
+                      placeholder="Masukkan Gambar Artikel">
                   </div>
                 </div>
                 <!-- /.card-body -->

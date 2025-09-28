@@ -13,9 +13,14 @@ class KuisRegulerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $kuis = KuisReguler::all();
+        $search = $request->input('search');
+        $kuis = KuisReguler::when($search, function ($query, $search) {
+            $query->where('judul', 'like', '%' . $search . '%');
+        })
+            ->latest()
+            ->paginate(10);
         return view('admin.kuis-reguler.index', compact('kuis'));
     }
 

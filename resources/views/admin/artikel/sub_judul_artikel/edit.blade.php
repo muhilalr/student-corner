@@ -8,7 +8,7 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Edit Subjudul Artikel</h3>
+                <h3 class="card-title">Edit Subjudul Artikel {{ $subjudul_artikel->artikel->judul }}</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -25,17 +25,7 @@
                 <div class="card-body">
                   @csrf
                   @method('PUT')
-                  <div class="form-group">
-                    <label for="subjek_materi">Judul Artikel</label>
-                    <select name="id_artikel" class="form-control" required>
-                      @foreach ($artikels as $artikel)
-                        <option value="{{ $artikel->id }}"
-                          {{ $subjudul_artikel->id_artikel == $artikel->id ? 'selected' : '' }}>
-                          {{ $artikel->judul }}
-                        </option>
-                      @endforeach
-                    </select>
-                  </div>
+                  <input type="hidden" name="id_artikel" value="{{ $subjudul_artikel->artikel->id }}">
                   <div class="form-group">
                     <label for="sub_judul">Sub Judul Artikel</label>
                     <input type="text" name="sub_judul" class="form-control" id="sub_judul"

@@ -13,36 +13,43 @@
           <div class="col-12">
             <div class="card" style="margin-top: 1rem;">
               <div class="card-header">
-                <h3 class="card-title">Data Sub Judul Artikel</h3>
+                <h3 class="card-title">Data Sub Judul Artikel {{ $artikel->judul }}</h3>
               </div>
               <!-- /.card-header -->
 
               <div class="card-body">
                 <div class="mb-3 d-flex justify-content-between">
-                  <form action="{{ route('admin_subjudul-artikel.index') }}" method="GET" class="form-inline">
+                  <form action="{{ route('admin_subjudul-artikel.index', $artikel->id) }}" method="GET"
+                    class="form-inline">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control mr-2"
                       placeholder="Cari ...">
                     <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
                   </form>
-                  <a href="{{ route('admin_subjudul-artikel.create') }}" class="btn btn-primary">
+                  <a href="{{ route('admin_subjudul-artikel.create', $artikel->id) }}" class="btn btn-primary">
                     <span><i class="fas fa-plus mr-2"></i></span>Tambah Data
                   </a>
                 </div>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead class="text-center">
                     <tr>
-                      <th>Judul Artikel</th>
                       <th>Sub Judul Artikel</th>
                       <th>Urutan</th>
+                      <th>Detail Subjudul Artikel</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach ($subjuduls as $item)
                       <tr>
-                        <td>{{ $item->artikel->judul }}</td>
                         <td>{{ $item->sub_judul }}</td>
                         <td>{{ $item->urutan }}</td>
+                        <td>
+                          <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
+                            <a href="{{ route('admin_detail-subjudul-artikel.index', $item->id) }}" target="_blank">
+                              <button class="btn btn-info">Lihat Detail</button>
+                            </a>
+                          </div>
+                        </td>
                         <td>
                           <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
                             <a href="{{ route('admin_subjudul-artikel.edit', $item->id) }}"

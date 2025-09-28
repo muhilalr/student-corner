@@ -13,32 +13,28 @@ class DetailSubJudulArtikelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index($id_subjudul, Request $request)
     {
         $search = $request->input('search');
-        $detail_subjuduls = DetailSubJudulArtikel::with('sub_judul_artikel.artikel')
+        $detail_subjuduls = DetailSubJudulArtikel::where('sub_judul_artikel_id', $id_subjudul)
             ->when($search, function ($query, $search) {
                 $query->where('konten_text', 'like', '%' . $search . '%')
                     ->orWhere('link_embed', 'like', '%' . $search . '%')
-                    ->orWhere('urutan', 'like', '%' . $search . '%')
-                    ->orWhereHas('sub_judul_artikel', function ($q) use ($search) {
-                        $q->where('sub_judul', 'like', '%' . $search . '%');
-                    })
-                    ->orWhereHas('sub_judul_artikel.artikel', function ($q) use ($search) {
-                        $q->where('judul', 'like', '%' . $search . '%');
-                    });
+                    ->orWhere('urutan', 'like', '%' . $search . '%');
             })
-            ->latest()
+            ->orderby('urutan', 'asc')
             ->paginate(10);
-        return view('admin.artikel.detail_subjudul_artikel.index', compact('detail_subjuduls'));
+
+        $subjudul = SubJudulArtikel::findOrFail($id_subjudul);
+        return view('admin.artikel.detail_subjudul_artikel.index', compact('detail_subjuduls', 'subjudul'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id_subjudul)
     {
-        $subjuduls = SubJudulArtikel::with('artikel')->get();
+        $subjuduls = SubJudulArtikel::where('id', $id_subjudul)->first();
         return view('admin.artikel.detail_subjudul_artikel.create', compact('subjuduls'));
     }
 
@@ -69,7 +65,7 @@ class DetailSubJudulArtikelController extends Controller
             'urutan' => $request->urutan
         ]);
 
-        return redirect()->route('admin_detail-subjudul-artikel.index')->with('success', 'Detail Sub Judul Artikel berhasil ditambahkan');
+        return redirect()->route('admin_detail-subjudul-artikel.index', $request->sub_judul_artikel_id)->with('success', 'Detail Sub Judul Artikel berhasil ditambahkan');
     }
 
     /**
@@ -83,17 +79,18 @@ class DetailSubJudulArtikelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DetailSubJudulArtikel $detail_subjudul_artikel)
+    public function edit($id)
     {
-        $subjuduls = SubJudulArtikel::all();
-        return view('admin.artikel.detail_subjudul_artikel.edit', compact('detail_subjudul_artikel', 'subjuduls'));
+        $detail_subjudul_artikel = DetailSubJudulArtikel::with('sub_judul_artikel')->findOrFail($id);
+        return view('admin.artikel.detail_subjudul_artikel.edit', compact('detail_subjudul_artikel'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DetailSubJudulArtikel $detail_subjudul_artikel)
+    public function update(Request $request, $id)
     {
+        $detail_subjudul_artikel = DetailSubJudulArtikel::findOrFail($id);
         $request->validate([
             'sub_judul_artikel_id' => 'required|exists:sub_judul_artikels,id',
             'konten_text' => 'required',
@@ -117,7 +114,7 @@ class DetailSubJudulArtikelController extends Controller
             'urutan' => $request->urutan
         ]);
 
-        return redirect()->route('admin_detail-subjudul-artikel.index')->with('success', 'Detail Sub Judul Artikel berhasil diperbarui');
+        return redirect()->route('admin_detail-subjudul-artikel.index', $request->sub_judul_artikel_id)->with('success', 'Detail Sub Judul Artikel berhasil diperbarui');
     }
 
     /**
@@ -129,6 +126,6 @@ class DetailSubJudulArtikelController extends Controller
             Storage::disk('public')->delete($detail_subjudul_artikel->gambar);
         }
         $detail_subjudul_artikel->delete();
-        return redirect()->route('admin_detail-subjudul-artikel.index')->with('success', 'Detail Sub Judul Artikel berhasil dihapus');
+        return redirect()->route('admin_detail-subjudul-artikel.index', $detail_subjudul_artikel->sub_judul_artikel_id)->with('success', 'Detail Sub Judul Artikel berhasil dihapus');
     }
 }

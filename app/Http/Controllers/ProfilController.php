@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Mail\OtpMail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\KuisReguler\HasilKuisReguler;
 use App\Models\TantanganBulanan\HasilKuisTantanganBulanan;
@@ -181,26 +183,50 @@ class ProfilController extends Controller
 
         $slug = Str::slug($request->name);
 
+        // handle foto
         if ($request->hasFile('foto')) {
             if (!is_null($user->foto) && Storage::disk('public')->exists($user->foto)) {
                 Storage::disk('public')->delete($user->foto);
             }
-
             $filePath = $request->file('foto')->store('users', 'public');
             $user->foto = $filePath;
         }
 
+        // handle password
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        // cek apakah email diubah
+        if ($request->email !== $user->email) {
+            // simpan ke pending_email, jangan update email langsung
+            $user->pending_email = $request->email;
+            $user->otp_expires_at = now()->addMinutes(3);
+
+            // generate OTP
+            $otp = rand(100000, 999999);
+            cache()->put('otp_' . $user->id, $otp, now()->addMinutes(3));
+
+            // kirim email OTP
+            Mail::to($user->pending_email)->queue(new OtpMail($otp));
+
+            $user->save();
+
+            return redirect()->route('verification.otp', ['email' => $user->pending_email])
+                ->with('status', 'Kami sudah mengirim kode OTP ke email baru Anda. Silakan verifikasi dalam 3 menit.');
+        }
+
+        // update data lain
         $user->update([
             'name' => $request->name,
-            'email' => $request->email,
             'jenis_kelamin' => $request->jenis_kelamin,
-            'password' => Hash::make($request->password),
             'instansi' => $request->instansi,
             'no_hp' => $request->no_hp,
-            'slug' => $slug
+            'slug' => $slug,
         ]);
 
-        return redirect()->route('profil.show', $user->slug)->with('success', 'Profil berhasil diperbarui');
+        return redirect()->route('profil.show', $user->slug)
+            ->with('success', 'Profil berhasil diperbarui');
     }
 
     /**

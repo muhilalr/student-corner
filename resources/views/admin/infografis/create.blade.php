@@ -43,10 +43,10 @@
               <div class="form-group">
                 <label for="gambar">Gambar</label>
                 <input type="file" name="gambar" class="form-control" id="gambar" placeholder="Masukkan Gambar"
-                  required>
+                  accept="image/jpg, image/jpeg, image/png" required>
               </div>
               <div class="form-group">
-                <label for="file_infografis">File Infografis</label>
+                <label for="file_infografis">File Infografis (PDF, JPG, JPEG, PNG)</label>
                 <input type="file" name="file_infografis" class="form-control" id="file_infografis"
                   placeholder="Masukkan File Infografis" required>
               </div>

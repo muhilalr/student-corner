@@ -57,7 +57,8 @@
               </div>
               <div class="form-group">
                 <label for="gambar">Gambar</label>
-                <input type="file" class="form-control" id="gambar" name="gambar" required>
+                <input type="file" class="form-control" id="gambar" name="gambar"
+                  accept="image/jpg, image/jpeg, image/png" required>
               </div>
             </div>
             <!-- /.card-body -->

@@ -12,8 +12,7 @@
           <div class="col-12">
             <div class="card" style="margin-top: 1rem;">
               <div class="card-header">
-                <h3 class="card-title">Data Soal {{ $kuis_tantangan_bulanan->judul }}
-                  ({{ $kuis_tantangan_bulanan->deskripsi }})</h3>
+                <h3 class="card-title">Data Soal {{ $kuis_tantangan_bulanan->judul }}</h3>
               </div>
               <!-- /.card-header -->
 

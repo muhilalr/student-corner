@@ -27,7 +27,8 @@
         <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
         @role('admin')
-          <li class="nav-item">
+          <li
+            class="nav-item {{ Route::is('admin_subjek-materi.*') || Route::is('admin_artikel.*') || Route::is('admin_video-pembelajaran.*') || Route::is('admin_infografis.*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <p>
                 Konten Edukasi
@@ -48,18 +49,6 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('admin_subjudul-artikel.index') }}"
-                  class="nav-link {{ Route::is('admin_subjudul-artikel.index') ? 'active' : '' }}">
-                  <p>Data Sub Judul Artikel</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('admin_detail-subjudul-artikel.index') }}"
-                  class="nav-link {{ Route::is('admin_detail-subjudul-artikel.index') ? 'active' : '' }}">
-                  <p>Data Detail Sub Judul Artikel</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="{{ route('admin_video-pembelajaran.index') }}"
                   class="nav-link {{ Route::is('admin_video-pembelajaran.index') ? 'active' : '' }}">
                   <p>Data Video Pembelajaran</p>
@@ -73,7 +62,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item">
+          <li
+            class="nav-item {{ Route::is('admin_informasi-magang.*') || Route::is('admin_daftar-magang.*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <p>
                 Informasi Magang
@@ -113,7 +103,7 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item">
+          <li class="nav-item {{ Route::is('admin_kuis-reguler.*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <p>
                 Kuis Reguler
@@ -127,21 +117,10 @@
                   <p>Topik Kuis Reguler</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{ route('admin_soal-kuis-reguler.index') }}"
-                  class="nav-link {{ Route::is('admin_soal-kuis-reguler.index') ? 'active' : '' }}">
-                  <p>Soal Kuis Reguler</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('admin_opsi-soal-pilihan-ganda.index') }}"
-                  class="nav-link {{ Route::is('admin_opsi-soal-pilihan-ganda.index') ? 'active' : '' }}">
-                  <p>Opsi Soal Pilihan Ganda</p>
-                </a>
-              </li>
             </ul>
           </li>
-          <li class="nav-item">
+          <li
+            class="nav-item {{ Route::is('admin_periode.*') || Route::is('admin_kuis-tantangan-bulanan.*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <p>
                 Kuis Tantangan Bulanan
@@ -173,7 +152,8 @@
         @endrole
 
         @role('operator')
-          <li class="nav-item">
+          <li
+            class="nav-item {{ Route::is('admin_subjek-materi.*') || Route::is('admin_artikel.*') || Route::is('admin_video-pembelajaran.*') || Route::is('admin_infografis.*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <p>
                 Konten Edukasi
@@ -194,18 +174,6 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('admin_subjudul-artikel.index') }}"
-                  class="nav-link {{ Route::is('admin_subjudul-artikel.index') ? 'active' : '' }}">
-                  <p>Data Sub Judul Artikel</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('admin_detail-subjudul-artikel.index') }}"
-                  class="nav-link {{ Route::is('admin_detail-subjudul-artikel.index') ? 'active' : '' }}">
-                  <p>Data Detail Sub Judul Artikel</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="{{ route('admin_video-pembelajaran.index') }}"
                   class="nav-link {{ Route::is('admin_video-pembelajaran.index') ? 'active' : '' }}">
                   <p>Data Video Pembelajaran</p>
@@ -219,7 +187,7 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item">
+          <li class="nav-item {{ Route::is('admin_kuis-reguler.*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <p>
                 Kuis Reguler
@@ -233,21 +201,10 @@
                   <p>Topik Kuis Reguler</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{ route('admin_soal-kuis-reguler.index') }}"
-                  class="nav-link {{ Route::is('admin_soal-kuis-reguler.index') ? 'active' : '' }}">
-                  <p>Soal Kuis Reguler</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('admin_opsi-soal-pilihan-ganda.index') }}"
-                  class="nav-link {{ Route::is('admin_opsi-soal-pilihan-ganda.index') ? 'active' : '' }}">
-                  <p>Opsi Soal Pilihan Ganda</p>
-                </a>
-              </li>
             </ul>
           </li>
-          <li class="nav-item">
+          <li
+            class="nav-item {{ Route::is('admin_periode.*') || Route::is('admin_kuis-tantangan-bulanan.*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <p>
                 Kuis Tantangan Bulanan
@@ -255,6 +212,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('admin_periode.index') }}"
+                  class="nav-link {{ Route::is('admin_periode.index') ? 'active' : '' }}">
+                  <p>Periode Kuis Tantangan Bulanan</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="{{ route('admin_kuis-tantangan-bulanan.index') }}"
                   class="nav-link {{ Route::is('admin_kuis-tantangan-bulanan.index') ? 'active' : '' }}">
@@ -266,7 +229,8 @@
         @endrole
 
         @role('operator magang')
-          <li class="nav-item">
+          <li
+            class="nav-item {{ Route::is('admin_informasi-magang.*') || Route::is('admin_daftar-magang.*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
               <p>
                 Informasi Magang
@@ -284,6 +248,24 @@
                 <a href="{{ route('admin_daftar-magang.index-admin') }}"
                   class="nav-link {{ Route::is('admin_daftar-magang.index-admin') ? 'active' : '' }}">
                   <p>Data Pendaftar Magang</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-magang.magangDiterima') }}"
+                  class="nav-link {{ Route::is('admin_daftar-magang.magangDiterima') ? 'active' : '' }}">
+                  <p>Pendaftar Magang Diterima</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-magang.magangDitolak') }}"
+                  class="nav-link {{ Route::is('admin_daftar-magang.magangDitolak') ? 'active' : '' }}">
+                  <p>Pendaftar Magang Ditolak</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-magang.riwayatMagang') }}"
+                  class="nav-link {{ Route::is('admin_daftar-magang.riwayatMagang') ? 'active' : '' }}">
+                  <p>Riwayat Pendaftar Magang</p>
                 </a>
               </li>
             </ul>

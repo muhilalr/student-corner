@@ -69,7 +69,7 @@
                   </p>
                   <a href="{{ route('konten-edukasi.show', $item->slug) }}">
                     <button
-                      class="rounded-md bg-button hover:bg-[#02a66b] px-4 py-2 text-sm font-medium text-white">Pelajari
+                      class="rounded-md w-full bg-button hover:bg-[#02a66b] px-4 py-2 text-sm font-medium text-white">Pelajari
                       Selengkapnya</button>
                   </a>
 

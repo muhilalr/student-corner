@@ -15,12 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            // $table->timestamp('email_verified_at')->nullable();
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->string('no_hp');
             $table->string('instansi');
             $table->string('foto')->nullable();
             $table->string('password');
+            $table->string('otp_code')->nullable();
+            $table->timestamp('otp_expires_at')->nullable();
+            $table->boolean('is_verified')->default(false);
+            $table->string('pending_email')->nullable();
             $table->rememberToken();
             $table->string('slug');
             $table->timestamps();

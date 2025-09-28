@@ -38,7 +38,8 @@
                   </div>
                   <div class="form-group">
                     <label for="gambar">Gambar</label>
-                    <input type="file" class="form-control" id="gambar" name="gambar">
+                    <input type="file" class="form-control" id="gambar" name="gambar"
+                      accept="image/jpg, image/jpeg, image/png">
                     <small>Biarkan kosong jika tidak ingin menguabah file.</small>
                   </div>
                 </div>

@@ -175,7 +175,7 @@
 
             <!-- Change Password Form -->
             <!-- Header Section -->
-            <div class="relative bg-red-600 px-8 py-6 mt-6">
+            <div class="relative bg-red-600 rounded-xl px-8 py-6 mt-6">
               <div class="flex items-center gap-4">
                 <div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                   <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

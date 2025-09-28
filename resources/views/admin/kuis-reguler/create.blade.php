@@ -27,14 +27,14 @@
                   placeholder="Masukkan Judul Kuis" required>
               </div>
               <div class="form-group">
-                <label for="deskripsi_kuis">Deskripsi</label>
-                <input type="text" name="deskripsi" class="form-control" id="deskripsi_kuis"
-                  placeholder="Masukkan Deskripsi Kuis" required>
+                <label for="soal">Deskripsi</label>
+                <textarea name="deskripsi" class="form-control" id="editor" placeholder="Masukkan Deskripsi Kuis" cols="30"
+                  rows="10"></textarea>
               </div>
               <div class="form-group">
                 <label for="gambar">Gambar</label>
                 <input type="file" name="gambar" class="form-control" id="gambar"
-                  placeholder="Masukkan Gambar Kuis" required>
+                  placeholder="Masukkan Gambar Kuis" accept="image/jpg, image/jpeg, image/png" required>
               </div>
               <div class="form-group">
                 <label for="durasi_menit">Durasi Pengerjaan (menit)</label>
@@ -53,4 +53,33 @@
       </div><!-- /.container-fluid -->
     </section>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/@ckeditor/ckeditor5-build-classic@35.3.0/build/ckeditor.js"></script>
+  <script>
+    const editors = ['editor'];
+    editors.forEach(id => {
+      ClassicEditor
+        .create(document.querySelector(`#${id}`), {
+          toolbar: [
+            'heading', '|',
+            'bold', 'italic', 'underline', 'strikethrough', '|',
+            'fontColor', 'fontSize', '|',
+            'link', 'bulletedList', 'numberedList', '|',
+            'alignment',
+            'insertTable', '|',
+            'undo', 'redo'
+          ],
+          fontSize: {
+            options: [9, 11, 13, 'default', 17, 19, 21],
+            supportAllValues: false
+          },
+          fontColor: {
+            columns: 5,
+            documentColors: 5
+          }
+        })
+        .catch(error => {
+          console.error(`Editor ${id} error:`, error);
+        });
+    });
+  </script>
 </x-layout-admin>

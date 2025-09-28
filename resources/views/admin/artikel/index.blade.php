@@ -35,10 +35,11 @@
                       <th>Deskripsi</th>
                       <th>Gambar</th>
                       <th>Ditambahkan Tanggal</th>
+                      <th>Sub Judul Artikel</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="text-center">
                     @foreach ($artikels as $artikel)
                       <tr>
                         <td>{{ $artikel->subjek_materi->judul }}</td>
@@ -47,6 +48,11 @@
                         <td><img src="{{ asset('storage/' . $artikel->gambar) }}" alt="Gambar Subjek"
                             style="max-width: 100px; max-height: 100px;"></td>
                         <td>{{ \Carbon\Carbon::parse($artikel->created_at)->format('d-m-Y') }}</td>
+                        <td>
+                          <a href="{{ route('admin_subjudul-artikel.index', $artikel->id) }}" target="_blank">
+                            <button class="btn btn-info">Lihat Daftar Sub Judul</button>
+                          </a>
+                        </td>
                         <td>
                           <div class="d-flex align-items-center justify-content-center" style="gap: 10px;">
                             <a href="{{ route('admin_artikel.edit', $artikel->id) }}" class="btn btn-warning"><span><i

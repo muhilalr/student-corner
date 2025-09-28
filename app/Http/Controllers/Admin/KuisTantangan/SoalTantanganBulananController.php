@@ -36,12 +36,6 @@ class SoalTantanganBulananController extends Controller
         return view('admin.kuis-tantangan-bulanan.soal-kuis.index', compact('soal', 'kuis_tantangan_bulanan'));
     }
 
-    public function indexOpsi()
-    {
-        $opsi = OpsiSoalKuisTantanganBulanan::with('soal_tantangan_bulanan')->paginate(12);
-        return view('admin.kuis-tantangan-bulanan.opsi-soal-pilgan.index', compact('opsi'));
-    }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -126,8 +120,9 @@ class SoalTantanganBulananController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SoalKuisTantanganBulanan $soal)
+    public function update(Request $request, $id)
     {
+        $soal = SoalKuisTantanganBulanan::findOrFail($id);
         $request->validate([
             'id_kuis_tantangan_bulanan' => 'required|exists:kuis_tantangan_bulanans,id',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png',
@@ -145,25 +140,26 @@ class SoalTantanganBulananController extends Controller
         }
 
         $soal->update([
-            'id_kuis_tantangan_bulanan' => $request->kuis_tantangan_bulanan,
+            'id_kuis_tantangan_bulanan' => $request->id_kuis_tantangan_bulanan,
             'soal' => $request->soal,
             'tipe_soal' => $request->tipe_soal,
             'jawaban' => $request->jawaban,
         ]);
 
-        // Hapus opsi lama kalau Pilihan Ganda
-        if ($request->tipe_soal === 'Pilihan Ganda') {
-            $soal->opsi()->delete();
-
-            foreach ($request->options as $label => $teks) {
-                if ($teks) {
-                    OpsiSoalKuisTantanganBulanan::create([
-                        'id_soal_tantangan' => $soal->id,
-                        'label' => $label,
-                        'teks_opsi' => $teks,
-                    ]);
-                }
+        // Kalau tipe soal pilihan ganda → update opsi
+        if ($request->tipe_soal === 'Pilihan Ganda' && $request->has('options')) {
+            foreach ($request->options as $label => $teks_opsi) {
+                $soal->opsi()->updateOrCreate(
+                    ['label' => $label], // cari berdasarkan label (A, B, C, D)
+                    [
+                        'teks_opsi' => $teks_opsi,
+                        'id_soal_tantangan' => $soal->id // penting supaya tidak null
+                    ]
+                );
             }
+        } else {
+            // Kalau bukan pilihan ganda, hapus opsi lama supaya tidak nyangkut
+            $soal->opsi()->delete();
         }
 
         return redirect()->route('admin_soal-kuis-tantangan-bulanan.index', $request->id_kuis_tantangan_bulanan)->with('success', 'Soal berhasil diperbarui.');

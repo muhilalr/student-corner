@@ -13,18 +13,19 @@
           <div class="col-12">
             <div class="card" style="margin-top: 1rem;">
               <div class="card-header">
-                <h3 class="card-title">Data Detail Sub Judul Artikel</h3>
+                <h3 class="card-title">Data Detail Sub Judul {{ $subjudul->sub_judul }}</h3>
               </div>
               <!-- /.card-header -->
 
               <div class="card-body">
                 <div class="mb-3 d-flex justify-content-between">
-                  <form action="{{ route('admin_detail-subjudul-artikel.index') }}" method="GET" class="form-inline">
+                  <form action="{{ route('admin_detail-subjudul-artikel.index', $subjudul->id) }}" method="GET"
+                    class="form-inline">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control mr-2"
                       placeholder="Cari ...">
                     <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>
                   </form>
-                  <a href="{{ route('admin_detail-subjudul-artikel.create') }}" class="btn btn-primary">
+                  <a href="{{ route('admin_detail-subjudul-artikel.create', $subjudul->id) }}" class="btn btn-primary">
                     <span><i class="fas fa-plus mr-2"></i></span>Tambah Data
                   </a>
                 </div>
@@ -32,8 +33,6 @@
                   <table id="example1" class="table table-bordered table-striped" style="min-width: 1000px;">
                     <thead class="text-center">
                       <tr>
-                        <th>Judul Artikel</th>
-                        <th>Sub Judul Artikel</th>
                         <th>Konten Text</th>
                         <th>Link Embed</th>
                         <th>Gambar</th>
@@ -44,9 +43,7 @@
                     <tbody>
                       @foreach ($detail_subjuduls as $detail_subjudul)
                         <tr>
-                          <td>{{ $detail_subjudul->sub_judul_artikel->artikel->judul }}</td>
-                          <td>{{ $detail_subjudul->sub_judul_artikel->sub_judul }}</td>
-                          <td>{{ Str::limit($detail_subjudul->konten_text, 100, '...') }}</td>
+                          <td>{!! Str::limit($detail_subjudul->konten_text, 100, '...') !!}</td>
                           <td>{{ Str::limit($detail_subjudul->link_embed, 10, '...') }}</td>
                           <td>
                             @if ($detail_subjudul->gambar)

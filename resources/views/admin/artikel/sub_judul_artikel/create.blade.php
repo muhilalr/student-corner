@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">Input Subjudul Artikel</h3>
+            <h3 class="card-title">Input Subjudul Artikel {{ $artikel->judul }}</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->
@@ -21,15 +21,7 @@
           <form method="POST" action="{{ route('admin_subjudul-artikel.store') }}">
             <div class="card-body">
               @csrf
-              <div class="form-group">
-                <label for="judul_artikel">Judul Artikel</label>
-                <select name="id_artikel" class="form-control" required>
-                  <option value="" disabled selected>-- Pilih Judul Artikel --</option>
-                  @foreach ($artikel as $item)
-                    <option value="{{ $item->id }}">{{ $item->judul }}</option>
-                  @endforeach
-                </select>
-              </div>
+              <input type="hidden" name="id_artikel" value="{{ $artikel->id }}">
               <div class="form-group">
                 <label for="subjudul_artikel">Sub Judul Artikel</label>
                 <input type="text" name="sub_judul" class="form-control" id="subjudul_artikel"

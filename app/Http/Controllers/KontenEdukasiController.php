@@ -9,23 +9,93 @@ use App\Models\SubjekMateri;
 use Illuminate\Http\Request;
 use App\Models\SubJudulArtikel;
 use App\Models\VideoPembelajaran;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DetailSubJudulArtikel;
-use App\Models\ProgresBelajar\ArtikelDibaca;
+use Illuminate\Support\Facades\Storage;
 use App\Models\ProgresBelajar\VideoDilihat;
+use App\Models\ProgresBelajar\ArtikelDibaca;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class KontenEdukasiController extends Controller
 {
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
         $subjek = SubjekMateri::where('slug', $slug)->firstOrFail();
         $subjeks = SubjekMateri::all();
-        $artikels = Artikel::where('subjek_materi_id', $subjek->id)->get();
-        $videos = VideoPembelajaran::where('subjek_materi_id', $subjek->id)->get();
-        $infografis = Infografis::where('subjek_materi_id', $subjek->id)->get();
 
-        return view('konten-edukasi.index', compact('artikels', 'subjek', 'subjeks', 'videos', 'infografis'));
+        $filterTipe = $request->get('tipe');   // artikel / video / infografis
+        $filterTahun = $request->get('tahun'); // contoh 2024
+
+        // Artikel
+        $artikels = Artikel::where('subjek_materi_id', $subjek->id)
+            ->when($filterTahun, fn($q) => $q->whereYear('created_at', $filterTahun))
+            ->get()
+            ->map(fn($a) => (object)[
+                'id' => $a->id,
+                'judul' => $a->judul,
+                'slug' => $a->slug,
+                'deskripsi' => $a->deskripsi,
+                'created_at' => $a->created_at,
+                'tipe' => 'artikel',
+                'thumbnail' => $a->gambar ? Storage::url($a->gambar) : null,
+                'file_infografis' => null,
+            ]);
+
+        // Video
+        $videos = VideoPembelajaran::where('subjek_materi_id', $subjek->id)
+            ->when($filterTahun, fn($q) => $q->whereYear('created_at', $filterTahun))
+            ->get()
+            ->map(fn($v) => (object)[
+                'id' => $v->id,
+                'judul' => $v->judul,
+                'slug' => $v->slug,
+                'deskripsi' => $v->deskripsi,
+                'created_at' => $v->created_at,
+                'tipe' => 'video',
+                'thumbnail' => $v->thumbnail,
+                'file_infografis' => null,
+            ]);
+
+        // Infografis
+        $infografis = Infografis::where('subjek_materi_id', $subjek->id)
+            ->when($filterTahun, fn($q) => $q->whereYear('created_at', $filterTahun))
+            ->get()
+            ->map(fn($i) => (object)[
+                'id' => $i->id,
+                'judul' => $i->judul,
+                'slug' => null,
+                'deskripsi' => $i->deskripsi,
+                'created_at' => $i->created_at,
+                'tipe' => 'infografis',
+                'thumbnail' => $i->gambar ? Storage::url($i->gambar) : null,
+                'file_infografis' => $i->file_infografis,
+            ]);
+
+        // Gabung
+        $merged = collect();
+        if (!$filterTipe || $filterTipe === 'artikel') $merged = $merged->concat($artikels);
+        if (!$filterTipe || $filterTipe === 'video') $merged = $merged->concat($videos);
+        if (!$filterTipe || $filterTipe === 'infografis') $merged = $merged->concat($infografis);
+
+        $merged = $merged->sortByDesc('created_at')->values();
+
+        // Pagination manual
+        $page = $request->get('page', 1);
+        $perPage = 10;
+        $items = $merged->slice(($page - 1) * $perPage, $perPage)->all();
+
+        $kontens = new LengthAwarePaginator(
+            $items,
+            $merged->count(),
+            $perPage,
+            $page,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        return view('konten-edukasi.index', compact('subjek', 'subjeks', 'kontens'));
     }
+
 
     public function showArtikel($subjek_slug, $artikel_slug)
     {

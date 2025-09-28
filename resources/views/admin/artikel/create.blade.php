@@ -43,7 +43,7 @@
               <div class="form-group">
                 <label for="gambar">Gambar Artikel</label>
                 <input type="file" name="gambar" class="form-control" id="gambar"
-                  placeholder="Masukkan Gambar Artikel" required>
+                  placeholder="Masukkan Gambar Artikel" accept="image/jpg, image/jpeg, image/png" required>
               </div>
             </div>
             <!-- /.card-body -->

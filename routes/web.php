@@ -4,9 +4,10 @@ use Illuminate\Mail\PendingMail;
 use App\Models\PendaftaranMagang;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Contracts\Role;
+use App\Http\Controllers\OtpController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProfilController;
 
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KontenEdukasiController;
 use App\Http\Controllers\LogHarianMagangController;
@@ -14,13 +15,13 @@ use App\Http\Controllers\VisualisasiDataController;
 use App\Http\Controllers\KuisDanTantanganController;
 use App\Http\Controllers\Admin\InformasiMagangController;
 use App\Http\Controllers\Admin\PendaftaranMagangController;
-use App\Http\Controllers\SimulasiStatistik\DistribusiNormalController;
 use App\Http\Controllers\VisualisasiData\BoxPlotController;
 use App\Http\Controllers\VisualisasiData\ScatterController;
 use App\Http\Controllers\VisualisasiData\PieChartController;
 use App\Http\Controllers\VisualisasiData\HistogramController;
 use App\Http\Controllers\VisualisasiData\LineChartController;
 use App\Http\Controllers\SimulasiStatistik\SimulasiSlovinController;
+use App\Http\Controllers\SimulasiStatistik\DistribusiNormalController;
 use App\Http\Controllers\SimulasiStatistik\SamplingSimulationController;
 
 // Route Konten Edukasi
@@ -116,6 +117,11 @@ Route::prefix('simulasi-statistik')->name('simulasi.')->group(function () {
 
 Route::get('/normal-distribution', [DistribusiNormalController::class, 'index'])->name('normal.index');
 Route::post('/normal-distribution', [DistribusiNormalController::class, 'calculate'])->name('normal.calculate');
+
+Route::get('/verify-otp', [OtpController::class, 'showForm'])->name('verification.otp');
+Route::post('/verify-otp', [OtpController::class, 'verify'])->name('verification.otp.submit');
+Route::post('/resend-otp', [OtpController::class, 'resend'])->name('verification.otp.resend');
+
 
 
 require __DIR__ . '/auth.php';

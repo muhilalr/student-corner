@@ -20,6 +20,7 @@
             <div class="relative bg-primary px-8 py-12">
               <div class="absolute inset-0 bg-black opacity-10"></div>
               <div class="relative flex flex-col md:flex-row items-center gap-6">
+
                 <!-- Profile Photo -->
                 <div class="relative group">
                   <div class="w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden bg-white">
