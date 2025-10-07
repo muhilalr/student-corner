@@ -61,9 +61,19 @@
       <a href="{{ route('kuis-tantangan.index') }}"
         class="bg-white hover:bg-gray-100 flex px-4 py-2 text-base text-slate-700 font-medium rounded-md">Kuis &
         Tantangan</a>
-      <a href="{{ route('program-magang.index') }}"
-        class="bg-white hover:bg-gray-100 flex px-4 py-2 text-base text-slate-700 font-medium rounded-md">Magang dan
-        Riset</a>
+      <div class="dropdown dropdown-hover">
+        <div tabindex="0" role="button"
+          class="bg-white hover:bg-gray-100 flex gap-1 pl-4 pr-2 py-2 text-base text-slate-700 font-medium rounded-md">
+          Magang dan Riset
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#1f1f1f">
+            <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+          </svg>
+        </div>
+        <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-md">
+          <li><a href="{{ route('program-magang.index') }}">Program Magang</a></li>
+          <li><a href="{{ route('program-riset.index') }}">Kolaborasi Riset Mandiri</a></li>
+        </ul>
+      </div>
     </div>
 
     <!-- Sign Up Button (Desktop) -->
@@ -107,8 +117,8 @@
                 @csrf
                 <li>
                   <button type="submit" class="text-red-600 hover:bg-red-50">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none" viewBox="0 0 24 24"
-                      stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" fill="none"
+                      viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                     </svg>
@@ -202,11 +212,24 @@
         Kuis & Tantangan
       </a>
 
-      <!-- Internship -->
-      <a href="{{ route('program-magang.index') }}"
-        class="block w-full text-left px-4 py-3 text-slate-700 font-medium hover:bg-gray-100 rounded-md transition-colors">
-        Magang dan Riset
-      </a>
+
+      <!-- Magang dan Riset -->
+      <div class="w-full">
+        <button onclick="toggleSubmenu('magang-submenu')"
+          class="flex items-center justify-between w-full px-4 py-3 text-slate-700 font-medium hover:bg-gray-100 rounded-md transition-colors">
+          <span>Magang dan Riset</span>
+          <svg id="alat-arrow" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform transition-transform"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div id="magang-submenu" class="hidden ml-4 mt-2 space-y-1">
+          <a href="{{ route('program-magang.index') }}"
+            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Program Magang</a>
+          <a href="{{ route('program-riset.index') }}"
+            class="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-md">Kolaborasi Riset Mandiri</a>
+        </div>
+      </div>
     </div>
 
 

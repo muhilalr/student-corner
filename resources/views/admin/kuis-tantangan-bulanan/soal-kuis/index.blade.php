@@ -47,8 +47,14 @@
                     <tbody class="text-center">
                       @foreach ($soal as $item)
                         <tr>
-                          <td><img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar Subjek"
-                              style="max-width: 100px; max-height: 100px;"></td>
+                          <td>
+                            @if ($item->gambar)
+                              <img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar Subjek"
+                                style="max-width: 100px; max-height: 100px;">
+                            @else
+                              <p>Gambar Tidak Tersedia</p>
+                            @endif
+                          </td>
                           <td>{!! $item->soal !!}</td>
                           <td>{{ $item->tipe_soal }}</td>
                           <td>{{ $item->jawaban }}</td>

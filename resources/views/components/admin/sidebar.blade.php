@@ -27,6 +27,13 @@
         <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
         @role('admin')
+          <li class="nav-item">
+            <a href="{{ route('admin_dashboard') }}" class="nav-link">
+              <p>
+                Dashboard
+              </p>
+            </a>
+          </li>
           <li
             class="nav-item {{ Route::is('admin_subjek-materi.*') || Route::is('admin_artikel.*') || Route::is('admin_video-pembelajaran.*') || Route::is('admin_infografis.*') ? 'menu-open' : '' }}">
             <a href="#" class="nav-link active">
@@ -99,6 +106,47 @@
                 <a href="{{ route('admin_daftar-magang.riwayatMagang') }}"
                   class="nav-link {{ Route::is('admin_daftar-magang.riwayatMagang') ? 'active' : '' }}">
                   <p>Riwayat Pendaftar Magang</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li
+            class="nav-item {{ Route::is('admin_informasi-riset.*') || Route::is('admin_daftar-riset.*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link active">
+              <p>
+                Informasi Kolaborasi Riset
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('admin_informasi-riset.index') }}"
+                  class="nav-link {{ Route::is('admin_informasi-riset.index') ? 'active' : '' }}">
+                  <p>Informasi Kolaborasi Riset</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-riset.index-admin') }}"
+                  class="nav-link {{ Route::is('admin_daftar-riset.index-admin') ? 'active' : '' }}">
+                  <p>Data Pendaftar Kolaborasi Riset</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-riset.risetDiterima') }}"
+                  class="nav-link {{ Route::is('admin_daftar-riset.risetDiterima') ? 'active' : '' }}">
+                  <p>Pendaftar Kolaborasi Riset Diterima</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-riset.risetDitolak') }}"
+                  class="nav-link {{ Route::is('admin_daftar-riset.risetDitolak') ? 'active' : '' }}">
+                  <p>Pendaftar Kolaborasi Riset Ditolak</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-riset.riwayatRiset') }}"
+                  class="nav-link {{ Route::is('admin_daftar-riset.riwayatRiset') ? 'active' : '' }}">
+                  <p>Riwayat Pendaftar Kolaborasi Riset</p>
                 </a>
               </li>
             </ul>
@@ -266,6 +314,47 @@
                 <a href="{{ route('admin_daftar-magang.riwayatMagang') }}"
                   class="nav-link {{ Route::is('admin_daftar-magang.riwayatMagang') ? 'active' : '' }}">
                   <p>Riwayat Pendaftar Magang</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li
+            class="nav-item {{ Route::is('admin_informasi-riset.*') || Route::is('admin_daftar-riset.*') ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link active">
+              <p>
+                Informasi Kolaborasi Riset
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('admin_informasi-riset.index') }}"
+                  class="nav-link {{ Route::is('admin_informasi-riset.index') ? 'active' : '' }}">
+                  <p>Informasi Kolaborasi Riset</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-riset.index-admin') }}"
+                  class="nav-link {{ Route::is('admin_daftar-riset.index-admin') ? 'active' : '' }}">
+                  <p>Data Pendaftar Kolaborasi Riset</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-riset.risetDiterima') }}"
+                  class="nav-link {{ Route::is('admin_daftar-riset.risetDiterima') ? 'active' : '' }}">
+                  <p>Pendaftar Kolaborasi Riset Diterima</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-riset.risetDitolak') }}"
+                  class="nav-link {{ Route::is('admin_daftar-riset.risetDitolak') ? 'active' : '' }}">
+                  <p>Pendaftar Kolaborasi Riset Ditolak</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('admin_daftar-riset.riwayatRiset') }}"
+                  class="nav-link {{ Route::is('admin_daftar-riset.riwayatRiset') ? 'active' : '' }}">
+                  <p>Riwayat Pendaftar Kolaborasi Riset</p>
                 </a>
               </li>
             </ul>

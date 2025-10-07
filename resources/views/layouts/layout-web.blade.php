@@ -58,7 +58,7 @@
   </div>
 
   <!-- Tombol Aksesibilitas -->
-  <div class="fixed bottom-6 left-6 z-50">
+  {{-- <div class="fixed bottom-6 left-6 z-50">
     <button id="accessibilityBtn"
       class="accessibility-btn bg-button text-white p-4 rounded-full shadow-lg hover:bg-[#02a66b]">
       <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -66,10 +66,10 @@
           d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
       </svg>
     </button>
-  </div>
+  </div> --}}
 
   <!-- Modal Aksesibilitas -->
-  <div id="accessibilityModal" class="accessibility-modal hide fixed top-24 left-20 z-50">
+  {{-- <div id="accessibilityModal" class="accessibility-modal hide fixed top-24 left-20 z-50">
     <div class="bg-zinc-100 rounded-lg p-6 max-w-md w-full mx-4 max-h-[70vh] overflow-y-auto">
       <div class="flex justify-between items-center mb-6">
         <h2 class="text-xl font-bold text-gray-800">Menu Aksesibilitas</h2>
@@ -156,9 +156,10 @@
         </button>
       </div>
     </div>
-  </div>
+  </div> --}}
 
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>
   <script>
     AOS.init();
 

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\ProgresBelajar\VideoDilihat;
 use App\Models\ProgresBelajar\ArtikelDibaca;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Models\ProgresBelajar\InfografisDilihat;
 
 class KontenEdukasiController extends Controller
 {
@@ -137,5 +138,21 @@ class KontenEdukasiController extends Controller
             ]);
         }
         return view('konten-edukasi.video-pembelajaran', compact('video', 'subjek'));
+    }
+
+    public function lihatInfografis($id)
+    {
+        $infografis = Infografis::findOrFail($id);
+
+        // Catat bahwa user membuka infografis
+        if (Auth::check()) {
+            InfografisDilihat::firstOrCreate([
+                'id_user' => Auth::id(),
+                'id_infografis' => $infografis->id,
+            ]);
+        }
+
+        // Redirect ke file asli
+        return redirect(Storage::url($infografis->file_infografis));
     }
 }

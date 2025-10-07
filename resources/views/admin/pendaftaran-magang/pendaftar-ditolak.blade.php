@@ -18,7 +18,7 @@
 
               <div class="card-body">
                 <div class="mb-3 d-flex justify-content-between">
-                  <form action="{{ route('admin_informasi-magang.index') }}" method="GET" class="form-inline">
+                  <form action="{{ route('admin_daftar-magang.magangDitolak') }}" method="GET" class="form-inline">
                     <input type="text" name="search" value="{{ request('search') }}" class="form-control mr-2"
                       placeholder="Cari Nama...">
                     <button type="submit" class="btn btn-secondary"><i class="fas fa-search"></i></button>

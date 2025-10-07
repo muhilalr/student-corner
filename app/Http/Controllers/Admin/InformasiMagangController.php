@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\InformasiMagang;
+use App\Models\PendaftaranMagang;
 use Illuminate\Validation\Rules\In;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Console\View\Components\Info;
 
 class InformasiMagangController extends Controller
@@ -22,8 +24,29 @@ class InformasiMagangController extends Controller
 
     public function indexUser()
     {
+        $user = Auth::user();
         $info = InformasiMagang::sole();
-        return view('program-magang.index', compact('info'));
+
+        $sertifikat = null;
+        if (Auth::check()) {
+            $sertifikat = PendaftaranMagang::where('user_id', $user->id)
+                ->latest()
+                ->value('sertifikat_magang');
+        }
+
+        return view('program-magang.index', compact('info', 'sertifikat'));
+    }
+
+    public function arsipKarya(Request $request)
+    {
+
+        $arsip = PendaftaranMagang::where('sertifikat_magang', '!=', null)
+            ->when($request->search, function ($query, $search) {
+                $query->where('nama', 'like', '%' . $search . '%');
+            })
+            ->latest()
+            ->paginate(20);
+        return view('program-magang.arsip-karya', compact('arsip'));
     }
 
     /**

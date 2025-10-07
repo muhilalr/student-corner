@@ -494,7 +494,7 @@
           </div>
 
           <!-- Submit Button -->
-          <button type="submit" id="submitBtn" disabled
+          <button type="submit" id="submitBtn" disabled onclick="openSubmitModal()"
             class="w-full bg-primary text-white font-bold py-4 px-8 rounded-xl flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#00295a]">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -515,6 +515,44 @@
             </p>
           </div>
         </form>
+        <!-- Modal Konfirmasi Submit Form -->
+        <div id="submitConfirmationModal"
+          class="hidden fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75">
+          <div class="bg-white rounded-xl p-6 shadow-2xl w-full max-w-md mx-4 transform transition-all">
+            <!-- Header Modal -->
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-xl font-bold text-gray-900">Konfirmasi Pendaftaran</h2>
+              </div>
+            </div>
+
+            <!-- Konten Modal -->
+            <p class="text-gray-700 leading-relaxed mb-4">
+              Apakah Anda yakin semua data yang Anda masukkan sudah benar?
+            </p>
+
+            <!-- Tombol Aksi -->
+            <div class="flex flex-col sm:flex-row gap-3">
+              <button id="cancelSubmitButton" type="button"
+                class="flex-1 px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium rounded-lg transition-colors duration-200">
+                Periksa Kembali
+              </button>
+              <button type="button" id="confirmSubmitButton"
+                class="flex-1 px-4 py-3 bg-primary hover:bg-[#00295a] text-white font-medium rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Ya, Daftar Sekarang
+              </button>
+            </div>
+          </div>
+        </div>
       @endif
     </div>
   </section>
@@ -538,6 +576,52 @@
 
         // Pastikan tombol disabled saat halaman dimuat
         toggleSubmitButton();
+      });
+
+      // Fungsi untuk membuka modal konfirmasi submit
+      function openSubmitModal() {
+        const modal = document.getElementById('submitConfirmationModal');
+        modal.classList.remove('hidden');
+
+        // Tambahkan event listener untuk menutup modal dengan ESC
+        document.addEventListener('keydown', handleEscapeKeySubmit);
+      }
+
+      // Fungsi untuk menutup modal konfirmasi submit
+      function closeSubmitModal() {
+        const modal = document.getElementById('submitConfirmationModal');
+        modal.classList.add('hidden');
+
+        // Hapus event listener ESC
+        document.removeEventListener('keydown', handleEscapeKeySubmit);
+      }
+
+      // Handle ESC key untuk modal submit
+      function handleEscapeKeySubmit(event) {
+        if (event.key === 'Escape') {
+          closeSubmitModal();
+        }
+      }
+
+      // Event listener untuk tombol batal di modal submit
+      document.getElementById('cancelSubmitButton').addEventListener('click', closeSubmitModal);
+
+      // Event listener untuk tombol konfirmasi submit
+      document.getElementById('confirmSubmitButton').addEventListener('click', function() {
+        // Submit form
+        document.getElementById('registrationForm').submit();
+      });
+
+      // Event listener untuk menutup modal ketika klik di luar modal
+      document.getElementById('submitConfirmationModal').addEventListener('click', function(event) {
+        if (event.target === this) {
+          closeSubmitModal();
+        }
+      });
+
+      // Mencegah modal tertutup ketika klik di dalam konten modal
+      document.querySelector('#submitConfirmationModal > div').addEventListener('click', function(event) {
+        event.stopPropagation();
       });
     </script>
   @endunless

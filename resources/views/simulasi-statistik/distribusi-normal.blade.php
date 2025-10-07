@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-100 p-8">
     <h1 class="text-3xl font-bold mb-6">Kalkulator Distribusi Normal</h1>
 
-    <form method="POST" action="{{ route('normal.calculate') }}"
+    <form method="POST" action="{{ route('simulasi.normal.calculate') }}"
       class="bg-white p-6 rounded-lg shadow-md grid grid-cols-1 md:grid-cols-3 gap-4">
       @csrf
       <div>

@@ -13,7 +13,9 @@ use App\Http\Controllers\KontenEdukasiController;
 use App\Http\Controllers\LogHarianMagangController;
 use App\Http\Controllers\VisualisasiDataController;
 use App\Http\Controllers\KuisDanTantanganController;
+use App\Http\Controllers\Admin\InformasiRisetController;
 use App\Http\Controllers\Admin\InformasiMagangController;
+use App\Http\Controllers\Admin\PendaftaranRisetController;
 use App\Http\Controllers\Admin\PendaftaranMagangController;
 use App\Http\Controllers\VisualisasiData\BoxPlotController;
 use App\Http\Controllers\VisualisasiData\ScatterController;
@@ -29,6 +31,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/konten-edukasi/{slug}', [KontenEdukasiController::class, 'show'])->name('konten-edukasi.show');
 Route::get('/konten-edukasi/{subjek_slug}/artikel/{slug}', [KontenEdukasiController::class, 'showArtikel'])->name('konten-edukasi.showArtikel');
 Route::get('/konten-edukasi/{subjek_slug}/video/{slug}', [KontenEdukasiController::class, 'showVideo'])->name('konten-edukasi.showVideo');
+Route::get('/infografis/{id}', [KontenEdukasiController::class, 'lihatInfografis'])
+    ->name('infografis.lihat');
 
 // Route Kalkulator
 Route::prefix('kalkulator-statistik')->group(function () {
@@ -64,6 +68,9 @@ Route::get('/kuis-dan-tantangan-bulanan', [KuisDanTantanganController::class, 'i
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/program-magang/informasi-magang', [InformasiMagangController::class, 'indexUser'])->name('program-magang.index');
+Route::get('/program-riset/informasi-riset', [InformasiRisetController::class, 'indexUser'])->name('program-riset.index');
+Route::get('/program-riset/arsip-karya-kolaborasi-riset', [InformasiRisetController::class, 'arsipKarya'])->name('program-riset.arsipKarya');
+Route::get('/program-magang/arsip-karya-magang', [InformasiMagangController::class, 'arsipKarya'])->name('program-magang.arsipKarya');
 
 Route::middleware('auth')->group(function () {
     // Route Profil
@@ -90,6 +97,13 @@ Route::middleware('auth')->group(function () {
     Route::put('/program-magang/log-harian-magang/edit-log-harian-magang/{id}', [LogHarianMagangController::class, 'update'])->name('log-harian.update');
     Route::delete('/program-magang/log-harian-magang/hapus-log-harian-magang/{id}', [LogHarianMagangController::class, 'destroy'])->name('log-harian.destroy');
 
+    // Route Pendaftaran Riset Mandiri
+    Route::get('/program-riset/daftar-riset', [PendaftaranRisetController::class, 'index'])->name('daftar-riset.index');
+    Route::post('/program-riset/daftar-riset', [PendaftaranRisetController::class, 'store'])
+        ->name('daftar-riset.store');
+    Route::post('/program-riset/upload-laporan/{pendaftaran_riset}', [PendaftaranRisetController::class, 'uploadLaporan'])->name('daftar-riset.upload-laporan');
+    Route::delete('/program-riset/hapus-laporan/{pendaftaran_riset}', [PendaftaranRisetController::class, 'hapusLaporan'])->name('daftar-riset.hapus-laporan');
+
     // Route Kuis dan Tantangan Bulanan
     // Kuis Reguler
     Route::get('/kuis-dan-tantangan-bulanan/kuis-reguler/{slug}', [KuisDanTantanganController::class, 'showSoalKuisReguler'])->name('kuis-tantangan.soal');
@@ -113,10 +127,11 @@ Route::prefix('simulasi-statistik')->name('simulasi.')->group(function () {
     Route::post('/simulasi-random-sampling', [SamplingSimulationController::class, 'simulate'])->name('sampling.run');
     Route::get('/simulasi-ukuran-sampel-slovin', [SimulasiSlovinController::class, 'index'])->name('slovin');
     Route::post('/simulasi-ukuran-sampel-slovin', [SimulasiSlovinController::class, 'hitung'])->name('slovin.hitung');
+    Route::get('/distribusi-normal', [DistribusiNormalController::class, 'index'])->name('normal.index');
+    Route::post('/distribusi-normal', [DistribusiNormalController::class, 'calculate'])->name('normal.calculate');
 });
 
-Route::get('/normal-distribution', [DistribusiNormalController::class, 'index'])->name('normal.index');
-Route::post('/normal-distribution', [DistribusiNormalController::class, 'calculate'])->name('normal.calculate');
+
 
 Route::get('/verify-otp', [OtpController::class, 'showForm'])->name('verification.otp');
 Route::post('/verify-otp', [OtpController::class, 'verify'])->name('verification.otp.submit');

@@ -7,9 +7,11 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\Admin\InfografisController;
 use App\Http\Controllers\Admin\SubjekMateriController;
+use App\Http\Controllers\Admin\InformasiRisetController;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Admin\InformasiMagangController;
 use App\Http\Controllers\Admin\SubJudulArtikelController;
+use App\Http\Controllers\Admin\PendaftaranRisetController;
 use App\Http\Controllers\Admin\PendaftaranMagangController;
 use App\Http\Controllers\Admin\VideoPembelajaranController;
 use App\Http\Controllers\Admin\DetailSubJudulArtikelController;
@@ -24,7 +26,7 @@ Route::prefix('admin')->name('admin_')->group(function () {
   Route::post('/login', [AdminLoginController::class, 'login'])->name('proseslogin');
 
   Route::middleware(['auth:admin'])->group(function () {
-    Route::get('/dashboard', [SubjekMateriController::class, 'index'])->middleware('role:admin')->name('dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware('role:admin')->name('dashboard');
 
     Route::get('/operator/dashboard', [SubjekMateriController::class, 'index'])->middleware('role:operator')->name('operator.dashboard');
     Route::get('/operator-magang/dashboard', [InformasiMagangController::class, 'index'])->middleware('role:operator magang')->name('magang.dashboard');
@@ -82,6 +84,32 @@ Route::prefix('admin')->name('admin_')->group(function () {
     Route::delete('/pendaftaran-magang/{pendaftaran_magang}', [PendaftaranMagangController::class, 'destroy'])
       ->name('daftar-magang.destroy');
 
+
+    // Informasi riset
+    Route::resource('informasi-riset', InformasiRisetController::class);
+
+    // Pendaftaran Riset
+    Route::get('/pendaftaran-riset', [PendaftaranRisetController::class, 'index_admin'])
+      ->name('daftar-riset.index-admin');
+    Route::get('/pendaftaran-riset-diterima', [PendaftaranRisetController::class, 'risetDiterima'])
+      ->name('daftar-riset.risetDiterima');
+    Route::get('/pendaftaran-riset-ditolak', [PendaftaranRisetController::class, 'risetDitolak'])
+      ->name('daftar-riset.risetDitolak');
+    Route::get('/riwayat-pendaftaran-riset', [PendaftaranRisetController::class, 'riwayatRiset'])
+      ->name('daftar-riset.riwayatRiset');
+
+    Route::get('/pendaftaran-riset/{pendaftaran_riset}/edit', [PendaftaranRisetController::class, 'edit'])
+      ->name('daftar-riset.edit');
+    Route::get('/pendaftaran-riset/{pendaftaran_riset}/edit-diterima', [PendaftaranRisetController::class, 'editDiterima'])
+      ->name('daftar-riset.edit-diterima');
+    Route::get('/pendaftaran-riset/{pendaftaran_riset}/upload-sertifikat', [PendaftaranRisetController::class, 'editSertifikat'])
+      ->name('daftar-riset.editSertifikat');
+    Route::put('/pendaftaran-riset/{pendaftaran_riset}/upload-sertifikat', [PendaftaranRisetController::class, 'uploadSertifikat'])
+      ->name('daftar-riset.upload-sertifikat');
+    Route::put('/pendaftaran-riset/{pendaftaran_riset}', [PendaftaranRisetController::class, 'update'])
+      ->name('daftar-riset.update');
+    Route::delete('/pendaftaran-riset/{pendaftaran_riset}', [PendaftaranRisetController::class, 'destroy'])
+      ->name('daftar-riset.destroy');
 
     // Kuis Reguler
     Route::resource('kuis-reguler', KuisRegulerController::class);

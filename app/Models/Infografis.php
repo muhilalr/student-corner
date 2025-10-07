@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Testing\Fluent\Concerns\Has;
+use App\Models\ProgresBelajar\InfografisDilihat;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Infografis extends Model
 {
@@ -21,5 +22,10 @@ class Infografis extends Model
     public function subjek_materi()
     {
         return $this->belongsTo(SubjekMateri::class, 'subjek_materi_id');
+    }
+
+    public function infografis_dilihat()
+    {
+        return $this->hasMany(InfografisDilihat::class, 'id_infografis');
     }
 }

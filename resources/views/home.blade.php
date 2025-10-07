@@ -206,22 +206,28 @@
       </div>
 
       <!-- Right side - Content -->
-      <div class="flex w-full flex-col items-center md:items-start justify-center p-4 sm:p-8 md:w-1/2">
-        <div class="mb-6 sm:mb-8">
-          <h1 class="mb-6 text-3xl md:text-4xl font-bold text-gray-800 text-center md:text-left">
+      <div class="flex w-full flex-col items-center md:items-start justify-center p-8 md:w-1/2">
+        <div class="mb-8">
+          <h1 class="mb-6 text-3xl md:text-4xl font-bold text-gray-800 text-center">
             Magang dan Riset
           </h1>
-          <p class="text-justify text-sm md:text-base font-semibold text-gray-600">
-            Dapatkan pengalaman kerja nyata dan kembangkan keterampilan profesionalmu melalui program magang kami.
-            Belajar langsung dari para ahli, berkontribusi pada proyek-proyek inovatif, dan persiapkan dirimu untuk
-            karier yang cemerlang.
+          <p class="text-center text-sm md:text-base font-semibold text-gray-600">
+            Dapatkan pengalaman kerja nyata sekaligus kesempatan riset bersama para ahli. Melalui program ini, kamu bisa
+            berkontribusi pada proyek inovatif, mengasah keterampilan profesional, serta berkolaborasi dalam penelitian
+            untuk pengembangan karya ilmiah.
           </p>
         </div>
-        <div class="w-full flex justify-center md:justify-start">
+        <div class="w-full flex flex-col gap-4">
           <a href="{{ route('program-magang.index') }}">
             <button
-              class="rounded-md border border-orange-500 px-6 py-3 lg:px-4 lg:py-2 text-sm font-medium text-orange-500 transition-colors duration-300 hover:bg-orange-500 hover:text-white">
-              Daftar Sekarang!
+              class="rounded-md w-full border border-orange-500 px-6 py-3 lg:px-4 lg:py-2 text-sm font-medium text-orange-500 transition-colors duration-300 hover:bg-orange-500 hover:text-white">
+              Daftar Magang
+            </button>
+          </a>
+          <a href="{{ route('program-riset.index') }}">
+            <button
+              class="rounded-md w-full border border-orange-500 px-6 py-3 lg:px-4 lg:py-2 text-sm font-medium text-orange-500 transition-colors duration-300 hover:bg-orange-500 hover:text-white">
+              Kolaborasi Riset Mandiri
             </button>
           </a>
         </div>

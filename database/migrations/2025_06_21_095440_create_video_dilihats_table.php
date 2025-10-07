@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_video')->references('id')->on('video_pembelajarans')->onDelete('cascade');
+            $table->unique(['id_user', 'id_video']);
         });
     }
 

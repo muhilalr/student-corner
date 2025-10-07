@@ -38,9 +38,9 @@
   <div class="wrapper">
 
     <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__shake" src="{{ asset('template/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo"
-        height="60" width="60">
+    <div class="preloader d-flex flex-row justify-content-center align-items-center gap-3">
+      <img src="{{ asset('gambar/logo-bps.jpg') }}" alt="AdminLTELogo" height="60" width="60">
+      <h6 class="font-weight-bold text-black">BPS PROVINSI <br>KEP. BANGKA BELITUNG</h6>
     </div>
 
     <x-admin.navbar />

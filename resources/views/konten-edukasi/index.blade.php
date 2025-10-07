@@ -67,7 +67,7 @@
   @elseif ($konten->tipe === 'video')
     {{ route('konten-edukasi.showVideo', [$subjek->slug, $konten->slug]) }}
   @elseif ($konten->tipe === 'infografis')
-    {{ Storage::url($konten->file_infografis) }} @endif">
+    {{ route('infografis.lihat', $konten->id) }} @endif">
                 <div class="rounded-lg bg-white p-4 shadow-md hover:cursor-pointer flex gap-4">
                   {{-- Thumbnail --}}
                   <img src="{{ $konten->thumbnail }}" class="aspect-[16/9] rounded-lg w-32 object-cover">

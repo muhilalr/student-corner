@@ -40,7 +40,7 @@
               </div>
             @endif
             <h2 class="text-base lg:text-xl font-bold leading-tight">
-              {{ $item->soal }}
+              {!! $item->soal !!}
             </h2>
           </div>
           <div class="p-6 sm:p-8">

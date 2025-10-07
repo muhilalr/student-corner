@@ -56,7 +56,8 @@
     <div class="content">
       <h2>Halo, {{ $pendaftaran->nama }}</h2>
 
-      <p>Sertifikat magang Anda sudah tersedia. Silakan unduh melalui link berikut:</p>
+      <p>Sertifikat magang Anda sudah tersedia. Silahkan diunduh di halaman Program Magang pada
+        website atau unduh melalui link berikut:</p>
 
       <p><a href="{{ url('storage/' . $pendaftaran->sertifikat_magang) }}" target="_blank">Unduh Sertifikat</a></p>
 
