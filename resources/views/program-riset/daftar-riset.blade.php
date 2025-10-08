@@ -148,11 +148,11 @@
                 <div class="text-sm text-gray-600 space-y-2">
                   <p class="flex items-center">
                     <span class="mr-2">📧</span>
-                    <a href="mailto:info@company.com" class="text-green-600 hover:underline">info@company.com</a>
+                    <a href="mailto:bps1900@bps.go.id" class="text-green-600 hover:underline">bps1900@bps.go.id</a>
                   </p>
                   <p class="flex items-center">
                     <span class="mr-2">📱</span>
-                    <a href="tel:+62812345678" class="text-green-600 hover:underline">+62 812 3456 789</a>
+                    <a href="#" class="text-green-600 hover:underline">+62 811 7816 340</a>
                   </p>
                   <p class="text-xs text-gray-500 mt-3">
                     Hubungi kami jika ada pertanyaan mengenai pendaftaran Anda
@@ -510,11 +510,10 @@
           <div class="text-center">
             <p class="text-sm text-gray-600">
               Butuh bantuan? Hubungi kami di
-              <a href="mailto:info@company.com"
-                class="text-primary hover:underline font-semibold">info@company.com</a>
+              <a href="mailto:bps1900@bps.go.id"
+                class="text-primary hover:underline font-semibold">bps1900@bps.go.id</a>
               atau
-              <a href="tel:+62812345678" class="text-primary hover:underline font-semibold">+62
-                812 3456 789</a>
+              <a href="#" class="text-primary hover:underline font-semibold">+62 811 7816 340</a>
             </p>
           </div>
         </form>
